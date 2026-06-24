@@ -1,0 +1,1268 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Enterprise AI Hub</title>
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  :root {
+    --bg-dark: #0d1117;
+    --bg-card: #161b22;
+    --bg-card2: #1c2230;
+    --accent: #58a6ff;
+    --accent2: #3fb950;
+    --accent3: #f78166;
+    --accent4: #d2a8ff;
+    --accent5: #ffa657;
+    --text-primary: #e6edf3;
+    --text-secondary: #8b949e;
+    --text-muted: #6e7681;
+    --border: rgba(48,54,61,0.9);
+    --gold: #d4af37;
+  }
+
+  html, body {
+    width: 100%; height: 100%;
+    background: var(--bg-dark);
+    font-family: 'Segoe UI', Arial, sans-serif;
+    color: var(--text-primary);
+    overflow: hidden;
+  }
+
+  #ppt {
+    width: 100vw; height: 100vh;
+    position: relative;
+    overflow: hidden;
+  }
+
+  .slide {
+    position: absolute;
+    top: 0; left: 0;
+    width: 100%; height: 100%;
+    display: flex; flex-direction: column;
+    padding: 0;
+    opacity: 0;
+    transform: translateX(60px);
+    transition: opacity .45s ease, transform .45s ease;
+    pointer-events: none;
+    overflow: hidden;
+  }
+  .slide.active { opacity: 1; transform: translateX(0); pointer-events: all; }
+  .slide.exit { opacity: 0; transform: translateX(-60px); }
+
+  .slide-header { padding: 36px 60px 0; flex-shrink: 0; }
+  .slide-body {
+    flex: 1;
+    padding: 20px 60px 30px;
+    overflow-y: auto;
+    scrollbar-width: thin;
+    scrollbar-color: #30363d transparent;
+  }
+  .slide-body::-webkit-scrollbar { width: 4px; }
+  .slide-body::-webkit-scrollbar-thumb { background: #30363d; border-radius: 2px; }
+
+  /* Cover */
+  .slide-cover {
+    background: radial-gradient(ellipse at 20% 50%, #0d2137 0%, #0d1117 60%);
+    align-items: center; justify-content: center; text-align: center;
+  }
+  .cover-tag {
+    display: inline-block;
+    border: 1px solid var(--accent); color: var(--accent);
+    font-size: 12px; letter-spacing: 3px; text-transform: uppercase;
+    padding: 6px 20px; border-radius: 20px; margin-bottom: 32px;
+  }
+  .cover-title {
+    font-size: clamp(28px, 4vw, 52px); font-weight: 700;
+    line-height: 1.2; color: #fff; max-width: 860px;
+  }
+  .cover-title span { color: var(--accent); }
+  .cover-subtitle {
+    margin-top: 20px; font-size: 15px;
+    color: var(--text-secondary); max-width: 700px; line-height: 1.7;
+  }
+  .cover-divider {
+    width: 60px; height: 3px;
+    background: linear-gradient(90deg, var(--accent), transparent);
+    margin: 28px auto;
+  }
+  .cover-meta { display: flex; gap: 40px; justify-content: center; flex-wrap: wrap; }
+  .cover-meta-item { text-align: center; }
+  .cover-meta-item .num { font-size: 32px; font-weight: 700; color: var(--accent); }
+  .cover-meta-item .label { font-size: 12px; color: var(--text-secondary); margin-top: 4px; }
+  .cover-grid {
+    position: absolute; inset: 0;
+    background-image:
+      linear-gradient(rgba(88,166,255,.04) 1px, transparent 1px),
+      linear-gradient(90deg, rgba(88,166,255,.04) 1px, transparent 1px);
+    background-size: 50px 50px; pointer-events: none;
+  }
+
+  /* Section */
+  .slide-section {
+    background: radial-gradient(ellipse at 30% 60%, #0d2137 0%, #0d1117 70%);
+    justify-content: center; padding: 60px;
+  }
+  .section-number {
+    font-size: 80px; font-weight: 800;
+    color: rgba(88,166,255,.1); line-height: 1; margin-bottom: -20px;
+  }
+  .section-eyebrow {
+    font-size: 12px; letter-spacing: 3px; text-transform: uppercase;
+    color: var(--accent); margin-bottom: 16px;
+  }
+  .section-title {
+    font-size: clamp(24px, 3.5vw, 44px); font-weight: 700;
+    color: #fff; line-height: 1.25; max-width: 700px;
+  }
+  .section-desc {
+    margin-top: 20px; font-size: 15px;
+    color: var(--text-secondary); max-width: 620px; line-height: 1.7;
+  }
+  .section-line {
+    width: 4px; height: 50px; background: var(--accent);
+    margin-bottom: 24px; border-radius: 2px;
+  }
+
+  /* Slide title */
+  .slide-title {
+    font-size: clamp(18px, 2.2vw, 28px); font-weight: 700;
+    color: #fff; display: flex; align-items: center; gap: 12px; margin-bottom: 6px;
+  }
+  .slide-title-dot {
+    width: 8px; height: 8px; border-radius: 50%;
+    background: var(--accent); flex-shrink: 0;
+  }
+  .slide-title-dot.green { background: var(--accent2); }
+  .slide-title-dot.orange { background: var(--accent5); }
+  .slide-title-dot.purple { background: var(--accent4); }
+  .slide-eyebrow {
+    font-size: 11px; letter-spacing: 2px; text-transform: uppercase;
+    color: var(--text-muted); margin-bottom: 4px; padding-left: 20px;
+  }
+
+  /* Cards */
+  .card-grid { display: grid; gap: 14px; margin-top: 12px; }
+  .card-grid-2 { grid-template-columns: repeat(2, 1fr); }
+  .card-grid-3 { grid-template-columns: repeat(3, 1fr); }
+
+  .card {
+    background: var(--bg-card); border: 1px solid var(--border);
+    border-radius: 10px; padding: 20px;
+    position: relative; overflow: hidden; transition: border-color .2s;
+  }
+  .card:hover { border-color: rgba(88,166,255,.35); }
+  .card::before {
+    content: ''; position: absolute; top: 0; left: 0;
+    width: 3px; height: 100%; background: var(--accent);
+    border-radius: 10px 0 0 10px;
+  }
+  .card.green::before { background: var(--accent2); }
+  .card.orange::before { background: var(--accent5); }
+  .card.red::before { background: var(--accent3); }
+  .card.purple::before { background: var(--accent4); }
+
+  .card-title { font-size: 13px; font-weight: 700; color: var(--text-primary); margin-bottom: 8px; line-height: 1.4; }
+  .card-body { font-size: 12px; color: var(--text-secondary); line-height: 1.65; }
+  .card-badge {
+    display: inline-block; font-size: 10px; letter-spacing: 1px;
+    padding: 2px 8px; border-radius: 4px;
+    background: rgba(88,166,255,.12); color: var(--accent);
+    margin-bottom: 8px; font-weight: 600;
+  }
+  .card-badge.green { background: rgba(63,185,80,.12); color: var(--accent2); }
+  .card-badge.orange { background: rgba(255,166,87,.12); color: var(--accent5); }
+  .card-badge.purple { background: rgba(210,168,255,.12); color: var(--accent4); }
+
+  /* Metrics */
+  .metrics { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 10px; }
+  .metric {
+    background: rgba(88,166,255,.08); border: 1px solid rgba(88,166,255,.2);
+    border-radius: 6px; padding: 5px 12px; font-size: 11px; color: var(--accent);
+  }
+  .metric.green { background: rgba(63,185,80,.08); border-color: rgba(63,185,80,.2); color: var(--accent2); }
+  .metric.orange { background: rgba(255,166,87,.08); border-color: rgba(255,166,87,.2); color: var(--accent5); }
+  .metric.purple { background: rgba(210,168,255,.08); border-color: rgba(210,168,255,.2); color: var(--accent4); }
+
+  /* Pain list */
+  .pain-list { display: flex; flex-direction: column; gap: 10px; margin-top: 12px; }
+  .pain-item {
+    display: flex; gap: 12px; align-items: flex-start;
+    background: var(--bg-card); border: 1px solid var(--border);
+    border-radius: 8px; padding: 14px 16px;
+  }
+  .pain-num {
+    width: 26px; height: 26px; border-radius: 50%;
+    background: linear-gradient(135deg, var(--accent3), #c0392b);
+    color: #fff; font-size: 12px; font-weight: 700;
+    display: flex; align-items: center; justify-content: center;
+    flex-shrink: 0; margin-top: 1px;
+  }
+  .pain-content .title { font-size: 13px; font-weight: 600; color: var(--text-primary); margin-bottom: 5px; }
+  .pain-content .detail { font-size: 12px; color: var(--text-secondary); line-height: 1.6; }
+
+  /* Solution box */
+  .solution-box {
+    background: linear-gradient(135deg, rgba(88,166,255,.07), rgba(88,166,255,.02));
+    border: 1px solid rgba(88,166,255,.25); border-radius: 10px;
+    padding: 16px 20px; margin-top: 10px;
+  }
+  .solution-label {
+    font-size: 10px; letter-spacing: 2px; text-transform: uppercase;
+    color: var(--accent); margin-bottom: 8px; font-weight: 600;
+  }
+  .solution-text { font-size: 12.5px; color: var(--text-secondary); line-height: 1.7; }
+
+  /* Case box */
+  .case-box {
+    background: var(--bg-card2); border: 1px solid var(--border);
+    border-radius: 8px; padding: 14px 16px; margin-top: 8px;
+  }
+  .case-label {
+    font-size: 10px; letter-spacing: 1px; text-transform: uppercase;
+    color: var(--accent2); margin-bottom: 6px; font-weight: 700;
+    display: flex; align-items: center; gap: 6px;
+  }
+  .case-label::before { content: ''; width: 12px; height: 2px; background: var(--accent2); }
+  .case-text { font-size: 12px; color: var(--text-secondary); line-height: 1.65; }
+
+  .row { display: flex; gap: 14px; margin-top: 12px; }
+  .col { flex: 1; min-width: 0; }
+
+  /* Table */
+  .data-table { width: 100%; border-collapse: collapse; margin-top: 12px; font-size: 12.5px; }
+  .data-table th {
+    background: rgba(88,166,255,.1); color: var(--accent);
+    text-align: left; padding: 10px 14px;
+    font-size: 11px; letter-spacing: 1px; text-transform: uppercase;
+    border-bottom: 1px solid var(--border);
+  }
+  .data-table td {
+    padding: 10px 14px; border-bottom: 1px solid rgba(48,54,61,.5);
+    color: var(--text-secondary); vertical-align: top; line-height: 1.5;
+  }
+  .data-table tr:last-child td { border-bottom: none; }
+  .data-table tr:hover td { background: rgba(255,255,255,.02); }
+  .highlight-cell { color: var(--accent2); font-weight: 600; }
+
+  /* Navigation */
+  #nav {
+    position: fixed; bottom: 28px; left: 50%;
+    transform: translateX(-50%);
+    display: flex; align-items: center; gap: 16px;
+    background: rgba(22,27,34,.92); backdrop-filter: blur(12px);
+    border: 1px solid var(--border); border-radius: 40px;
+    padding: 10px 20px; z-index: 100; user-select: none;
+  }
+  .nav-btn {
+    width: 34px; height: 34px; border-radius: 50%;
+    border: 1px solid var(--border); background: transparent;
+    color: var(--text-secondary); font-size: 14px;
+    cursor: pointer; display: flex; align-items: center; justify-content: center;
+    transition: all .2s;
+  }
+  .nav-btn:hover { background: rgba(88,166,255,.1); border-color: var(--accent); color: var(--accent); }
+  .nav-btn:disabled { opacity: .3; cursor: default; }
+  #slide-counter { font-size: 12px; color: var(--text-secondary); min-width: 60px; text-align: center; }
+  .dot-nav { display: flex; gap: 5px; align-items: center; }
+  .dot-nav .dot {
+    width: 5px; height: 5px; border-radius: 50%;
+    background: var(--text-muted); transition: all .2s; cursor: pointer;
+  }
+  .dot-nav .dot.active { width: 18px; border-radius: 3px; background: var(--accent); }
+
+  #progress {
+    position: fixed; top: 0; left: 0; height: 2px;
+    background: linear-gradient(90deg, var(--accent), var(--accent4));
+    transition: width .4s ease; z-index: 200;
+  }
+  .slide-num-badge {
+    position: absolute; top: 22px; right: 36px;
+    font-size: 11px; color: var(--text-muted); letter-spacing: 1px;
+  }
+
+  /* ROI */
+  .roi-grid { display: grid; grid-template-columns: repeat(3,1fr); gap: 16px; margin-top: 16px; }
+  .roi-card {
+    background: var(--bg-card); border: 1px solid var(--border);
+    border-radius: 12px; padding: 22px; text-align: center;
+    position: relative; overflow: hidden;
+  }
+  .roi-card::after { content: ''; position: absolute; bottom: 0; left: 0; width: 100%; height: 3px; }
+  .roi-card.blue::after { background: var(--accent); }
+  .roi-card.green::after { background: var(--accent2); }
+  .roi-card.orange::after { background: var(--accent5); }
+  .roi-title { font-size: 14px; font-weight: 700; color: var(--text-primary); margin-bottom: 6px; }
+  .roi-cost { font-size: 22px; font-weight: 800; margin-bottom: 10px; }
+  .roi-card.blue .roi-cost { color: var(--accent); }
+  .roi-card.green .roi-cost { color: var(--accent2); }
+  .roi-card.orange .roi-cost { color: var(--accent5); }
+  .roi-detail { font-size: 12px; color: var(--text-secondary); line-height: 1.6; }
+
+  /* End */
+  .slide-end {
+    background: radial-gradient(ellipse at 80% 30%, #0d2137 0%, #0d1117 60%);
+    align-items: center; justify-content: center; text-align: center;
+  }
+  .end-title { font-size: clamp(22px,3vw,40px); font-weight: 800; color: #fff; }
+  .end-title span { color: var(--accent); }
+  .end-sub { font-size: 14px; color: var(--text-secondary); margin-top: 14px; }
+
+  @media (max-width: 700px) {
+    .card-grid-2, .card-grid-3 { grid-template-columns: 1fr; }
+    .row { flex-direction: column; }
+    .roi-grid { grid-template-columns: 1fr; }
+    .slide-header { padding: 24px 24px 0; }
+    .slide-body { padding: 16px 24px 24px; }
+    .slide-section { padding: 36px 24px; }
+  }
+</style>
+</head>
+<body>
+
+<div id="progress"></div>
+<div id="ppt">
+
+<!-- ══════════════════════════════════════════════
+     SLIDE 1 — COVER
+══════════════════════════════════════════════ -->
+<div class="slide slide-cover active" id="s1">
+  <div class="cover-grid"></div>
+  <div class="cover-tag">Enterprise AI Hub</div>
+  <h1 class="cover-title">Common Pain Points &amp; <span>AI Implementation Solutions</span><br>Across Mainstream Industries</h1>
+  <div class="cover-divider"></div>
+  <p class="cover-subtitle">Covering six core sectors: International Trade, Manufacturing, Finance, Shipping &amp; Logistics, Real Estate, and Human Resources — mapping universal pain points, AI solution pathways, and measurable business outcomes from real commercial deployments.</p>
+  <div style="height:32px"></div>
+  <div class="cover-meta">
+    <div class="cover-meta-item"><div class="num">6</div><div class="label">Core Industries</div></div>
+    <div class="cover-meta-item"><div class="num">5</div><div class="label">Universal Pain Points</div></div>
+    <div class="cover-meta-item"><div class="num">20+</div><div class="label">Benchmark Cases</div></div>
+    <div class="cover-meta-item"><div class="num">3</div><div class="label">AI Implementation Forms</div></div>
+  </div>
+</div>
+
+<!-- ══════════════════════════════════════════════
+     SLIDE 2 — Report Structure
+══════════════════════════════════════════════ -->
+<div class="slide" id="s2">
+  <div class="slide-num-badge">02 / 19</div>
+  <div class="slide-header">
+    <div class="slide-eyebrow">Report Structure</div>
+    <h2 class="slide-title"><span class="slide-title-dot"></span>Overview</h2>
+  </div>
+  <div class="slide-body">
+    <div class="card-grid card-grid-3">
+      <div class="card">
+        <div class="card-badge">Part 01</div>
+        <div class="card-title">5 Universal Industry Pain Points &amp; Standardized AI Solutions</div>
+        <div class="card-body">Cross-sector challenges: document automation, demand forecasting, intelligent customer service, risk control, and data-driven decision support.</div>
+      </div>
+      <div class="card orange">
+        <div class="card-badge orange">Part 02</div>
+        <div class="card-title">6 Industry-Specific Pain Points, Tailored Solutions &amp; Cases</div>
+        <div class="card-body">International Trade · Manufacturing · Finance · Shipping &amp; Logistics · Real Estate · HR — proprietary pain points + implementation rules + benchmark cases + quantifiable ROI.</div>
+      </div>
+      <div class="card green">
+        <div class="card-badge green">Part 03</div>
+        <div class="card-title">Implementation Cost &amp; ROI General Reference</div>
+        <div class="card-body">Cost ranges for SaaS subscription vs. on-premises deployment, payback periods, and recommended priority scenarios.</div>
+      </div>
+    </div>
+    <div style="margin-top:20px">
+      <div class="solution-box">
+        <div class="solution-label">Three AI Implementation Forms</div>
+        <div style="display:flex;gap:16px;flex-wrap:wrap;margin-top:4px">
+          <div style="display:flex;align-items:center;gap:8px;font-size:12.5px;color:var(--text-secondary)">
+            <span style="width:8px;height:8px;border-radius:50%;background:var(--accent);display:inline-block"></span>
+            Generative Large Language Models (LLMs)
+          </div>
+          <div style="display:flex;align-items:center;gap:8px;font-size:12.5px;color:var(--text-secondary)">
+            <span style="width:8px;height:8px;border-radius:50%;background:var(--accent2);display:inline-block"></span>
+            Traditional Machine Learning
+          </div>
+          <div style="display:flex;align-items:center;gap:8px;font-size:12.5px;color:var(--text-secondary)">
+            <span style="width:8px;height:8px;border-radius:50%;background:var(--accent5);display:inline-block"></span>
+            AI Agents / RPA + AI
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ══════════════════════════════════════════════
+     SLIDE 3 — SECTION BREAK: Part 1
+══════════════════════════════════════════════ -->
+<div class="slide slide-section" id="s3">
+  <div class="section-number">01</div>
+  <div class="section-line"></div>
+  <div class="section-eyebrow">Universal Pain Points</div>
+  <h2 class="section-title">Five Universal Industry Pain Points<br>&amp; Standardized AI Solutions</h2>
+  <p class="section-desc">The following pain points and solutions apply across all industries and represent the highest-priority entry points for enterprise AI transformation.</p>
+  <div class="cover-grid"></div>
+</div>
+
+<!-- ══════════════════════════════════════════════
+     SLIDE 4 — Pain Points 1 & 2
+══════════════════════════════════════════════ -->
+<div class="slide" id="s4">
+  <div class="slide-num-badge">04 / 19</div>
+  <div class="slide-header">
+    <div class="slide-eyebrow">Universal Pain Points 01 &amp; 02</div>
+    <h2 class="slide-title"><span class="slide-title-dot"></span>Inefficient Paperwork · Inaccurate Demand Forecasting</h2>
+  </div>
+  <div class="slide-body">
+    <div class="row">
+      <div class="col">
+        <div class="card">
+          <div class="card-badge">Pain Point 01</div>
+          <div class="card-title">📄 Massive Repetitive Paperwork Drives Up Labor Costs</div>
+          <div class="card-body">Manual data entry is slow and error-prone; labor costs erode margins.</div>
+          <div class="solution-box" style="margin-top:12px">
+            <div class="solution-label">AI Solution</div>
+            <div class="solution-text">Deploy OCR + large document-parsing LLMs + RPA Digital Workers (AI Agents) to auto-identify invoices, contracts, customs declarations, expense reports, HR files, and engineering drawings. Perform structured entry, logic verification, and archiving. Generative AI drafts standard contracts, official letters, and reports in bulk.</div>
+          </div>
+          <div class="case-box">
+            <div class="case-label">Cross-industry Case · Yonyou BIP</div>
+            <div class="case-text">Expense audit cycle: <strong style="color:#fff">5 working days → 8 hours</strong>. Document entry error rate: 12% → <strong style="color:var(--accent2)">0.8%</strong>. Mid-sized enterprises save the equivalent of 3–5 finance staff annually. AI contract parsing handles 10,000+ contracts/month, cutting manual workload by <strong style="color:var(--accent2)">70%</strong>.</div>
+          </div>
+        </div>
+      </div>
+      <div class="col">
+        <div class="card orange">
+          <div class="card-badge orange">Pain Point 02</div>
+          <div class="card-title">📦 Experience-Based Forecasting Leads to Inventory Imbalance</div>
+          <div class="card-body">Overstock, stockouts, misallocated inventory, and heavy capital tie-up.</div>
+          <div class="solution-box" style="margin-top:12px;border-color:rgba(255,166,87,.25);background:linear-gradient(135deg,rgba(255,166,87,.07),rgba(255,166,87,.02))">
+            <div class="solution-label" style="color:var(--accent5)">AI Solution</div>
+            <div class="solution-text">Deploy time-series ML models (TFT/LSTM) + multi-source data fusion models integrating historical orders, industry sentiment, seasonal factors, competitor data, macro indicators, and upstream/downstream supply chain data. Dynamically forecast weekly/monthly demand and auto-generate safety stock thresholds and replenishment plans.</div>
+          </div>
+          <div class="case-box">
+            <div class="case-label" style="color:var(--accent5)">Cross-industry Case · AI Demand Forecasting SaaS</div>
+            <div class="case-text">Adopted by Yiwu commodity traders, home appliance manufacturers, and building material procurement teams. Inventory turnover days: <strong style="color:#fff">42 → 19 days</strong>. Slow-moving inventory impairment losses down <strong style="color:var(--accent2)">45%</strong>.</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ══════════════════════════════════════════════
+     SLIDE 5 — Pain Points 3 & 4
+══════════════════════════════════════════════ -->
+<div class="slide" id="s5">
+  <div class="slide-num-badge">05 / 19</div>
+  <div class="slide-header">
+    <div class="slide-eyebrow">Universal Pain Points 03 &amp; 04</div>
+    <h2 class="slide-title"><span class="slide-title-dot purple"></span>Fragmented Customer Service · High-Cost Manual Risk Control</h2>
+  </div>
+  <div class="slide-body">
+    <div class="row">
+      <div class="col">
+        <div class="card purple">
+          <div class="card-badge purple">Pain Point 03</div>
+          <div class="card-title">🤖 Scattered Inquiries — No 7×24 Coverage</div>
+          <div class="card-body">Overstaffed basic customer service teams; high-intent leads lost to slow follow-up.</div>
+          <div class="solution-box" style="margin-top:12px;border-color:rgba(210,168,255,.25);background:linear-gradient(135deg,rgba(210,168,255,.07),rgba(210,168,255,.02))">
+            <div class="solution-label" style="color:var(--accent4)">AI Solution</div>
+            <div class="solution-text">Deploy multimodal LLM-powered intelligent customer service Agents to handle all-channel FAQs, auto-classify leads, initiate outbound follow-up calls, and transfer high-intent customers to human agents. Generative AI auto-generates customized business letters and property consultation scripts.</div>
+          </div>
+          <div class="case-box">
+            <div class="case-label" style="color:var(--accent4)">Case · Taji Futern Global AI Sales Agent</div>
+            <div class="case-text">Serving foreign trade, manufacturing equipment, real estate investment, and financial services. Lead screening efficiency up <strong style="color:#fff">6×</strong>. Email open rate: 6% → <strong style="color:var(--accent2)">15%</strong>. Business inquiries tripled.</div>
+          </div>
+        </div>
+      </div>
+      <div class="col">
+        <div class="card red">
+          <div class="card-badge" style="background:rgba(247,129,102,.12);color:var(--accent3)">Pain Point 04</div>
+          <div class="card-title">🛡 Manual Risk Control — High Fraud &amp; Bad Debt Exposure</div>
+          <div class="card-body">Compliance gaps go undetected; post-incident accountability is costly.</div>
+          <div class="solution-box" style="margin-top:12px;border-color:rgba(247,129,102,.25);background:linear-gradient(135deg,rgba(247,129,102,.07),rgba(247,129,102,.02))">
+            <div class="solution-label" style="color:var(--accent3)">AI Solution</div>
+            <div class="solution-text">Implement risk control models combining graph neural networks, rule engines, and federated learning. Real-time monitoring of transactions, contract performance, supply chain payments, and abnormal customer qualifications. Pre-risk rating → in-process anomaly alerts → post-event analysis, all compliant with industry regulations.</div>
+          </div>
+          <div class="case-box">
+            <div class="case-label" style="color:var(--accent3)">Case · Group-level Integrated AI Risk Control Platform</div>
+            <div class="case-text">Shared across trade, real estate, factoring, and manufacturing subsidiaries. A/R overdue early-warning accuracy: <strong style="color:#fff">89%</strong>. Bad debt ratio down <strong style="color:var(--accent2)">32%</strong> year-on-year.</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ══════════════════════════════════════════════
+     SLIDE 6 — Pain Point 5
+══════════════════════════════════════════════ -->
+<div class="slide" id="s6">
+  <div class="slide-num-badge">06 / 19</div>
+  <div class="slide-header">
+    <div class="slide-eyebrow">Universal Pain Point 05</div>
+    <h2 class="slide-title"><span class="slide-title-dot green"></span>Severe Data Silos — Management Lacks Real-Time Decision Support</h2>
+  </div>
+  <div class="slide-body">
+    <div class="row">
+      <div class="col" style="flex:1.2">
+        <div class="card green" style="height:100%">
+          <div class="card-badge green">Pain Point 05</div>
+          <div class="card-title">📊 Data Silos Make Reporting Time-Consuming</div>
+          <div class="card-body" style="margin-bottom:14px">Management lacks real-time data; heavy IT dependency; long reporting cycles.</div>
+          <div class="solution-box" style="border-color:rgba(63,185,80,.25);background:linear-gradient(135deg,rgba(63,185,80,.07),rgba(63,185,80,.02))">
+            <div class="solution-label" style="color:var(--accent2)">AI Solution</div>
+            <div class="solution-text">Deploy ChatBI natural language analytics LLMs connected to ERP, CRM, WMS, and attendance systems. Auto-generate reports, visual dashboards, and operational diagnostic analyses based on managers' verbal queries — no IT support needed for data extraction.</div>
+          </div>
+          <div class="case-box" style="margin-top:10px">
+            <div class="case-label" style="color:var(--accent2)">Case · Diversified Conglomerate AI Conversational BI</div>
+            <div class="case-text">Spanning manufacturing, trade, and real estate segments. Monthly operational reports: <strong style="color:#fff">7 manual working days → 1 hour</strong> for full AI analysis. Data analyst headcount reduced by <strong style="color:var(--accent2)">50%</strong>.</div>
+          </div>
+        </div>
+      </div>
+      <div class="col">
+        <div style="background:var(--bg-card);border:1px solid var(--border);border-radius:10px;padding:20px;height:100%">
+          <div style="font-size:12px;letter-spacing:1px;text-transform:uppercase;color:var(--text-muted);margin-bottom:16px">5 Universal Pain Points — Impact Snapshot</div>
+          <div style="display:flex;flex-direction:column;gap:10px">
+            <div style="display:flex;align-items:center;gap:10px">
+              <div style="font-size:11px;color:var(--text-muted);width:120px;flex-shrink:0">Doc. Automation</div>
+              <div style="flex:1;height:6px;background:rgba(255,255,255,.05);border-radius:3px;overflow:hidden">
+                <div style="width:88%;height:100%;background:var(--accent);border-radius:3px"></div>
+              </div>
+              <div style="font-size:11px;color:var(--accent);width:44px;text-align:right">-70%</div>
+            </div>
+            <div style="display:flex;align-items:center;gap:10px">
+              <div style="font-size:11px;color:var(--text-muted);width:120px;flex-shrink:0">Forecast Accuracy</div>
+              <div style="flex:1;height:6px;background:rgba(255,255,255,.05);border-radius:3px;overflow:hidden">
+                <div style="width:75%;height:100%;background:var(--accent5);border-radius:3px"></div>
+              </div>
+              <div style="font-size:11px;color:var(--accent5);width:44px;text-align:right">-45%</div>
+            </div>
+            <div style="display:flex;align-items:center;gap:10px">
+              <div style="font-size:11px;color:var(--text-muted);width:120px;flex-shrink:0">Lead Conversion</div>
+              <div style="flex:1;height:6px;background:rgba(255,255,255,.05);border-radius:3px;overflow:hidden">
+                <div style="width:95%;height:100%;background:var(--accent4);border-radius:3px"></div>
+              </div>
+              <div style="font-size:11px;color:var(--accent4);width:44px;text-align:right">×6</div>
+            </div>
+            <div style="display:flex;align-items:center;gap:10px">
+              <div style="font-size:11px;color:var(--text-muted);width:120px;flex-shrink:0">Bad Debt Rate</div>
+              <div style="flex:1;height:6px;background:rgba(255,255,255,.05);border-radius:3px;overflow:hidden">
+                <div style="width:64%;height:100%;background:var(--accent3);border-radius:3px"></div>
+              </div>
+              <div style="font-size:11px;color:var(--accent3);width:44px;text-align:right">-32%</div>
+            </div>
+            <div style="display:flex;align-items:center;gap:10px">
+              <div style="font-size:11px;color:var(--text-muted);width:120px;flex-shrink:0">Reporting Speed</div>
+              <div style="flex:1;height:6px;background:rgba(255,255,255,.05);border-radius:3px;overflow:hidden">
+                <div style="width:99%;height:100%;background:var(--accent2);border-radius:3px"></div>
+              </div>
+              <div style="font-size:11px;color:var(--accent2);width:44px;text-align:right">×42</div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ══════════════════════════════════════════════
+     SLIDE 7 — SECTION BREAK: Part 2
+══════════════════════════════════════════════ -->
+<div class="slide slide-section" id="s7">
+  <div class="section-number">02</div>
+  <div class="section-line" style="background:var(--accent5)"></div>
+  <div class="section-eyebrow" style="color:var(--accent5)">Industry-Specific Solutions</div>
+  <h2 class="section-title">Six Industry-Specific Pain Points,<br>Tailored Solutions &amp; Benchmark Cases</h2>
+  <p class="section-desc">International Trade · Manufacturing · Finance · Shipping &amp; Logistics · Real Estate · Human Resources</p>
+  <div class="cover-grid"></div>
+</div>
+
+<!-- ══════════════════════════════════════════════
+     SLIDE 8 — International Trade: Pain Points
+══════════════════════════════════════════════ -->
+<div class="slide" id="s8">
+  <div class="slide-num-badge">08 / 19</div>
+  <div class="slide-header">
+    <div class="slide-eyebrow">Industry I · International Trade</div>
+    <h2 class="slide-title">
+      <span style="width:32px;height:32px;border-radius:8px;background:rgba(88,166,255,.15);display:flex;align-items:center;justify-content:center;font-size:16px;flex-shrink:0">🌐</span>
+      International Trade — Five Sector-Specific Pain Points
+    </h2>
+  </div>
+  <div class="slide-body">
+    <div class="pain-list">
+      <div class="pain-item">
+        <div class="pain-num">1</div>
+        <div class="pain-content">
+          <div class="title">Blind Overseas Client Development</div>
+          <div class="detail">Manually screening vast customs and social media data is extremely inefficient; generic outreach emails yield low open rates.</div>
+        </div>
+      </div>
+      <div class="pain-item">
+        <div class="pain-num">2</div>
+        <div class="pain-content">
+          <div class="title">Complex Customs Documents &amp; High Classification Barriers</div>
+          <div class="detail">Intricate declarations, commodity inspection, and tax rebate materials; misclassification leads to cargo detention and fines.</div>
+        </div>
+      </div>
+      <div class="pain-item">
+        <div class="pain-num">3</div>
+        <div class="pain-content">
+          <div class="title">Volatile International Freight Rates, Exchange Rates &amp; Geopolitics</div>
+          <div class="detail">Delayed manual pricing causes shipping and currency exchange losses that erode profits.</div>
+        </div>
+      </div>
+      <div class="pain-item">
+        <div class="pain-num">4</div>
+        <div class="pain-content">
+          <div class="title">Long Cross-Border Supply Chains — Overseas Warehouse Mismatch</div>
+          <div class="detail">Simultaneous overstock of slow-moving goods and stockouts of bestsellers.</div>
+        </div>
+      </div>
+      <div class="pain-item">
+        <div class="pain-num">5</div>
+        <div class="pain-content">
+          <div class="title">Language Barriers &amp; Time Zone Delays Hurt Customer Response</div>
+          <div class="detail">High risk of order loss due to delayed complaint handling.</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ══════════════════════════════════════════════
+     SLIDE 9 — International Trade: Cases
+══════════════════════════════════════════════ -->
+<div class="slide" id="s9">
+  <div class="slide-num-badge">09 / 19</div>
+  <div class="slide-header">
+    <div class="slide-eyebrow">Industry I · Case Studies</div>
+    <h2 class="slide-title"><span class="slide-title-dot"></span>International Trade — Tiered AI Solutions &amp; Benchmark Cases</h2>
+  </div>
+  <div class="slide-body">
+    <div class="card-grid card-grid-3">
+      <div class="card">
+        <div class="card-badge">Intelligent Client Development</div>
+        <div class="card-title">Alibaba OKKI AI Reach Foreign Trade Agent</div>
+        <div class="card-body">Shenzhen lock manufacturer. AI crawls global business data, procurement tenders, and overseas social media, filtering 20,000+ qualified buyers in 10 seconds. Auto-generates personalized multilingual outreach emails.</div>
+        <div class="metrics">
+          <div class="metric">Inquiries ↑300%</div>
+          <div class="metric green">Per-capita productivity ×6</div>
+        </div>
+      </div>
+      <div class="card">
+        <div class="card-badge">Trend Forecasting + Product Design</div>
+        <div class="card-title">Quanzhou Footwear Factory AI Trend Prediction</div>
+        <div class="card-body">AI analyzes TikTok/Amazon/Google Search to accurately predict minimalist fashion trends in Europe and America. Design cycle: 30 days → 2 days. Flagship wholesale margin reached 92%.</div>
+        <div class="metrics">
+          <div class="metric">Design cycle -93%</div>
+          <div class="metric green">New annual revenue tens of millions</div>
+        </div>
+      </div>
+      <div class="card orange">
+        <div class="card-badge orange">Document Automation</div>
+        <div class="card-title">Shanghai Meihua Cross-Border Trade AI Document Platform</div>
+        <div class="card-body">Auto-identifies customs declarations, letters of credit, and packing lists. HS code classification accuracy: 97%. Auto-generates tax rebate applications.</div>
+        <div class="metrics">
+          <div class="metric orange">200+ documents/day</div>
+          <div class="metric green">Tax rebate cycle -40%</div>
+        </div>
+      </div>
+    </div>
+    <div class="case-box" style="margin-top:14px">
+      <div class="case-label">SHEIN Cross-Border Supply Chain AI System · Freight Rate Forecasting</div>
+      <div class="case-text">Real-time data on carrier rates, port congestion, tariff policies, and FX to predict freight hikes and lock shipping spaces in advance. Air freight costs down <strong style="color:#fff">55%</strong>. Overall logistics costs down <strong style="color:var(--accent2)">20%</strong>. Hot-product replenishment cycle compressed from 45 days to <strong style="color:#fff">7 days</strong>.</div>
+    </div>
+  </div>
+</div>
+
+<!-- ══════════════════════════════════════════════
+     SLIDE 10 — Manufacturing: Pain Points
+══════════════════════════════════════════════ -->
+<div class="slide" id="s10">
+  <div class="slide-num-badge">10 / 19</div>
+  <div class="slide-header">
+    <div class="slide-eyebrow">Industry II · Manufacturing</div>
+    <h2 class="slide-title">
+      <span style="width:32px;height:32px;border-radius:8px;background:rgba(255,166,87,.15);display:flex;align-items:center;justify-content:center;font-size:16px;flex-shrink:0">🏭</span>
+      Manufacturing — Five Sector-Specific Pain Points
+    </h2>
+  </div>
+  <div class="slide-body">
+    <div class="pain-list">
+      <div class="pain-item">
+        <div class="pain-num">1</div>
+        <div class="pain-content">
+          <div class="title">Frequent Unplanned Equipment Downtime</div>
+          <div class="detail">Manual inspections miss latent faults; high maintenance costs and heavy production line losses.</div>
+        </div>
+      </div>
+      <div class="pain-item">
+        <div class="pain-num">2</div>
+        <div class="pain-content">
+          <div class="title">Quality Inspection Relies Entirely on Manual Visual Checks</div>
+          <div class="detail">Fatigue causes missed defects, leading to defective products, customer complaints, and compensation claims.</div>
+        </div>
+      </div>
+      <div class="pain-item">
+        <div class="pain-num">3</div>
+        <div class="pain-content">
+          <div class="title">Frequent Order Changes Make Experience-Based Scheduling Error-Prone</div>
+          <div class="detail">Material mismatches, idle production capacity, or overloaded lines.</div>
+        </div>
+      </div>
+      <div class="pain-item">
+        <div class="pain-num">4</div>
+        <div class="pain-content">
+          <div class="title">Loose Energy Management — Severe Water, Electricity &amp; Gas Waste</div>
+          <div class="detail">High energy consumption inflates unit costs and weakens competitiveness.</div>
+        </div>
+      </div>
+      <div class="pain-item">
+        <div class="pain-num">5</div>
+        <div class="pain-content">
+          <div class="title">Long R&amp;D Simulation Cycles &amp; High Prototyping Costs</div>
+          <div class="detail">Product iteration speed is limited; market windows are compressed.</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ══════════════════════════════════════════════
+     SLIDE 11 — Manufacturing: Cases
+══════════════════════════════════════════════ -->
+<div class="slide" id="s11">
+  <div class="slide-num-badge">11 / 19</div>
+  <div class="slide-header">
+    <div class="slide-eyebrow">Industry II · Case Studies</div>
+    <h2 class="slide-title"><span class="slide-title-dot orange"></span>Manufacturing — Tiered AI Solutions &amp; Benchmark Cases</h2>
+  </div>
+  <div class="slide-body">
+    <div class="card-grid card-grid-2">
+      <div class="card">
+        <div class="card-badge">Predictive Maintenance</div>
+        <div class="card-title">Sany Heavy Industry · Construction Machinery Workshops</div>
+        <div class="card-body">Vibration and temperature sensors installed on equipment. AI analyzes operational data to predict failures 7–15 days in advance.</div>
+        <div class="metrics">
+          <div class="metric">Unplanned downtime -52%</div>
+          <div class="metric green">OEE ↑21%</div>
+          <div class="metric orange">Annual maintenance cost -38%</div>
+        </div>
+      </div>
+      <div class="card orange">
+        <div class="card-badge orange">Visual Quality Inspection</div>
+        <div class="card-title">Foxconn AOI Circuit Board AI Visual Inspection</div>
+        <div class="card-body">Industrial cameras + AI algorithms detect defects at 0.01mm precision. 20-person inspection team reduced to 3 staff for spot checks.</div>
+        <div class="metrics">
+          <div class="metric">Misjudgment rate 0.1%</div>
+          <div class="metric green">Inspection efficiency ↑50%</div>
+        </div>
+      </div>
+      <div class="card green">
+        <div class="card-badge green">Dynamic Production Scheduling</div>
+        <div class="card-title">Domestic Auto Parts Manufacturer AI Scheduling</div>
+        <div class="card-body">Reschedules entire production plans within 10 minutes upon sudden material shortages or equipment failures.</div>
+        <div class="metrics">
+          <div class="metric">Equipment utilization 75%→88%</div>
+          <div class="metric green">Order delay rate -22%</div>
+        </div>
+      </div>
+      <div class="card purple">
+        <div class="card-badge purple">Energy Optimization + Digital Twin</div>
+        <div class="card-title">Schneider Electric Shanghai Smart Factory</div>
+        <div class="card-body">Digital twin + AI flexible production lines support rapid multi-product switching. Steel plant AI energy system cuts power consumption per ton of steel by 6%.</div>
+        <div class="metrics">
+          <div class="metric purple">New product dev cycle -63%</div>
+          <div class="metric green">Annual electricity savings ¥12M+</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ══════════════════════════════════════════════
+     SLIDE 12 — Finance: Pain Points + Cases
+══════════════════════════════════════════════ -->
+<div class="slide" id="s12">
+  <div class="slide-num-badge">12 / 19</div>
+  <div class="slide-header">
+    <div class="slide-eyebrow">Industry III · Finance</div>
+    <h2 class="slide-title">
+      <span style="width:32px;height:32px;border-radius:8px;background:rgba(63,185,80,.15);display:flex;align-items:center;justify-content:center;font-size:16px;flex-shrink:0">🏦</span>
+      Financial Industry — Pain Points &amp; AI Solutions
+    </h2>
+  </div>
+  <div class="slide-body">
+    <div class="card-grid card-grid-3">
+      <div class="card">
+        <div class="card-badge">Intelligent Credit Approval</div>
+        <div class="card-title">Dongying Bank AI Credit System for SMEs</div>
+        <div class="card-body">AI automatically verifies credit records, business information, and cash flow. Loan approval: 3 days → a few hours, with instant disbursement for online quick loans.</div>
+        <div class="metrics">
+          <div class="metric green">¥2B new loans in 6 months</div>
+          <div class="metric">Customer acquisition cost -65%</div>
+        </div>
+      </div>
+      <div class="card green">
+        <div class="card-badge green">AI Investment Research + Wealth Management</div>
+        <div class="card-title">China Merchants Bank CMBC Think Tank AI</div>
+        <div class="card-body">Integrates market-wide financial reports, announcements, and industry news; generates research summaries in 5 seconds. AI robo-advisor delivers 5,000+ personalized asset allocation plans daily.</div>
+        <div class="metrics">
+          <div class="metric">Replaced 26M working hours/year</div>
+          <div class="metric green">Customer churn rate -41%</div>
+        </div>
+      </div>
+      <div class="card orange">
+        <div class="card-badge orange">Insurance Claims + Anti-Fraud</div>
+        <div class="card-title">Ping An Auto Insurance AI Damage Assessment</div>
+        <div class="card-body">Car owners upload accident photos; AI visually identifies damage and auto-calculates compensation. Small claims credited in 5 minutes.</div>
+        <div class="metrics">
+          <div class="metric orange">On-site inspectors -60%</div>
+          <div class="metric green">Fraud identification accuracy 91%</div>
+        </div>
+      </div>
+    </div>
+    <div style="margin-top:14px;background:var(--bg-card);border:1px solid var(--border);border-radius:8px;padding:16px 20px">
+      <div style="font-size:11px;letter-spacing:1px;text-transform:uppercase;color:var(--text-muted);margin-bottom:10px">Finance Industry — Five Key Pain Points</div>
+      <div style="display:flex;gap:10px;flex-wrap:wrap">
+        <span style="background:rgba(255,255,255,.04);border:1px solid var(--border);border-radius:6px;padding:5px 12px;font-size:11.5px;color:var(--text-secondary)">Credit approval 3–7 days</span>
+        <span style="background:rgba(255,255,255,.04);border:1px solid var(--border);border-radius:6px;padding:5px 12px;font-size:11.5px;color:var(--text-secondary)">Covert card / loan fraud</span>
+        <span style="background:rgba(255,255,255,.04);border:1px solid var(--border);border-radius:6px;padding:5px 12px;font-size:11.5px;color:var(--text-secondary)">Research reports take ≥3 days</span>
+        <span style="background:rgba(255,255,255,.04);border:1px solid var(--border);border-radius:6px;padding:5px 12px;font-size:11.5px;color:var(--text-secondary)">Homogenized wealth management</span>
+        <span style="background:rgba(255,255,255,.04);border:1px solid var(--border);border-radius:6px;padding:5px 12px;font-size:11.5px;color:var(--text-secondary)">High underwriting &amp; claims costs</span>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ══════════════════════════════════════════════
+     SLIDE 13 — Shipping & Logistics
+══════════════════════════════════════════════ -->
+<div class="slide" id="s13">
+  <div class="slide-num-badge">13 / 19</div>
+  <div class="slide-header">
+    <div class="slide-eyebrow">Industry IV · Shipping &amp; Logistics</div>
+    <h2 class="slide-title">
+      <span style="width:32px;height:32px;border-radius:8px;background:rgba(56,211,203,.15);display:flex;align-items:center;justify-content:center;font-size:16px;flex-shrink:0">🚢</span>
+      Shipping, Port &amp; Logistics — Pain Points &amp; AI Solutions
+    </h2>
+  </div>
+  <div class="slide-body">
+    <div class="row">
+      <div class="col">
+        <div class="pain-list">
+          <div class="pain-item">
+            <div class="pain-num">1</div>
+            <div class="pain-content">
+              <div class="title">Manual Route Planning — High Empty Load Rate (industry avg. &gt;35%)</div>
+            </div>
+          </div>
+          <div class="pain-item">
+            <div class="pain-num">2</div>
+            <div class="pain-content">
+              <div class="title">Inefficient Port Cargo Handling &amp; Inspection — High Demurrage Fees</div>
+            </div>
+          </div>
+          <div class="pain-item">
+            <div class="pain-num">3</div>
+            <div class="pain-content">
+              <div class="title">No Visibility into In-Transit Cargo Status — Difficult to Investigate Sea Damage or Theft</div>
+            </div>
+          </div>
+          <div class="pain-item">
+            <div class="pain-num">4</div>
+            <div class="pain-content">
+              <div class="title">Loose Fuel Consumption Management</div>
+            </div>
+          </div>
+          <div class="pain-item">
+            <div class="pain-num">5</div>
+            <div class="pain-content">
+              <div class="title">Sharp Cyclical Freight Rate Swings — Manual Forecasts Highly Inaccurate</div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="col">
+        <div class="card" style="height:auto;margin-bottom:12px">
+          <div class="card-badge">Dynamic Stowage + Route Optimization</div>
+          <div class="card-title">UPS Global Ocean &amp; Land Transport AI Dispatching</div>
+          <div class="card-body">Real-time global weather, port congestion, and fuel price data to dynamically adjust vessel and truck routes.</div>
+          <div class="metrics">
+            <div class="metric">Annual fuel savings $450K</div>
+            <div class="metric green">On-time rate 85%→95%</div>
+            <div class="metric orange">Year-1 ROI 265%</div>
+          </div>
+        </div>
+        <div class="card green">
+          <div class="card-badge green">AI Unmanned Port Gate</div>
+          <div class="card-title">Shanghai Port AI Unmanned Terminal</div>
+          <div class="card-body">Vision tech auto-identifies container numbers, seals, and damage. Gate clearance: 20 min → 40 seconds per container.</div>
+          <div class="metrics">
+            <div class="metric">Terminal cargo handlers -55%</div>
+            <div class="metric green">Annual throughput efficiency ↑30%</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ══════════════════════════════════════════════
+     SLIDE 14 — Real Estate
+══════════════════════════════════════════════ -->
+<div class="slide" id="s14">
+  <div class="slide-num-badge">14 / 19</div>
+  <div class="slide-header">
+    <div class="slide-eyebrow">Industry V · Real Estate</div>
+    <h2 class="slide-title">
+      <span style="width:32px;height:32px;border-radius:8px;background:rgba(247,129,102,.15);display:flex;align-items:center;justify-content:center;font-size:16px;flex-shrink:0">🏗</span>
+      Real Estate — Pain Points &amp; AI Solutions
+    </h2>
+  </div>
+  <div class="slide-body">
+    <div class="card-grid card-grid-3">
+      <div class="card red">
+        <div class="card-badge" style="background:rgba(247,129,102,.12);color:var(--accent3)">Engineering Settlement</div>
+        <div class="card-title">Leading Developer AI Quantity Calculation &amp; Contract Risk Control</div>
+        <div class="card-body">AI auto-calculates engineering quantities from construction drawings and verifies pricing against contracts and visas.</div>
+        <div class="metrics">
+          <div class="metric orange">Settlement cycle 6 mo. → 2 mo.</div>
+          <div class="metric green">Cost disputes -42%</div>
+          <div class="metric">Cost audit staff -40%</div>
+        </div>
+      </div>
+      <div class="card">
+        <div class="card-badge">Precision Marketing</div>
+        <div class="card-title">Country Garden AI Customer Acquisition Agent</div>
+        <div class="card-body">AI analyzes regional demographics, housing demand, and competitor projects to deliver targeted feed ads. AI property consultants provide 7×24 online consultation and screen prospects.</div>
+        <div class="metrics">
+          <div class="metric">Marketing ROI ↑58%</div>
+          <div class="metric green">Invalid ad spend -35%</div>
+        </div>
+      </div>
+      <div class="card green">
+        <div class="card-badge green">Safety Monitoring</div>
+        <div class="card-title">CSCEC Ongoing Project AI Video Surveillance</div>
+        <div class="card-body">AI cameras detect violations such as missing hard hats, object-throwing from heights, and illegal hot work; real-time pop-up alerts issued.</div>
+        <div class="metrics">
+          <div class="metric">Hazard inspection efficiency ↑90%</div>
+          <div class="metric green">Work-related injuries YoY -61%</div>
+        </div>
+      </div>
+    </div>
+    <div style="margin-top:14px;background:var(--bg-card);border:1px solid var(--border);border-radius:8px;padding:16px">
+      <div style="font-size:11px;letter-spacing:1px;text-transform:uppercase;color:var(--text-muted);margin-bottom:10px">Additional Pain Points &amp; AI Directions</div>
+      <div style="display:flex;gap:14px;flex-wrap:wrap">
+        <div style="font-size:12px;color:var(--text-secondary)">🏪 <strong style="color:var(--text-primary)">Commercial Footfall Analytics</strong> — AI optimizes retail layout and reduces vacancy rates</div>
+        <div style="font-size:12px;color:var(--text-secondary)">🔧 <strong style="color:var(--text-primary)">Intelligent Property Work Order Dispatch</strong> — AI allocation reduces owner complaint rates</div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ══════════════════════════════════════════════
+     SLIDE 15 — Human Resources
+══════════════════════════════════════════════ -->
+<div class="slide" id="s15">
+  <div class="slide-num-badge">15 / 19</div>
+  <div class="slide-header">
+    <div class="slide-eyebrow">Industry VI · Human Resources</div>
+    <h2 class="slide-title">
+      <span style="width:32px;height:32px;border-radius:8px;background:rgba(210,168,255,.15);display:flex;align-items:center;justify-content:center;font-size:16px;flex-shrink:0">👥</span>
+      Human Resources — Pain Points &amp; Benchmark Cases
+    </h2>
+  </div>
+  <div class="slide-body">
+    <div class="row">
+      <div class="col">
+        <div class="pain-list" style="gap:8px">
+          <div class="pain-item">
+            <div class="pain-num" style="background:linear-gradient(135deg,var(--accent4),#9b59b6)">1</div>
+            <div class="pain-content">
+              <div class="title">Manual Resume Screening Is Time-Consuming — 70% of HR Time on Initial Review</div>
+            </div>
+          </div>
+          <div class="pain-item">
+            <div class="pain-num" style="background:linear-gradient(135deg,var(--accent4),#9b59b6)">2</div>
+            <div class="pain-content">
+              <div class="title">Payroll Requires Cross-System Reconciliation — Month-End Takes 5–7 Days</div>
+            </div>
+          </div>
+          <div class="pain-item">
+            <div class="pain-num" style="background:linear-gradient(135deg,var(--accent4),#9b59b6)">3</div>
+            <div class="pain-content">
+              <div class="title">Repeated Onboarding Material Production — Training Effectiveness Not Quantifiable</div>
+            </div>
+          </div>
+          <div class="pain-item">
+            <div class="pain-num" style="background:linear-gradient(135deg,var(--accent4),#9b59b6)">4</div>
+            <div class="pain-content">
+              <div class="title">Delayed Turnover Warnings — Core Talent Leaves Without Prior Intervention</div>
+            </div>
+          </div>
+          <div class="pain-item">
+            <div class="pain-num" style="background:linear-gradient(135deg,var(--accent4),#9b59b6)">5</div>
+            <div class="pain-content">
+              <div class="title">Subjective Performance Scoring Introduces Bias and Fairness Concerns</div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="col">
+        <div class="card purple" style="margin-bottom:12px">
+          <div class="card-badge purple">AI Resume Screening + Initial Interview</div>
+          <div class="card-title">Xinrenxinshi AI Recruitment Engine</div>
+          <div class="card-body">Deployed by 500 chain convenience store enterprises. AI parses resumes, auto-matches job descriptions, and conducts voice-based initial interviews.</div>
+          <div class="metrics">
+            <div class="metric purple">Initial screening: 7 days → half a day</div>
+            <div class="metric green">Recruitment cycle -38%</div>
+          </div>
+        </div>
+        <div class="card green">
+          <div class="card-badge green">AI Employee Profiling + Attrition Prediction</div>
+          <div class="card-title">Manufacturing Group HR AI Platform</div>
+          <div class="card-body">AI builds employee profiles from attendance, performance, internal transfers, and leave data, issuing early warnings for high-attrition-risk core staff 3 months in advance.</div>
+          <div class="metrics">
+            <div class="metric">Key talent turnover rate -33%</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ══════════════════════════════════════════════
+     SLIDE 16 — Industry Comparison Table
+══════════════════════════════════════════════ -->
+<div class="slide" id="s16">
+  <div class="slide-num-badge">16 / 19</div>
+  <div class="slide-header">
+    <div class="slide-eyebrow">Industry Comparison</div>
+    <h2 class="slide-title"><span class="slide-title-dot orange"></span>Six Industries — AI ROI Comparison Overview</h2>
+  </div>
+  <div class="slide-body">
+    <table class="data-table">
+      <thead>
+        <tr>
+          <th>Industry</th>
+          <th>Core AI Applications</th>
+          <th>Representative Cases</th>
+          <th>Key Outcomes</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td>🌐 International Trade</td>
+          <td>Intelligent client development, document automation, freight rate forecasting</td>
+          <td>Alibaba OKKI, Shanghai Meihua, SHEIN</td>
+          <td class="highlight-cell">Inquiries ↑300%, logistics cost -20%</td>
+        </tr>
+        <tr>
+          <td>🏭 Manufacturing</td>
+          <td>Predictive maintenance, visual inspection, dynamic scheduling, digital twin</td>
+          <td>Sany Heavy Industry, Foxconn, Schneider</td>
+          <td class="highlight-cell">Downtime -52%, dev cycle -63%</td>
+        </tr>
+        <tr>
+          <td>🏦 Finance</td>
+          <td>AI credit approval, investment research, insurance claims &amp; anti-fraud</td>
+          <td>Dongying Bank, CMB, Ping An</td>
+          <td class="highlight-cell">Approval in hours, fraud ID 91%</td>
+        </tr>
+        <tr>
+          <td>🚢 Shipping &amp; Logistics</td>
+          <td>Route optimization, unmanned terminals, freight rate forecasting</td>
+          <td>UPS, Shanghai Port, Flexport</td>
+          <td class="highlight-cell">On-time rate ↑10pt, throughput ↑30%</td>
+        </tr>
+        <tr>
+          <td>🏗 Real Estate</td>
+          <td>Quantity calculation, precision marketing, safety monitoring</td>
+          <td>Leading developer, Country Garden, CSCEC</td>
+          <td class="highlight-cell">Settlement cycle -67%, injuries -61%</td>
+        </tr>
+        <tr>
+          <td>👥 Human Resources</td>
+          <td>AI recruitment, payroll automation, attrition prediction</td>
+          <td>Xinrenxinshi, Manufacturing Group HR</td>
+          <td class="highlight-cell">Recruitment cycle -38%, retention +33%</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+</div>
+
+<!-- ══════════════════════════════════════════════
+     SLIDE 17 — SECTION BREAK: Part 3
+══════════════════════════════════════════════ -->
+<div class="slide slide-section" id="s17">
+  <div class="section-number">03</div>
+  <div class="section-line" style="background:var(--accent2)"></div>
+  <div class="section-eyebrow" style="color:var(--accent2)">Implementation Cost &amp; ROI</div>
+  <h2 class="section-title">Implementation Cost &amp; ROI<br>General Reference Guide</h2>
+  <p class="section-desc">A decision-making framework covering investment and return on AI implementation for enterprises of different scales.</p>
+  <div class="cover-grid"></div>
+</div>
+
+<!-- ══════════════════════════════════════════════
+     SLIDE 18 — ROI Reference
+══════════════════════════════════════════════ -->
+<div class="slide" id="s18">
+  <div class="slide-num-badge">18 / 19</div>
+  <div class="slide-header">
+    <div class="slide-eyebrow">Cost &amp; ROI Reference</div>
+    <h2 class="slide-title"><span class="slide-title-dot green"></span>AI Implementation Cost &amp; ROI Reference Framework</h2>
+  </div>
+  <div class="slide-body">
+    <div class="roi-grid">
+      <div class="roi-card blue">
+        <div class="roi-title">SME — SaaS Subscription</div>
+        <div class="roi-cost">¥30K–150K / year</div>
+        <div class="roi-detail">
+          Subscription model, pay-as-you-go<br>
+          Average payback period <strong style="color:#fff">6–12 months</strong><br>
+          Overall cost reduction <strong style="color:var(--accent)">15%–40%</strong>
+        </div>
+      </div>
+      <div class="roi-card green">
+        <div class="roi-title">Mid-Large Enterprise — On-Premises</div>
+        <div class="roi-cost">¥500K–3M total</div>
+        <div class="roi-detail">
+          One-time investment + annual maintenance<br>
+          ROI typically realized within <strong style="color:#fff">18 months</strong><br>
+          Comprehensive operating cost reduction <strong style="color:var(--accent2)">20%+</strong>
+        </div>
+      </div>
+      <div class="roi-card orange">
+        <div class="roi-title">Priority Lightweight Scenarios</div>
+        <div class="roi-cost">Fastest Results</div>
+        <div class="roi-detail">
+          ✅ Document Automation<br>
+          ✅ Intelligent Customer Service<br>
+          ✅ Demand Forecasting<br>
+          <em style="color:var(--text-muted);font-size:11px">Low implementation barrier, quick impact</em>
+        </div>
+      </div>
+    </div>
+    <div style="margin-top:20px;background:var(--bg-card);border:1px solid var(--border);border-radius:10px;padding:18px 22px">
+      <div style="display:flex;gap:24px;flex-wrap:wrap;align-items:center">
+        <div style="flex:1;min-width:200px">
+          <div style="font-size:11px;letter-spacing:1px;text-transform:uppercase;color:var(--text-muted);margin-bottom:10px">Investment Decision Guidance</div>
+          <div style="font-size:13px;color:var(--text-secondary);line-height:1.7">
+            Start with <span style="color:var(--accent2)">document automation, intelligent customer service, and demand forecasting</span> — these three scenarios deliver the fastest results with the lowest implementation barriers. They are ideal for validating AI value at minimum risk before expanding to more complex areas like predictive maintenance, risk control, and digital twin.
+          </div>
+        </div>
+        <div style="display:flex;flex-direction:column;gap:8px">
+          <div style="display:flex;align-items:center;gap:10px">
+            <div style="width:10px;height:10px;border-radius:50%;background:var(--accent2)"></div>
+            <span style="font-size:12px;color:var(--text-secondary)">Low barrier · Fast ROI</span>
+            <span style="font-size:12px;color:var(--accent2);font-weight:700">Doc Automation / Service / Forecasting</span>
+          </div>
+          <div style="display:flex;align-items:center;gap:10px">
+            <div style="width:10px;height:10px;border-radius:50%;background:var(--accent)"></div>
+            <span style="font-size:12px;color:var(--text-secondary)">Mid barrier · Steady ROI</span>
+            <span style="font-size:12px;color:var(--accent);font-weight:700">Recruitment / Risk Control / Marketing</span>
+          </div>
+          <div style="display:flex;align-items:center;gap:10px">
+            <div style="width:10px;height:10px;border-radius:50%;background:var(--accent5)"></div>
+            <span style="font-size:12px;color:var(--text-secondary)">High barrier · Deep transformation</span>
+            <span style="font-size:12px;color:var(--accent5);font-weight:700">Digital Twin / Predictive Maintenance / Federated Learning</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ══════════════════════════════════════════════
+     SLIDE 19 — END SLIDE
+══════════════════════════════════════════════ -->
+<div class="slide slide-end" id="s19">
+  <div class="cover-grid"></div>
+  <div class="cover-tag" style="margin-bottom:28px">AI Industry Intelligence</div>
+  <h2 class="end-title">AI Is Reshaping Every Industry<br><span>From Efficiency Revolution to Intelligent Transformation</span></h2>
+  <p class="end-sub">6 Industries · 20+ Benchmark Cases · Quantifiable ROI · Deployable Solutions</p>
+  <div class="cover-divider" style="margin-top:28px"></div>
+  <div class="cover-meta" style="margin-top:0">
+    <div class="cover-meta-item"><div class="num" style="font-size:18px">Document Automation</div><div class="label">Priority Scenario 1</div></div>
+    <div class="cover-meta-item"><div class="num" style="font-size:18px">Intelligent Service</div><div class="label">Priority Scenario 2</div></div>
+    <div class="cover-meta-item"><div class="num" style="font-size:18px">Demand Forecasting</div><div class="label">Priority Scenario 3</div></div>
+  </div>
+</div>
+
+</div><!-- /ppt -->
+
+<!-- Navigation -->
+<div id="nav">
+  <button class="nav-btn" id="prevBtn" onclick="changeSlide(-1)" disabled>&#8592;</button>
+  <div class="dot-nav" id="dotNav"></div>
+  <span id="slide-counter">1 / 19</span>
+  <button class="nav-btn" id="nextBtn" onclick="changeSlide(1)">&#8594;</button>
+</div>
+
+<script>
+  const slides = document.querySelectorAll('.slide');
+  const total = slides.length;
+  let current = 0;
+
+  const counter = document.getElementById('slide-counter');
+  const prevBtn = document.getElementById('prevBtn');
+  const nextBtn = document.getElementById('nextBtn');
+  const progress = document.getElementById('progress');
+  const dotNav = document.getElementById('dotNav');
+
+  slides.forEach((_, i) => {
+    const d = document.createElement('div');
+    d.className = 'dot' + (i === 0 ? ' active' : '');
+    d.onclick = () => goTo(i);
+    dotNav.appendChild(d);
+  });
+
+  function updateUI() {
+    counter.textContent = `${current + 1} / ${total}`;
+    prevBtn.disabled = current === 0;
+    nextBtn.disabled = current === total - 1;
+    progress.style.width = `${((current + 1) / total) * 100}%`;
+    dotNav.querySelectorAll('.dot').forEach((d, i) => {
+      d.classList.toggle('active', i === current);
+    });
+  }
+
+  function goTo(idx) {
+    if (idx === current) return;
+    slides[current].classList.remove('active');
+    slides[current].classList.add('exit');
+    const prev = current;
+    current = idx;
+    slides[current].classList.add('active');
+    setTimeout(() => slides[prev].classList.remove('exit'), 480);
+    updateUI();
+  }
+
+  function changeSlide(dir) {
+    const next = current + dir;
+    if (next < 0 || next >= total) return;
+    goTo(next);
+  }
+
+  document.addEventListener('keydown', e => {
+    if (e.key === 'ArrowRight' || e.key === 'ArrowDown' || e.key === ' ') { e.preventDefault(); changeSlide(1); }
+    if (e.key === 'ArrowLeft' || e.key === 'ArrowUp') { e.preventDefault(); changeSlide(-1); }
+    if (e.key === 'Home') goTo(0);
+    if (e.key === 'End') goTo(total - 1);
+  });
+
+  let touchX = 0;
+  document.addEventListener('touchstart', e => { touchX = e.touches[0].clientX; }, { passive: true });
+  document.addEventListener('touchend', e => {
+    const dx = e.changedTouches[0].clientX - touchX;
+    if (Math.abs(dx) > 50) changeSlide(dx < 0 ? 1 : -1);
+  }, { passive: true });
+
+  updateUI();
+</script>
+</body>
+</html>

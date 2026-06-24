@@ -1,0 +1,1456 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Enterprise AI Hub</title>
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  :root {
+    --bg-dark: #0d1117;
+    --bg-card: #161b22;
+    --bg-card2: #1c2230;
+    --accent: #58a6ff;
+    --accent2: #3fb950;
+    --accent3: #f78166;
+    --accent4: #d2a8ff;
+    --accent5: #ffa657;
+    --text-primary: #e6edf3;
+    --text-secondary: #8b949e;
+    --text-muted: #6e7681;
+    --border: rgba(48,54,61,0.9);
+    --gold: #d4af37;
+  }
+
+  html, body {
+    width: 100%; height: 100%;
+    background: var(--bg-dark);
+    font-family: 'Segoe UI', 'PingFang SC', 'Microsoft YaHei', sans-serif;
+    color: var(--text-primary);
+    overflow: hidden;
+  }
+
+  /* ─── Slide Container ─── */
+  #ppt {
+    width: 100vw; height: 100vh;
+    position: relative;
+    overflow: hidden;
+  }
+
+  .slide {
+    position: absolute;
+    top: 0; left: 0;
+    width: 100%; height: 100%;
+    display: flex; flex-direction: column;
+    padding: 0;
+    opacity: 0;
+    transform: translateX(60px);
+    transition: opacity .45s ease, transform .45s ease;
+    pointer-events: none;
+    overflow: hidden;
+  }
+  .slide.active {
+    opacity: 1; transform: translateX(0);
+    pointer-events: all;
+  }
+  .slide.exit {
+    opacity: 0; transform: translateX(-60px);
+  }
+
+  /* ─── Common Layout ─── */
+  .slide-header {
+    padding: 36px 60px 0;
+    flex-shrink: 0;
+  }
+  .slide-body {
+    flex: 1;
+    padding: 20px 60px 30px;
+    overflow-y: auto;
+    scrollbar-width: thin;
+    scrollbar-color: #30363d transparent;
+  }
+  .slide-body::-webkit-scrollbar { width: 4px; }
+  .slide-body::-webkit-scrollbar-thumb { background: #30363d; border-radius: 2px; }
+
+  /* ─── Cover Slide ─── */
+  .slide-cover {
+    background: radial-gradient(ellipse at 20% 50%, #0d2137 0%, #0d1117 60%);
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+  }
+  .cover-tag {
+    display: inline-block;
+    border: 1px solid var(--accent);
+    color: var(--accent);
+    font-size: 12px;
+    letter-spacing: 3px;
+    text-transform: uppercase;
+    padding: 6px 20px;
+    border-radius: 20px;
+    margin-bottom: 32px;
+  }
+  .cover-title {
+    font-size: clamp(28px, 4vw, 52px);
+    font-weight: 700;
+    line-height: 1.2;
+    color: #fff;
+    max-width: 800px;
+  }
+  .cover-title span { color: var(--accent); }
+  .cover-subtitle {
+    margin-top: 20px;
+    font-size: 16px;
+    color: var(--text-secondary);
+    max-width: 680px;
+    line-height: 1.7;
+  }
+  .cover-divider {
+    width: 60px; height: 3px;
+    background: linear-gradient(90deg, var(--accent), transparent);
+    margin: 28px auto;
+  }
+  .cover-meta {
+    display: flex; gap: 40px;
+    justify-content: center;
+    flex-wrap: wrap;
+  }
+  .cover-meta-item {
+    text-align: center;
+  }
+  .cover-meta-item .num {
+    font-size: 32px; font-weight: 700;
+    color: var(--accent);
+  }
+  .cover-meta-item .label {
+    font-size: 12px;
+    color: var(--text-secondary);
+    margin-top: 4px;
+  }
+  /* grid bg decoration */
+  .cover-grid {
+    position: absolute;
+    inset: 0;
+    background-image:
+      linear-gradient(rgba(88,166,255,.04) 1px, transparent 1px),
+      linear-gradient(90deg, rgba(88,166,255,.04) 1px, transparent 1px);
+    background-size: 50px 50px;
+    pointer-events: none;
+  }
+
+  /* ─── Section Title Slides ─── */
+  .slide-section {
+    background: radial-gradient(ellipse at 30% 60%, #0d2137 0%, #0d1117 70%);
+    justify-content: center;
+    padding: 60px;
+  }
+  .section-number {
+    font-size: 80px;
+    font-weight: 800;
+    color: rgba(88,166,255,.1);
+    line-height: 1;
+    margin-bottom: -20px;
+  }
+  .section-eyebrow {
+    font-size: 12px;
+    letter-spacing: 3px;
+    text-transform: uppercase;
+    color: var(--accent);
+    margin-bottom: 16px;
+  }
+  .section-title {
+    font-size: clamp(24px, 3.5vw, 44px);
+    font-weight: 700;
+    color: #fff;
+    line-height: 1.25;
+    max-width: 700px;
+  }
+  .section-desc {
+    margin-top: 20px;
+    font-size: 15px;
+    color: var(--text-secondary);
+    max-width: 600px;
+    line-height: 1.7;
+  }
+  .section-line {
+    width: 4px; height: 50px;
+    background: var(--accent);
+    margin-bottom: 24px;
+    border-radius: 2px;
+  }
+
+  /* ─── Slide Title ─── */
+  .slide-title {
+    font-size: clamp(18px, 2.2vw, 28px);
+    font-weight: 700;
+    color: #fff;
+    display: flex; align-items: center; gap: 12px;
+    margin-bottom: 6px;
+  }
+  .slide-title-dot {
+    width: 8px; height: 8px;
+    border-radius: 50%;
+    background: var(--accent);
+    flex-shrink: 0;
+  }
+  .slide-title-dot.green { background: var(--accent2); }
+  .slide-title-dot.orange { background: var(--accent5); }
+  .slide-title-dot.purple { background: var(--accent4); }
+  .slide-eyebrow {
+    font-size: 11px; letter-spacing: 2px; text-transform: uppercase;
+    color: var(--text-muted); margin-bottom: 4px;
+    padding-left: 20px;
+  }
+
+  /* ─── Cards ─── */
+  .card-grid {
+    display: grid;
+    gap: 14px;
+    margin-top: 12px;
+  }
+  .card-grid-2 { grid-template-columns: repeat(2, 1fr); }
+  .card-grid-3 { grid-template-columns: repeat(3, 1fr); }
+  .card-grid-5 { grid-template-columns: repeat(5, 1fr); }
+
+  .card {
+    background: var(--bg-card);
+    border: 1px solid var(--border);
+    border-radius: 10px;
+    padding: 20px;
+    position: relative;
+    overflow: hidden;
+    transition: border-color .2s;
+  }
+  .card:hover { border-color: rgba(88,166,255,.35); }
+  .card::before {
+    content: '';
+    position: absolute; top: 0; left: 0;
+    width: 3px; height: 100%;
+    background: var(--accent);
+    border-radius: 10px 0 0 10px;
+  }
+  .card.green::before { background: var(--accent2); }
+  .card.orange::before { background: var(--accent5); }
+  .card.red::before { background: var(--accent3); }
+  .card.purple::before { background: var(--accent4); }
+
+  .card-icon {
+    font-size: 22px; margin-bottom: 10px;
+  }
+  .card-title {
+    font-size: 13px; font-weight: 700;
+    color: var(--text-primary);
+    margin-bottom: 8px;
+    line-height: 1.4;
+  }
+  .card-body {
+    font-size: 12px; color: var(--text-secondary);
+    line-height: 1.65;
+  }
+  .card-badge {
+    display: inline-block;
+    font-size: 10px; letter-spacing: 1px;
+    padding: 2px 8px;
+    border-radius: 4px;
+    background: rgba(88,166,255,.12);
+    color: var(--accent);
+    margin-bottom: 8px;
+    font-weight: 600;
+  }
+  .card-badge.green { background: rgba(63,185,80,.12); color: var(--accent2); }
+  .card-badge.orange { background: rgba(255,166,87,.12); color: var(--accent5); }
+  .card-badge.purple { background: rgba(210,168,255,.12); color: var(--accent4); }
+
+  /* ─── Metric Chips ─── */
+  .metrics {
+    display: flex; flex-wrap: wrap; gap: 8px;
+    margin-top: 10px;
+  }
+  .metric {
+    background: rgba(88,166,255,.08);
+    border: 1px solid rgba(88,166,255,.2);
+    border-radius: 6px;
+    padding: 5px 12px;
+    font-size: 11px;
+    color: var(--accent);
+  }
+  .metric.green { background: rgba(63,185,80,.08); border-color: rgba(63,185,80,.2); color: var(--accent2); }
+  .metric.orange { background: rgba(255,166,87,.08); border-color: rgba(255,166,87,.2); color: var(--accent5); }
+
+  /* ─── Pain Point List ─── */
+  .pain-list {
+    display: flex; flex-direction: column; gap: 10px;
+    margin-top: 12px;
+  }
+  .pain-item {
+    display: flex; gap: 12px;
+    align-items: flex-start;
+    background: var(--bg-card);
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    padding: 14px 16px;
+  }
+  .pain-num {
+    width: 26px; height: 26px;
+    border-radius: 50%;
+    background: linear-gradient(135deg, var(--accent3), #c0392b);
+    color: #fff;
+    font-size: 12px; font-weight: 700;
+    display: flex; align-items: center; justify-content: center;
+    flex-shrink: 0;
+    margin-top: 1px;
+  }
+  .pain-content .title {
+    font-size: 13px; font-weight: 600;
+    color: var(--text-primary); margin-bottom: 5px;
+  }
+  .pain-content .detail {
+    font-size: 12px; color: var(--text-secondary);
+    line-height: 1.6;
+  }
+
+  /* ─── Solution Box ─── */
+  .solution-box {
+    background: linear-gradient(135deg, rgba(88,166,255,.07), rgba(88,166,255,.02));
+    border: 1px solid rgba(88,166,255,.25);
+    border-radius: 10px;
+    padding: 16px 20px;
+    margin-top: 10px;
+  }
+  .solution-label {
+    font-size: 10px; letter-spacing: 2px; text-transform: uppercase;
+    color: var(--accent); margin-bottom: 8px; font-weight: 600;
+  }
+  .solution-text {
+    font-size: 12.5px; color: var(--text-secondary);
+    line-height: 1.7;
+  }
+
+  /* ─── Case Box ─── */
+  .case-box {
+    background: var(--bg-card2);
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    padding: 14px 16px;
+    margin-top: 8px;
+  }
+  .case-label {
+    font-size: 10px; letter-spacing: 1px; text-transform: uppercase;
+    color: var(--accent2); margin-bottom: 6px; font-weight: 700;
+    display: flex; align-items: center; gap: 6px;
+  }
+  .case-label::before {
+    content: '';
+    width: 12px; height: 2px;
+    background: var(--accent2);
+  }
+  .case-text {
+    font-size: 12px; color: var(--text-secondary);
+    line-height: 1.65;
+  }
+
+  /* ─── Row ─── */
+  .row { display: flex; gap: 14px; margin-top: 12px; }
+  .col { flex: 1; min-width: 0; }
+
+  /* ─── Industry Tag ─── */
+  .industry-tag {
+    display: flex; align-items: center; gap: 10px;
+    margin-bottom: 4px;
+  }
+  .industry-icon {
+    width: 36px; height: 36px;
+    border-radius: 8px;
+    display: flex; align-items: center; justify-content: center;
+    font-size: 18px;
+    flex-shrink: 0;
+  }
+  .industry-icon.blue { background: rgba(88,166,255,.15); }
+  .industry-icon.green { background: rgba(63,185,80,.15); }
+  .industry-icon.orange { background: rgba(255,166,87,.15); }
+  .industry-icon.purple { background: rgba(210,168,255,.15); }
+  .industry-icon.red { background: rgba(247,129,102,.15); }
+  .industry-icon.teal { background: rgba(56,211,203,.15); }
+
+  /* ─── Table ─── */
+  .data-table {
+    width: 100%; border-collapse: collapse;
+    margin-top: 12px;
+    font-size: 12.5px;
+  }
+  .data-table th {
+    background: rgba(88,166,255,.1);
+    color: var(--accent);
+    text-align: left;
+    padding: 10px 14px;
+    font-size: 11px; letter-spacing: 1px; text-transform: uppercase;
+    border-bottom: 1px solid var(--border);
+  }
+  .data-table td {
+    padding: 10px 14px;
+    border-bottom: 1px solid rgba(48,54,61,.5);
+    color: var(--text-secondary);
+    vertical-align: top;
+    line-height: 1.5;
+  }
+  .data-table tr:last-child td { border-bottom: none; }
+  .data-table tr:hover td { background: rgba(255,255,255,.02); }
+  .highlight-cell { color: var(--accent2); font-weight: 600; }
+
+  /* ─── Navigation ─── */
+  #nav {
+    position: fixed; bottom: 28px; left: 50%;
+    transform: translateX(-50%);
+    display: flex; align-items: center; gap: 16px;
+    background: rgba(22,27,34,.92);
+    backdrop-filter: blur(12px);
+    border: 1px solid var(--border);
+    border-radius: 40px;
+    padding: 10px 20px;
+    z-index: 100;
+    user-select: none;
+  }
+  .nav-btn {
+    width: 34px; height: 34px;
+    border-radius: 50%;
+    border: 1px solid var(--border);
+    background: transparent;
+    color: var(--text-secondary);
+    font-size: 14px;
+    cursor: pointer;
+    display: flex; align-items: center; justify-content: center;
+    transition: all .2s;
+  }
+  .nav-btn:hover {
+    background: rgba(88,166,255,.1);
+    border-color: var(--accent);
+    color: var(--accent);
+  }
+  .nav-btn:disabled { opacity: .3; cursor: default; }
+  #slide-counter {
+    font-size: 12px;
+    color: var(--text-secondary);
+    min-width: 60px; text-align: center;
+  }
+  .dot-nav {
+    display: flex; gap: 5px; align-items: center;
+  }
+  .dot-nav .dot {
+    width: 5px; height: 5px; border-radius: 50%;
+    background: var(--text-muted);
+    transition: all .2s; cursor: pointer;
+  }
+  .dot-nav .dot.active {
+    width: 18px; border-radius: 3px;
+    background: var(--accent);
+  }
+
+  /* ─── Progress bar ─── */
+  #progress {
+    position: fixed; top: 0; left: 0;
+    height: 2px;
+    background: linear-gradient(90deg, var(--accent), var(--accent4));
+    transition: width .4s ease;
+    z-index: 200;
+  }
+
+  /* ─── Slide number badge ─── */
+  .slide-num-badge {
+    position: absolute; top: 22px; right: 36px;
+    font-size: 11px; color: var(--text-muted);
+    letter-spacing: 1px;
+  }
+
+  /* ROI Table Slide Specific */
+  .roi-grid { display: grid; grid-template-columns: repeat(3,1fr); gap: 16px; margin-top: 16px; }
+  .roi-card {
+    background: var(--bg-card);
+    border: 1px solid var(--border);
+    border-radius: 12px; padding: 22px;
+    text-align: center;
+    position: relative; overflow: hidden;
+  }
+  .roi-card::after {
+    content: '';
+    position: absolute; bottom: 0; left: 0;
+    width: 100%; height: 3px;
+  }
+  .roi-card.blue::after { background: var(--accent); }
+  .roi-card.green::after { background: var(--accent2); }
+  .roi-card.orange::after { background: var(--accent5); }
+  .roi-title { font-size: 14px; font-weight: 700; color: var(--text-primary); margin-bottom: 6px; }
+  .roi-cost { font-size: 22px; font-weight: 800; margin-bottom: 10px; }
+  .roi-card.blue .roi-cost { color: var(--accent); }
+  .roi-card.green .roi-cost { color: var(--accent2); }
+  .roi-card.orange .roi-cost { color: var(--accent5); }
+  .roi-detail { font-size: 12px; color: var(--text-secondary); line-height: 1.6; }
+
+  /* End slide */
+  .slide-end {
+    background: radial-gradient(ellipse at 80% 30%, #0d2137 0%, #0d1117 60%);
+    align-items: center; justify-content: center; text-align: center;
+  }
+  .end-title { font-size: clamp(22px,3vw,40px); font-weight: 800; color: #fff; }
+  .end-title span { color: var(--accent); }
+  .end-sub { font-size: 14px; color: var(--text-secondary); margin-top: 14px; }
+
+  @media (max-width: 700px) {
+    .card-grid-2, .card-grid-3, .card-grid-5 { grid-template-columns: 1fr; }
+    .row { flex-direction: column; }
+    .roi-grid { grid-template-columns: 1fr; }
+    .slide-header { padding: 24px 24px 0; }
+    .slide-body { padding: 16px 24px 24px; }
+    .slide-section { padding: 36px 24px; }
+  }
+</style>
+</head>
+<body>
+
+<div id="progress"></div>
+<div id="ppt">
+
+<!-- ══════════════════════════════════════════════
+     SLIDE 1 — COVER
+══════════════════════════════════════════════ -->
+<div class="slide slide-cover active" id="s1">
+  <div class="cover-grid"></div>
+  <div class="cover-tag">Enterprise AI Hub</div>
+  <h1 class="cover-title">主流行业 <span>AI 实施</span><br>痛点与解决方案</h1>
+  <div class="cover-divider"></div>
+  <p class="cover-subtitle">覆盖国际贸易、制造业、金融、航运物流、房地产、人力资源六大核心行业<br>梳理通用痛点与 AI 解决路径，呈现真实商业化落地案例与可量化收益</p>
+  <div style="height:32px"></div>
+  <div class="cover-meta">
+    <div class="cover-meta-item"><div class="num">6</div><div class="label">核心行业</div></div>
+    <div class="cover-meta-item"><div class="num">5</div><div class="label">通用痛点</div></div>
+    <div class="cover-meta-item"><div class="num">20+</div><div class="label">标杆案例</div></div>
+    <div class="cover-meta-item"><div class="num">3</div><div class="label">AI 落地形态</div></div>
+  </div>
+</div>
+
+<!-- ══════════════════════════════════════════════
+     SLIDE 2 — 报告结构 Overview
+══════════════════════════════════════════════ -->
+<div class="slide" id="s2">
+  <div class="slide-num-badge">02 / 19</div>
+  <div class="slide-header">
+    <div class="slide-eyebrow">Report Structure</div>
+    <h2 class="slide-title"><span class="slide-title-dot"></span>总览</h2>
+  </div>
+  <div class="slide-body">
+    <div class="card-grid card-grid-3">
+      <div class="card">
+        <div class="card-badge">Part 01</div>
+        <div class="card-title">五大通用行业痛点<br>及标准化 AI 方案</div>
+        <div class="card-body">适用于所有行业的共性问题：文档自动化、需求预测、客服智能化、风险管控、数据决策支持。</div>
+      </div>
+      <div class="card orange">
+        <div class="card-badge orange">Part 02</div>
+        <div class="card-title">六大行业专项痛点<br>定制解决方案与案例</div>
+        <div class="card-body">国际贸易、制造业、金融、航运物流、房地产、人力资源——专属痛点 + 实施规则 + 标杆案例 + 可量化收益。</div>
+      </div>
+      <div class="card green">
+        <div class="card-badge green">Part 03</div>
+        <div class="card-title">实施成本与 ROI<br>通用参考</div>
+        <div class="card-body">SaaS 订阅 vs 私有化部署的成本范围、回收周期与优先落地场景建议。</div>
+      </div>
+    </div>
+    <div style="margin-top:20px">
+      <div class="solution-box">
+        <div class="solution-label">AI 落地三种形态</div>
+        <div style="display:flex;gap:16px;flex-wrap:wrap;margin-top:4px">
+          <div style="display:flex;align-items:center;gap:8px;font-size:12.5px;color:var(--text-secondary)">
+            <span style="width:8px;height:8px;border-radius:50%;background:var(--accent);display:inline-block"></span>
+            生成式大语言模型（LLM）
+          </div>
+          <div style="display:flex;align-items:center;gap:8px;font-size:12.5px;color:var(--text-secondary)">
+            <span style="width:8px;height:8px;border-radius:50%;background:var(--accent2);display:inline-block"></span>
+            传统机器学习
+          </div>
+          <div style="display:flex;align-items:center;gap:8px;font-size:12.5px;color:var(--text-secondary)">
+            <span style="width:8px;height:8px;border-radius:50%;background:var(--accent5);display:inline-block"></span>
+            AI Agent / RPA+AI
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ══════════════════════════════════════════════
+     SLIDE 3 — SECTION BREAK: Part 1
+══════════════════════════════════════════════ -->
+<div class="slide slide-section" id="s3">
+  <div class="section-number">01</div>
+  <div class="section-line"></div>
+  <div class="section-eyebrow">Universal Pain Points</div>
+  <h2 class="section-title">五大通用行业痛点<br>标准化 AI 解决方案</h2>
+  <p class="section-desc">以下痛点与解决方案横跨所有行业，是企业 AI 转型的优先切入口</p>
+  <div class="cover-grid"></div>
+</div>
+
+<!-- ══════════════════════════════════════════════
+     SLIDE 4 — 痛点 1 & 2
+══════════════════════════════════════════════ -->
+<div class="slide" id="s4">
+  <div class="slide-num-badge">04 / 19</div>
+  <div class="slide-header">
+    <div class="slide-eyebrow">通用行业痛点 01 & 02</div>
+    <h2 class="slide-title"><span class="slide-title-dot"></span>重复文书低效 · 需求预测失准</h2>
+  </div>
+  <div class="slide-body">
+    <div class="row">
+      <div class="col">
+        <div class="card">
+          <div class="card-badge">通用行业痛点 01</div>
+          <div class="card-title">📄 大量重复性文书处理导致人工成本高企</div>
+          <div class="card-body">手工录入效率低、出错率高、劳动力成本侵蚀利润。</div>
+          <div class="solution-box" style="margin-top:12px">
+            <div class="solution-label">AI 方案</div>
+            <div class="solution-text">采用 OCR + 大文档解析 LLM + RPA 数字员工（AI Agent），自动识别发票、合同、报关单、费用报告、人事档案及工程图纸；进行结构化录入、逻辑校验和归档；生成式 AI 批量起草标准合同、公函和报告。</div>
+          </div>
+          <div class="case-box">
+            <div class="case-label">跨行业案例 · 用友 BIP</div>
+            <div class="case-text">费用单据审核周期从 <strong style="color:#fff">5 工作日→8 小时</strong>；文件录入差错率从 12%→<strong style="color:var(--accent2)">0.8%</strong>；中型企业每年节省 3～5 名财务人员成本。合同 AI 解析系统每月处理逾万份合同，人工工作量减少 <strong style="color:var(--accent2)">70%</strong>。</div>
+          </div>
+        </div>
+      </div>
+      <div class="col">
+        <div class="card orange">
+          <div class="card-badge orange">通用行业痛点 02</div>
+          <div class="card-title">📦 市场与需求预测依赖经验，库存失衡</div>
+          <div class="card-body">积压、断货、库存分配失衡、资金大量沉淀。</div>
+          <div class="solution-box" style="margin-top:12px;border-color:rgba(255,166,87,.25);background:linear-gradient(135deg,rgba(255,166,87,.07),rgba(255,166,87,.02))">
+            <div class="solution-label" style="color:var(--accent5)">AI 方案</div>
+            <div class="solution-text">部署时序机器学习模型（TFT/LSTM）+ 多源数据融合预测模型，整合历史订单、行业舆情、季节因素、竞品数据、宏观指标及上下游供应链数据，动态预测周度/月度需求，自动生成安全库存阈值和补货计划。</div>
+          </div>
+          <div class="case-box">
+            <div class="case-label" style="color:var(--accent5)">跨行业案例 · AI 需求预测 SaaS</div>
+            <div class="case-text">覆盖义乌商贸、家电制造、建材地产采购团队。库存周转天数从 <strong style="color:#fff">42→19 天</strong>；滞销库存减值损失下降 <strong style="color:var(--accent2)">45%</strong>。</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ══════════════════════════════════════════════
+     SLIDE 5 — 痛点 3 & 4
+══════════════════════════════════════════════ -->
+<div class="slide" id="s5">
+  <div class="slide-num-badge">05 / 19</div>
+  <div class="slide-header">
+    <div class="slide-eyebrow">通用行业痛点 03 & 04</div>
+    <h2 class="slide-title"><span class="slide-title-dot purple"></span>客服多渠道分散 · 全流程风控成本高</h2>
+  </div>
+  <div class="slide-body">
+    <div class="row">
+      <div class="col">
+        <div class="card purple">
+          <div class="card-badge purple">通用行业痛点 03</div>
+          <div class="card-title">🤖 客户询盘分散，难以实现 7×24 服务</div>
+          <div class="card-body">基础客服团队冗员，高意向客户因跟进不及时而流失。</div>
+          <div class="solution-box" style="margin-top:12px;border-color:rgba(210,168,255,.25);background:linear-gradient(135deg,rgba(210,168,255,.07),rgba(210,168,255,.02))">
+            <div class="solution-label" style="color:var(--accent4)">AI 方案</div>
+            <div class="solution-text">部署多模态 LLM 智能客服 Agent，处理全渠道 FAQ，自动分类线索，发起外呼跟进，将高意向客户转接人工；生成式 AI 自动生成定制化商务信函和置业咨询话术。</div>
+          </div>
+          <div class="case-box">
+            <div class="case-label" style="color:var(--accent4)">案例 · Taji Futern AI 销售 Agent</div>
+            <div class="case-text">覆盖外贸、制造设备、地产招商、金融服务。全球商机挖掘效率提升 <strong style="color:#fff">6 倍</strong>，邮件打开率从 6%→<strong style="color:var(--accent2)">15%</strong>，业务询盘量增长 <strong style="color:var(--accent2)">3 倍</strong>。</div>
+          </div>
+        </div>
+      </div>
+      <div class="col">
+        <div class="card red">
+          <div class="card-badge" style="background:rgba(247,129,102,.12);color:var(--accent3)">通用行业痛点 04</div>
+          <div class="card-title">🛡 全流程风控依赖人工，欺诈与坏账风险高</div>
+          <div class="card-body">合规漏洞难以识别，事后追责成本高昂。</div>
+          <div class="solution-box" style="margin-top:12px;border-color:rgba(247,129,102,.25);background:linear-gradient(135deg,rgba(247,129,102,.07),rgba(247,129,102,.02))">
+            <div class="solution-label" style="color:var(--accent3)">AI 方案</div>
+            <div class="solution-text">结合图神经网络、规则引擎和联邦学习的风控模型，实时监控交易、合同履约、供应链回款与异常客户资质，实现事前评级→事中预警→事后分析，并符合行业监管要求。</div>
+          </div>
+          <div class="case-box">
+            <div class="case-label" style="color:var(--accent3)">案例 · 集团一体化 AI 风控平台</div>
+            <div class="case-text">覆盖贸易、地产、保理、制造子公司。应收账款逾期预警准确率达 <strong style="color:#fff">89%</strong>，坏账率同比下降 <strong style="color:var(--accent2)">32%</strong>。</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ══════════════════════════════════════════════
+     SLIDE 6 — 痛点 5
+══════════════════════════════════════════════ -->
+<div class="slide" id="s6">
+  <div class="slide-num-badge">06 / 19</div>
+  <div class="slide-header">
+    <div class="slide-eyebrow">通用行业痛点 05</div>
+    <h2 class="slide-title"><span class="slide-title-dot green"></span>数据孤岛严重 · 管理决策缺乏实时支撑</h2>
+  </div>
+  <div class="slide-body">
+    <div class="row">
+      <div class="col" style="flex:1.2">
+        <div class="card green" style="height:100%">
+          <div class="card-badge green">通用行业痛点 05</div>
+          <div class="card-title">📊 内部数据严重孤岛化，报表生成耗时</div>
+          <div class="card-body" style="margin-bottom:14px">管理层缺乏实时数据支撑决策，IT 依赖严重，报表周期长。</div>
+          <div class="solution-box" style="border-color:rgba(63,185,80,.25);background:linear-gradient(135deg,rgba(63,185,80,.07),rgba(63,185,80,.02))">
+            <div class="solution-label" style="color:var(--accent2)">AI 方案</div>
+            <div class="solution-text">部署 ChatBI 自然语言分析 LLM，接入 ERP、CRM、WMS 和考勤系统，根据管理者口头查询自动生成报表、可视化看板和经营诊断分析，无需 IT 支持数据取数。</div>
+          </div>
+          <div class="case-box" style="margin-top:10px">
+            <div class="case-label" style="color:var(--accent2)">案例 · 多元化集团 AI 会话式 BI</div>
+            <div class="case-text">覆盖制造、贸易、地产板块。月度经营报告耗时从 <strong style="color:#fff">7 人工工作日→1 小时</strong> AI 全维分析报告；数据分析岗减员 <strong style="color:var(--accent2)">50%</strong>。</div>
+          </div>
+        </div>
+      </div>
+      <div class="col">
+        <div style="background:var(--bg-card);border:1px solid var(--border);border-radius:10px;padding:20px;height:100%">
+          <div style="font-size:12px;letter-spacing:1px;text-transform:uppercase;color:var(--text-muted);margin-bottom:16px">五大通用痛点 · 效益速览</div>
+          <div style="display:flex;flex-direction:column;gap:10px">
+            <div style="display:flex;align-items:center;gap:10px">
+              <div style="font-size:11px;color:var(--text-muted);width:100px;flex-shrink:0">文书自动化</div>
+              <div style="flex:1;height:6px;background:rgba(255,255,255,.05);border-radius:3px;overflow:hidden">
+                <div style="width:88%;height:100%;background:var(--accent);border-radius:3px"></div>
+              </div>
+              <div style="font-size:11px;color:var(--accent);width:40px;text-align:right">-70%</div>
+            </div>
+            <div style="display:flex;align-items:center;gap:10px">
+              <div style="font-size:11px;color:var(--text-muted);width:100px;flex-shrink:0">需求预测精度</div>
+              <div style="flex:1;height:6px;background:rgba(255,255,255,.05);border-radius:3px;overflow:hidden">
+                <div style="width:75%;height:100%;background:var(--accent5);border-radius:3px"></div>
+              </div>
+              <div style="font-size:11px;color:var(--accent5);width:40px;text-align:right">-45%</div>
+            </div>
+            <div style="display:flex;align-items:center;gap:10px">
+              <div style="font-size:11px;color:var(--text-muted);width:100px;flex-shrink:0">线索转化率</div>
+              <div style="flex:1;height:6px;background:rgba(255,255,255,.05);border-radius:3px;overflow:hidden">
+                <div style="width:95%;height:100%;background:var(--accent4);border-radius:3px"></div>
+              </div>
+              <div style="font-size:11px;color:var(--accent4);width:40px;text-align:right">×6</div>
+            </div>
+            <div style="display:flex;align-items:center;gap:10px">
+              <div style="font-size:11px;color:var(--text-muted);width:100px;flex-shrink:0">坏账率</div>
+              <div style="flex:1;height:6px;background:rgba(255,255,255,.05);border-radius:3px;overflow:hidden">
+                <div style="width:64%;height:100%;background:var(--accent3);border-radius:3px"></div>
+              </div>
+              <div style="font-size:11px;color:var(--accent3);width:40px;text-align:right">-32%</div>
+            </div>
+            <div style="display:flex;align-items:center;gap:10px">
+              <div style="font-size:11px;color:var(--text-muted);width:100px;flex-shrink:0">报表效率</div>
+              <div style="flex:1;height:6px;background:rgba(255,255,255,.05);border-radius:3px;overflow:hidden">
+                <div style="width:99%;height:100%;background:var(--accent2);border-radius:3px"></div>
+              </div>
+              <div style="font-size:11px;color:var(--accent2);width:40px;text-align:right">×42</div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ══════════════════════════════════════════════
+     SLIDE 7 — SECTION BREAK: Part 2
+══════════════════════════════════════════════ -->
+<div class="slide slide-section" id="s7">
+  <div class="section-number">02</div>
+  <div class="section-line" style="background:var(--accent5)"></div>
+  <div class="section-eyebrow" style="color:var(--accent5)">Industry-Specific Solutions</div>
+  <h2 class="section-title">六大行业专项痛点<br>定制方案与标杆案例</h2>
+  <p class="section-desc">国际贸易 · 制造业 · 金融 · 航运物流 · 房地产 · 人力资源</p>
+  <div class="cover-grid"></div>
+</div>
+
+<!-- ══════════════════════════════════════════════
+     SLIDE 8 — 国际贸易 痛点
+══════════════════════════════════════════════ -->
+<div class="slide" id="s8">
+  <div class="slide-num-badge">08 / 19</div>
+  <div class="slide-header">
+    <div class="slide-eyebrow">Industry I · International Trade</div>
+    <h2 class="slide-title">
+      <span style="width:32px;height:32px;border-radius:8px;background:rgba(88,166,255,.15);display:flex;align-items:center;justify-content:center;font-size:16px;flex-shrink:0">🌐</span>
+      国际贸易 — 五大行业专项痛点
+    </h2>
+  </div>
+  <div class="slide-body">
+    <div class="pain-list">
+      <div class="pain-item">
+        <div class="pain-num">1</div>
+        <div class="pain-content">
+          <div class="title">海外客户开发盲目</div>
+          <div class="detail">人工筛选海量海关和社媒数据效率极低；群发开发信打开率低。</div>
+        </div>
+      </div>
+      <div class="pain-item">
+        <div class="pain-num">2</div>
+        <div class="pain-content">
+          <div class="title">报关单证繁琐、归类技术门槛高</div>
+          <div class="detail">申报、商检、退税材料复杂；归类错误易导致货物滞港和罚款。</div>
+        </div>
+      </div>
+      <div class="pain-item">
+        <div class="pain-num">3</div>
+        <div class="pain-content">
+          <div class="title">国际运价、汇率、地缘政策波动</div>
+          <div class="detail">人工报价滞后，运损与汇损侵蚀利润。</div>
+        </div>
+      </div>
+      <div class="pain-item">
+        <div class="pain-num">4</div>
+        <div class="pain-content">
+          <div class="title">跨境供应链长，海外仓库存错配</div>
+          <div class="detail">滞销品积压与爆款断货并存的双重困境。</div>
+        </div>
+      </div>
+      <div class="pain-item">
+        <div class="pain-num">5</div>
+        <div class="pain-content">
+          <div class="title">语言壁垒 + 时差导致客诉响应延迟</div>
+          <div class="detail">订单流失风险高。</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ══════════════════════════════════════════════
+     SLIDE 9 — 国际贸易 案例
+══════════════════════════════════════════════ -->
+<div class="slide" id="s9">
+  <div class="slide-num-badge">09 / 19</div>
+  <div class="slide-header">
+    <div class="slide-eyebrow">Industry I · Case Studies</div>
+    <h2 class="slide-title"><span class="slide-title-dot"></span>国际贸易 — AI 分层解决方案与标杆案例</h2>
+  </div>
+  <div class="slide-body">
+    <div class="card-grid card-grid-3">
+      <div class="card">
+        <div class="card-badge">智能客户开发</div>
+        <div class="card-title">Alibaba OKKI AI 触达外贸 Agent</div>
+        <div class="card-body">深圳锁具企业。AI 爬取全球商业数据、采购招标及海外社媒，10 秒内筛出 2 万+ 合格买家，自动生成多语种个性化开发信。</div>
+        <div class="metrics">
+          <div class="metric">询盘量 ↑300%</div>
+          <div class="metric green">人均产能 ×6</div>
+        </div>
+      </div>
+      <div class="card">
+        <div class="card-badge">趋势预测 + 产品设计</div>
+        <div class="card-title">泉州运动鞋厂 AI 趋势预测</div>
+        <div class="card-body">AI 分析 TikTok/Amazon/Google Search，精准预判欧美极简风潮，产品设计周期从 30 天→2 天，主打品批发利润率达 92%。</div>
+        <div class="metrics">
+          <div class="metric">设计周期 -93%</div>
+          <div class="metric green">新增年收入 千万级</div>
+        </div>
+      </div>
+      <div class="card orange">
+        <div class="card-badge orange">文件自动化</div>
+        <div class="card-title">上海美华系统 跨境贸易 AI 单证平台</div>
+        <div class="card-body">自动识别报关单、信用证、装箱单，HS 编码智能归类准确率 97%，自动生成退税申请材料。</div>
+        <div class="metrics">
+          <div class="metric orange">每日处理 200+ 单</div>
+          <div class="metric green">退税周期 -40%</div>
+        </div>
+      </div>
+    </div>
+    <div class="case-box" style="margin-top:14px">
+      <div class="case-label">SHEIN 跨境供应链 AI 系统 · 运价预测</div>
+      <div class="case-text">实时抓取船公司运价、港口拥堵、关税政策、外汇数据，提前预判运价涨势锁舱。空运成本降低 <strong style="color:#fff">55%</strong>，综合物流费用下降 <strong style="color:var(--accent2)">20%</strong>，爆款产品生产补货周期从 45 天压缩至 <strong style="color:#fff">7 天</strong>。</div>
+    </div>
+  </div>
+</div>
+
+<!-- ══════════════════════════════════════════════
+     SLIDE 10 — 制造业 痛点
+══════════════════════════════════════════════ -->
+<div class="slide" id="s10">
+  <div class="slide-num-badge">10 / 19</div>
+  <div class="slide-header">
+    <div class="slide-eyebrow">Industry II · Manufacturing</div>
+    <h2 class="slide-title">
+      <span style="width:32px;height:32px;border-radius:8px;background:rgba(255,166,87,.15);display:flex;align-items:center;justify-content:center;font-size:16px;flex-shrink:0">🏭</span>
+      制造业 — 五大行业专项痛点
+    </h2>
+  </div>
+  <div class="slide-body">
+    <div class="pain-list">
+      <div class="pain-item">
+        <div class="pain-num">1</div>
+        <div class="pain-content">
+          <div class="title">计划外设备停机频发</div>
+          <div class="detail">人工巡检漏判潜在故障，维修成本高，产线损失重。</div>
+        </div>
+      </div>
+      <div class="pain-item">
+        <div class="pain-num">2</div>
+        <div class="pain-content">
+          <div class="title">产品质检完全依赖人工目检</div>
+          <div class="detail">疲劳导致漏检，引发不良品、客诉和赔偿。</div>
+        </div>
+      </div>
+      <div class="pain-item">
+        <div class="pain-num">3</div>
+        <div class="pain-content">
+          <div class="title">订单频繁变更，经验排产易错</div>
+          <div class="detail">物料错配、产能闲置或过载。</div>
+        </div>
+      </div>
+      <div class="pain-item">
+        <div class="pain-num">4</div>
+        <div class="pain-content">
+          <div class="title">能源管理粗放，水电气浪费严重</div>
+          <div class="detail">高能耗拉高单位成本，影响竞争力。</div>
+        </div>
+      </div>
+      <div class="pain-item">
+        <div class="pain-num">5</div>
+        <div class="pain-content">
+          <div class="title">新品研发仿真周期长、打样成本高</div>
+          <div class="detail">产品迭代速度受限，市场窗口期被压缩。</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ══════════════════════════════════════════════
+     SLIDE 11 — 制造业 案例
+══════════════════════════════════════════════ -->
+<div class="slide" id="s11">
+  <div class="slide-num-badge">11 / 19</div>
+  <div class="slide-header">
+    <div class="slide-eyebrow">Industry II · Case Studies</div>
+    <h2 class="slide-title"><span class="slide-title-dot orange"></span>制造业 — AI 分层解决方案与标杆案例</h2>
+  </div>
+  <div class="slide-body">
+    <div class="card-grid card-grid-2">
+      <div class="card">
+        <div class="card-badge">预测性维护</div>
+        <div class="card-title">三一重工 · 工程机械生产车间</div>
+        <div class="card-body">设备安装振动/温度传感器，AI 分析运行数据，提前 7～15 天预测故障。</div>
+        <div class="metrics">
+          <div class="metric">计划外停机 -52%</div>
+          <div class="metric green">OEE ↑21%</div>
+          <div class="metric orange">年维护成本 -38%</div>
+        </div>
+      </div>
+      <div class="card orange">
+        <div class="card-badge orange">视觉质检</div>
+        <div class="card-title">富士康 AOI 电路板 AI 视觉检测</div>
+        <div class="card-body">工业相机 + AI 算法检测 0.01mm 精度缺陷，20 人质检组→3 人抽检。</div>
+        <div class="metrics">
+          <div class="metric">误判率 0.1%</div>
+          <div class="metric green">检测效率 ↑50%</div>
+        </div>
+      </div>
+      <div class="card green">
+        <div class="card-badge green">动态排产</div>
+        <div class="card-title">国内汽车零部件厂 AI 智能排产</div>
+        <div class="card-body">突发缺料或设备故障时，10 分钟内完成全局生产计划重排。</div>
+        <div class="metrics">
+          <div class="metric">设备利用率 75%→88%</div>
+          <div class="metric green">订单延期率 -22%</div>
+        </div>
+      </div>
+      <div class="card purple">
+        <div class="card-badge purple">能源优化 + 数字孪生</div>
+        <div class="card-title">施耐德电气上海工厂</div>
+        <div class="card-body">数字孪生 + AI 柔性产线，支持多品种快速切换。钢铁厂 AI 能源系统动态调参，吨钢电耗降低 6%。</div>
+        <div class="metrics">
+          <div class="metric purple">新品研发周期 -63%</div>
+          <div class="metric green">年节电费 1200万+</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ══════════════════════════════════════════════
+     SLIDE 12 — 金融 痛点 + 案例
+══════════════════════════════════════════════ -->
+<div class="slide" id="s12">
+  <div class="slide-num-badge">12 / 19</div>
+  <div class="slide-header">
+    <div class="slide-eyebrow">Industry III · Finance</div>
+    <h2 class="slide-title">
+      <span style="width:32px;height:32px;border-radius:8px;background:rgba(63,185,80,.15);display:flex;align-items:center;justify-content:center;font-size:16px;flex-shrink:0">🏦</span>
+      金融行业 — 痛点与 AI 方案
+    </h2>
+  </div>
+  <div class="slide-body">
+    <div class="card-grid card-grid-3">
+      <div class="card">
+        <div class="card-badge">智能信贷审批</div>
+        <div class="card-title">东营银行 小微企业 AI 信贷系统</div>
+        <div class="card-body">AI 自动核验征信、经营信息和资金流水，贷款审批从 3 天→数小时，网银极速贷即时放款。</div>
+        <div class="metrics">
+          <div class="metric green">半年新增贷款 20亿</div>
+          <div class="metric">获客成本 -65%</div>
+        </div>
+      </div>
+      <div class="card green">
+        <div class="card-badge green">AI 投研 + 财富管理</div>
+        <div class="card-title">招商银行 CMBC Think Tank AI</div>
+        <div class="card-body">整合全市场财报、公告、行业资讯，5 秒生成研报摘要。AI 理财顾问每日生成 5000+ 个性化资产配置方案。</div>
+        <div class="metrics">
+          <div class="metric">替代 2600 万人工小时</div>
+          <div class="metric green">客户流失率 -41%</div>
+        </div>
+      </div>
+      <div class="card orange">
+        <div class="card-badge orange">保险理赔 + 反欺诈</div>
+        <div class="card-title">平安车险 AI 定损系统</div>
+        <div class="card-body">车主上传事故照片，AI 视觉识别受损部位并自动计算赔偿金额，小额理赔 5 分钟到账。</div>
+        <div class="metrics">
+          <div class="metric orange">查勘员 -60%</div>
+          <div class="metric green">欺诈识别准确率 91%</div>
+        </div>
+      </div>
+    </div>
+    <div style="margin-top:14px;background:var(--bg-card);border:1px solid var(--border);border-radius:8px;padding:16px 20px">
+      <div style="font-size:11px;letter-spacing:1px;text-transform:uppercase;color:var(--text-muted);margin-bottom:10px">金融行业五大痛点速览</div>
+      <div style="display:flex;gap:10px;flex-wrap:wrap">
+        <span style="background:rgba(255,255,255,.04);border:1px solid var(--border);border-radius:6px;padding:5px 12px;font-size:11.5px;color:var(--text-secondary)">信贷审批 3-7 天</span>
+        <span style="background:rgba(255,255,255,.04);border:1px solid var(--border);border-radius:6px;padding:5px 12px;font-size:11.5px;color:var(--text-secondary)">信用卡欺诈隐蔽</span>
+        <span style="background:rgba(255,255,255,.04);border:1px solid var(--border);border-radius:6px;padding:5px 12px;font-size:11.5px;color:var(--text-secondary)">研报撰写 ≥3 天</span>
+        <span style="background:rgba(255,255,255,.04);border:1px solid var(--border);border-radius:6px;padding:5px 12px;font-size:11.5px;color:var(--text-secondary)">财富管理同质化</span>
+        <span style="background:rgba(255,255,255,.04);border:1px solid var(--border);border-radius:6px;padding:5px 12px;font-size:11.5px;color:var(--text-secondary)">保险核保理赔成本高</span>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ══════════════════════════════════════════════
+     SLIDE 13 — 航运物流 痛点
+══════════════════════════════════════════════ -->
+<div class="slide" id="s13">
+  <div class="slide-num-badge">13 / 19</div>
+  <div class="slide-header">
+    <div class="slide-eyebrow">Industry IV · Shipping & Logistics</div>
+    <h2 class="slide-title">
+      <span style="width:32px;height:32px;border-radius:8px;background:rgba(56,211,203,.15);display:flex;align-items:center;justify-content:center;font-size:16px;flex-shrink:0">🚢</span>
+      航运港口物流 — 五大痛点与 AI 方案
+    </h2>
+  </div>
+  <div class="slide-body">
+    <div class="row">
+      <div class="col">
+        <div class="pain-list">
+          <div class="pain-item">
+            <div class="pain-num">1</div>
+            <div class="pain-content">
+              <div class="title">船舶路线规划粗放，空载率高（行业均值 >35%）</div>
+            </div>
+          </div>
+          <div class="pain-item">
+            <div class="pain-num">2</div>
+            <div class="pain-content">
+              <div class="title">港口装卸检验效率低，船舶滞期费高</div>
+            </div>
+          </div>
+          <div class="pain-item">
+            <div class="pain-num">3</div>
+            <div class="pain-content">
+              <div class="title">洋途货物状态无法监控，海损货盗取证困难</div>
+            </div>
+          </div>
+          <div class="pain-item">
+            <div class="pain-num">4</div>
+            <div class="pain-content">
+              <div class="title">燃油成本管理松散</div>
+            </div>
+          </div>
+          <div class="pain-item">
+            <div class="pain-num">5</div>
+            <div class="pain-content">
+              <div class="title">运价剧烈周期波动，人工预测误差大</div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="col">
+        <div class="card" style="height:auto;margin-bottom:12px">
+          <div class="card-badge">动态配载 + 航线优化</div>
+          <div class="card-title">UPS 全球海陆运 AI 调度系统</div>
+          <div class="card-body">实时接入全球天气、港口拥堵、燃油价格，动态调整船舶和卡车路线。</div>
+          <div class="metrics">
+            <div class="metric">年节油 45万美元</div>
+            <div class="metric green">准时率 85%→95%</div>
+            <div class="metric orange">首年 ROI 265%</div>
+          </div>
+        </div>
+        <div class="card green">
+          <div class="card-badge green">AI 无人港口闸口</div>
+          <div class="card-title">上海港 AI 无人化码头</div>
+          <div class="card-body">视觉技术自动识别箱号、铅封和破损，单箱过闸从 20 分钟→40 秒。</div>
+          <div class="metrics">
+            <div class="metric">理货员 -55%</div>
+            <div class="metric green">年吞吐效率 ↑30%</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ══════════════════════════════════════════════
+     SLIDE 14 — 房地产 痛点 + 案例
+══════════════════════════════════════════════ -->
+<div class="slide" id="s14">
+  <div class="slide-num-badge">14 / 19</div>
+  <div class="slide-header">
+    <div class="slide-eyebrow">Industry V · Real Estate</div>
+    <h2 class="slide-title">
+      <span style="width:32px;height:32px;border-radius:8px;background:rgba(247,129,102,.15);display:flex;align-items:center;justify-content:center;font-size:16px;flex-shrink:0">🏗</span>
+      房地产 — 痛点与 AI 解决方案
+    </h2>
+  </div>
+  <div class="slide-body">
+    <div class="card-grid card-grid-3">
+      <div class="card red">
+        <div class="card-badge" style="background:rgba(247,129,102,.12);color:var(--accent3)">工程结算</div>
+        <div class="card-title">头部房企 AI 工程量计算与合同风控</div>
+        <div class="card-body">AI 从施工图纸自动计算工程量，比对合同与签证定价。</div>
+        <div class="metrics">
+          <div class="metric orange">结算周期 6月→2月</div>
+          <div class="metric green">造价争议 -42%</div>
+          <div class="metric">造价审计人员 -40%</div>
+        </div>
+      </div>
+      <div class="card">
+        <div class="card-badge">精准营销</div>
+        <div class="card-title">碧桂园 AI 获客 Agent</div>
+        <div class="card-body">AI 分析区域人口、购房需求、竞品楼盘，投放精准信息流广告；AI 置业顾问 7×24 在线咨询筛客。</div>
+        <div class="metrics">
+          <div class="metric">营销 ROI ↑58%</div>
+          <div class="metric green">无效广告费 -35%</div>
+        </div>
+      </div>
+      <div class="card green">
+        <div class="card-badge green">安全监控</div>
+        <div class="card-title">中国建筑在建项目 AI 视频监控</div>
+        <div class="card-body">AI 摄像头识别未戴安全帽、高空抛物、违规动火，实时弹窗预警。</div>
+        <div class="metrics">
+          <div class="metric">隐患排查效率 ↑90%</div>
+          <div class="metric green">工伤同比 -61%</div>
+        </div>
+      </div>
+    </div>
+    <div style="margin-top:14px;background:var(--bg-card);border:1px solid var(--border);border-radius:8px;padding:16px">
+      <div style="font-size:11px;letter-spacing:1px;text-transform:uppercase;color:var(--text-muted);margin-bottom:10px">其他痛点 · 解决方向</div>
+      <div style="display:flex;gap:14px;flex-wrap:wrap">
+        <div style="font-size:12px;color:var(--text-secondary)">🏪 <strong style="color:var(--text-primary)">商业地产客流分析</strong>——AI 分析人流优化铺位布局，降低空置率</div>
+        <div style="font-size:12px;color:var(--text-secondary)">🔧 <strong style="color:var(--text-primary)">物业维修工单智能派单</strong>——AI 合理分配工单，降低业主投诉率</div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ══════════════════════════════════════════════
+     SLIDE 15 — 人力资源 痛点 + 案例
+══════════════════════════════════════════════ -->
+<div class="slide" id="s15">
+  <div class="slide-num-badge">15 / 19</div>
+  <div class="slide-header">
+    <div class="slide-eyebrow">Industry VI · Human Resources</div>
+    <h2 class="slide-title">
+      <span style="width:32px;height:32px;border-radius:8px;background:rgba(210,168,255,.15);display:flex;align-items:center;justify-content:center;font-size:16px;flex-shrink:0">👥</span>
+      人力资源 — 痛点与标杆案例
+    </h2>
+  </div>
+  <div class="slide-body">
+    <div class="row">
+      <div class="col">
+        <div class="pain-list" style="gap:8px">
+          <div class="pain-item">
+            <div class="pain-num" style="background:linear-gradient(135deg,var(--accent4),#9b59b6)">1</div>
+            <div class="pain-content">
+              <div class="title">人工筛简历耗时，HR 70% 时间在初筛</div>
+            </div>
+          </div>
+          <div class="pain-item">
+            <div class="pain-num" style="background:linear-gradient(135deg,var(--accent4),#9b59b6)">2</div>
+            <div class="pain-content">
+              <div class="title">薪资核算需跨系统对账，月结耗时 5-7 天</div>
+            </div>
+          </div>
+          <div class="pain-item">
+            <div class="pain-num" style="background:linear-gradient(135deg,var(--accent4),#9b59b6)">3</div>
+            <div class="pain-content">
+              <div class="title">入职培训材料重复生产，培训效果无法量化</div>
+            </div>
+          </div>
+          <div class="pain-item">
+            <div class="pain-num" style="background:linear-gradient(135deg,var(--accent4),#9b59b6)">4</div>
+            <div class="pain-content">
+              <div class="title">员工离职预警滞后，核心人才突然离职</div>
+            </div>
+          </div>
+          <div class="pain-item">
+            <div class="pain-num" style="background:linear-gradient(135deg,var(--accent4),#9b59b6)">5</div>
+            <div class="pain-content">
+              <div class="title">绩效考核主观打分，存在偏差影响公平</div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="col">
+        <div class="card purple" style="margin-bottom:12px">
+          <div class="card-badge purple">AI 简历筛选 + 初面</div>
+          <div class="card-title">新人新事 AI 招聘引擎</div>
+          <div class="card-body">500 家连锁便利店企业部署。AI 解析简历、自动对标岗位、开展语音初面。</div>
+          <div class="metrics">
+            <div class="metric purple">初筛时间 7天→半天</div>
+            <div class="metric green">招聘周期 -38%</div>
+          </div>
+        </div>
+        <div class="card green">
+          <div class="card-badge green">AI 员工画像 + 离职预警</div>
+          <div class="card-title">制造集团 HR AI 平台</div>
+          <div class="card-body">AI 基于考勤、绩效、内部调动和请假数据构建员工画像，提前 3 个月预警高离职风险核心员工。</div>
+          <div class="metrics">
+            <div class="metric">关键人才流失率 -33%</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ══════════════════════════════════════════════
+     SLIDE 16 — 六大行业对比总览
+══════════════════════════════════════════════ -->
+<div class="slide" id="s16">
+  <div class="slide-num-badge">16 / 19</div>
+  <div class="slide-header">
+    <div class="slide-eyebrow">Industry Comparison</div>
+    <h2 class="slide-title"><span class="slide-title-dot orange"></span>六大行业 AI 落地效益对比总览</h2>
+  </div>
+  <div class="slide-body">
+    <table class="data-table">
+      <thead>
+        <tr>
+          <th>行业</th>
+          <th>核心 AI 应用</th>
+          <th>代表案例</th>
+          <th>关键效益</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td>🌐 国际贸易</td>
+          <td>智能客户开发、文件自动化、运价预测</td>
+          <td>Alibaba OKKI、上海美华、SHEIN</td>
+          <td class="highlight-cell">询盘↑300%，物流成本-20%</td>
+        </tr>
+        <tr>
+          <td>🏭 制造业</td>
+          <td>预测维护、视觉质检、动态排产、数字孪生</td>
+          <td>三一重工、富士康、施耐德</td>
+          <td class="highlight-cell">停机-52%，研发周期-63%</td>
+        </tr>
+        <tr>
+          <td>🏦 金融</td>
+          <td>AI 信贷、智能投研、保险定损反欺诈</td>
+          <td>东营银行、招商银行、平安</td>
+          <td class="highlight-cell">审批数小时，欺诈识别 91%</td>
+        </tr>
+        <tr>
+          <td>🚢 航运物流</td>
+          <td>路线优化、无人港口、运价预测</td>
+          <td>UPS、上海港、Flexport</td>
+          <td class="highlight-cell">准时率↑10pt，吞吐↑30%</td>
+        </tr>
+        <tr>
+          <td>🏗 房地产</td>
+          <td>工程量计算、精准营销、安全监控</td>
+          <td>头部房企、碧桂园、中建</td>
+          <td class="highlight-cell">结算周期-67%，工伤-61%</td>
+        </tr>
+        <tr>
+          <td>👥 人力资源</td>
+          <td>AI 招聘、薪资自动化、离职预警</td>
+          <td>新人新事、制造集团 HR</td>
+          <td class="highlight-cell">招聘周期-38%，留才+33%</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+</div>
+
+<!-- ══════════════════════════════════════════════
+     SLIDE 17 — SECTION BREAK: Part 3
+══════════════════════════════════════════════ -->
+<div class="slide slide-section" id="s17">
+  <div class="section-number">03</div>
+  <div class="section-line" style="background:var(--accent2)"></div>
+  <div class="section-eyebrow" style="color:var(--accent2)">Implementation Cost & ROI</div>
+  <h2 class="section-title">实施成本与 ROI<br>通用参考指南</h2>
+  <p class="section-desc">为不同规模企业提供 AI 实施投入产出的决策参考框架。</p>
+  <div class="cover-grid"></div>
+</div>
+
+<!-- ══════════════════════════════════════════════
+     SLIDE 18 — ROI 参考
+══════════════════════════════════════════════ -->
+<div class="slide" id="s18">
+  <div class="slide-num-badge">18 / 19</div>
+  <div class="slide-header">
+    <div class="slide-eyebrow">Cost & ROI Reference</div>
+    <h2 class="slide-title"><span class="slide-title-dot green"></span>AI 实施成本与 ROI 参考框架</h2>
+  </div>
+  <div class="slide-body">
+    <div class="roi-grid">
+      <div class="roi-card blue">
+        <div class="roi-title">中小企业 SaaS 订阅</div>
+        <div class="roi-cost">3 ~ 15 万元/年</div>
+        <div class="roi-detail">
+          订阅制，按需付费<br>
+          平均回收期 <strong style="color:#fff">6 ~ 12 个月</strong><br>
+          综合降本 <strong style="color:var(--accent)">15% ~ 40%</strong>
+        </div>
+      </div>
+      <div class="roi-card green">
+        <div class="roi-title">中大型企业私有化部署</div>
+        <div class="roi-cost">50 ~ 300 万元</div>
+        <div class="roi-detail">
+          一次性投入 + 年维护费<br>
+          ROI 回收期一般 <strong style="color:#fff">18 个月内</strong><br>
+          综合运营成本降低 <strong style="color:var(--accent2)">20%+</strong>
+        </div>
+      </div>
+      <div class="roi-card orange">
+        <div class="roi-title">轻量级优先落地场景</div>
+        <div class="roi-cost">最快见效</div>
+        <div class="roi-detail">
+          ✅ 文件自动化<br>
+          ✅ 智能客服<br>
+          ✅ 需求预测<br>
+          <em style="color:var(--text-muted);font-size:11px">落地门槛低，成效快</em>
+        </div>
+      </div>
+    </div>
+    <div style="margin-top:20px;background:var(--bg-card);border:1px solid var(--border);border-radius:10px;padding:18px 22px">
+      <div style="display:flex;gap:24px;flex-wrap:wrap;align-items:center">
+        <div style="flex:1;min-width:200px">
+          <div style="font-size:11px;letter-spacing:1px;text-transform:uppercase;color:var(--text-muted);margin-bottom:10px">投资决策建议</div>
+          <div style="font-size:13px;color:var(--text-secondary);line-height:1.7">
+            优先从 <span style="color:var(--accent2)">文件自动化、智能客服、需求预测</span> 三个场景切入——这三类场景成效最快，实施门槛最低，适合以最低风险验证 AI 价值，再逐步扩展至更复杂的预测维护、风控和数字孪生方向。
+          </div>
+        </div>
+        <div style="display:flex;flex-direction:column;gap:8px">
+          <div style="display:flex;align-items:center;gap:10px">
+            <div style="width:10px;height:10px;border-radius:50%;background:var(--accent2)"></div>
+            <span style="font-size:12px;color:var(--text-secondary)">低门槛 · 快回报</span>
+            <span style="font-size:12px;color:var(--accent2);font-weight:700">文件自动化 / 客服 / 需求预测</span>
+          </div>
+          <div style="display:flex;align-items:center;gap:10px">
+            <div style="width:10px;height:10px;border-radius:50%;background:var(--accent)"></div>
+            <span style="font-size:12px;color:var(--text-secondary)">中门槛 · 稳回报</span>
+            <span style="font-size:12px;color:var(--accent);font-weight:700">招聘 / 风控 / 营销</span>
+          </div>
+          <div style="display:flex;align-items:center;gap:10px">
+            <div style="width:10px;height:10px;border-radius:50%;background:var(--accent5)"></div>
+            <span style="font-size:12px;color:var(--text-secondary)">高门槛 · 深变革</span>
+            <span style="font-size:12px;color:var(--accent5);font-weight:700">数字孪生 / 预测维护 / 联邦学习</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ══════════════════════════════════════════════
+     SLIDE 19 — END SLIDE
+══════════════════════════════════════════════ -->
+<div class="slide slide-end" id="s19">
+  <div class="cover-grid"></div>
+  <div class="cover-tag" style="margin-bottom:28px">AI Industry Intelligence</div>
+  <h2 class="end-title">AI 正在重塑每一个行业<br><span>从效率革命到智能变革</span></h2>
+  <p class="end-sub">六大行业 · 20+ 标杆案例 · 可量化收益 · 可落地方案</p>
+  <div class="cover-divider" style="margin-top:28px"></div>
+  <div class="cover-meta" style="margin-top:0">
+    <div class="cover-meta-item"><div class="num" style="font-size:22px">文件自动化</div><div class="label">优先落地场景 1</div></div>
+    <div class="cover-meta-item"><div class="num" style="font-size:22px">智能客服</div><div class="label">优先落地场景 2</div></div>
+    <div class="cover-meta-item"><div class="num" style="font-size:22px">需求预测</div><div class="label">优先落地场景 3</div></div>
+  </div>
+</div>
+
+</div><!-- /ppt -->
+
+<!-- ─── Navigation ─── -->
+<div id="nav">
+  <button class="nav-btn" id="prevBtn" onclick="changeSlide(-1)" disabled>&#8592;</button>
+  <div class="dot-nav" id="dotNav"></div>
+  <span id="slide-counter">1 / 19</span>
+  <button class="nav-btn" id="nextBtn" onclick="changeSlide(1)">&#8594;</button>
+</div>
+
+<script>
+  const slides = document.querySelectorAll('.slide');
+  const total = slides.length;
+  let current = 0;
+
+  const counter = document.getElementById('slide-counter');
+  const prevBtn = document.getElementById('prevBtn');
+  const nextBtn = document.getElementById('nextBtn');
+  const progress = document.getElementById('progress');
+  const dotNav = document.getElementById('dotNav');
+
+  // Build dots
+  slides.forEach((_, i) => {
+    const d = document.createElement('div');
+    d.className = 'dot' + (i === 0 ? ' active' : '');
+    d.onclick = () => goTo(i);
+    dotNav.appendChild(d);
+  });
+
+  function updateUI() {
+    counter.textContent = `${current + 1} / ${total}`;
+    prevBtn.disabled = current === 0;
+    nextBtn.disabled = current === total - 1;
+    progress.style.width = `${((current + 1) / total) * 100}%`;
+    dotNav.querySelectorAll('.dot').forEach((d, i) => {
+      d.classList.toggle('active', i === current);
+    });
+  }
+
+  function goTo(idx) {
+    if (idx === current) return;
+    slides[current].classList.remove('active');
+    slides[current].classList.add('exit');
+    const prev = current;
+    current = idx;
+    slides[current].classList.add('active');
+    setTimeout(() => slides[prev].classList.remove('exit'), 480);
+    updateUI();
+  }
+
+  function changeSlide(dir) {
+    const next = current + dir;
+    if (next < 0 || next >= total) return;
+    goTo(next);
+  }
+
+  // Keyboard
+  document.addEventListener('keydown', e => {
+    if (e.key === 'ArrowRight' || e.key === 'ArrowDown' || e.key === ' ') { e.preventDefault(); changeSlide(1); }
+    if (e.key === 'ArrowLeft' || e.key === 'ArrowUp') { e.preventDefault(); changeSlide(-1); }
+    if (e.key === 'Home') goTo(0);
+    if (e.key === 'End') goTo(total - 1);
+  });
+
+  // Touch swipe
+  let touchX = 0;
+  document.addEventListener('touchstart', e => { touchX = e.touches[0].clientX; }, { passive: true });
+  document.addEventListener('touchend', e => {
+    const dx = e.changedTouches[0].clientX - touchX;
+    if (Math.abs(dx) > 50) changeSlide(dx < 0 ? 1 : -1);
+  }, { passive: true });
+
+  updateUI();
+</script>
+</body>
+</html>
