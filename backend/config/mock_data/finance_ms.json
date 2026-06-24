@@ -1,0 +1,296 @@
+{
+  "doc_parser": {
+    "documents": [
+      {
+        "id": "doc_fi_001",
+        "type": "credit_contract",
+        "title": "Business Loan Contract LN-2024-001",
+        "content": "Contract No: LN-2024-001\nBorrower: Beijing Yuanjing Technology Co., Ltd\nLoan Amount: RMB 5,000,000.00\nCurrency: RMB\nAnnual Interest Rate: 4.35%\nLoan Term: 36 months\nInterest Start Date: 2024-06-01\nMaturity Date: 2027-05-31\nCollateral: Property Mortgage (Appraised Value 8M)\nRepayment Method: Equal Principal and Interest\nPurpose: Business Working Capital\nDefault Clause: Overdue penalty at 1.5x interest rate",
+        "fields": {
+          "Contract No": "LN-2024-001",
+          "Borrower": "Beijing Yuanjing Technology Co., Ltd",
+          "Loan Amount": "RMB 5,000,000.00",
+          "Annual Interest Rate": "4.35%",
+          "Loan Term": "36 months",
+          "Collateral": "Property Mortgage",
+          "Purpose": "Business Working Capital"
+        }
+      },
+      {
+        "id": "doc_fi_002",
+        "type": "financial_report",
+        "title": "Yuanjing Technology 2024Q3 Financial Report",
+        "content": "Company Name: Beijing Yuanjing Technology Co., Ltd\nReport Type: Balance Sheet\nReporting Period: 2024 Q3\nTotal Assets: RMB 52,800,000.00\nTotal Liabilities: RMB 28,500,000.00\nRevenue: RMB 18,600,000.00\nCOGS: RMB 11,200,000.00\nNet Profit: RMB 3,250,000.00\nOperating Cash Flow: RMB 4,100,000.00\nDebt-to-Asset Ratio: 53.98%\nAudit Opinion: Unqualified Opinion",
+        "fields": {
+          "Company Name": "Beijing Yuanjing Technology Co., Ltd",
+          "Reporting Period": "2024 Q3",
+          "Total Assets": "RMB 52,800,000.00",
+          "Total Liabilities": "RMB 28,500,000.00",
+          "Revenue": "RMB 18,600,000.00",
+          "Net Profit": "RMB 3,250,000.00",
+          "Operating Cash Flow": "RMB 4,100,000.00"
+        }
+      }
+    ]
+  },
+  "demand_forecast": {
+    "history": [
+      {
+        "date": "2024-01-01",
+        "loan_applications": 2580,
+        "wealth_sales": 82500,
+        "credit_card_new": 12500
+      },
+      {
+        "date": "2024-02-01",
+        "loan_applications": 2120,
+        "wealth_sales": 69800,
+        "credit_card_new": 9800
+      },
+      {
+        "date": "2024-03-01",
+        "loan_applications": 2850,
+        "wealth_sales": 92100,
+        "credit_card_new": 15200
+      },
+      {
+        "date": "2024-04-01",
+        "loan_applications": 2720,
+        "wealth_sales": 88500,
+        "credit_card_new": 13800
+      },
+      {
+        "date": "2024-05-01",
+        "loan_applications": 2980,
+        "wealth_sales": 95600,
+        "credit_card_new": 16200
+      },
+      {
+        "date": "2024-06-01",
+        "loan_applications": 3150,
+        "wealth_sales": 102300,
+        "credit_card_new": 17800
+      },
+      {
+        "date": "2024-07-01",
+        "loan_applications": 3350,
+        "wealth_sales": 108500,
+        "credit_card_new": 18500
+      },
+      {
+        "date": "2024-08-01",
+        "loan_applications": 3280,
+        "wealth_sales": 105200,
+        "credit_card_new": 17200
+      },
+      {
+        "date": "2024-09-01",
+        "loan_applications": 3520,
+        "wealth_sales": 112800,
+        "credit_card_new": 19500
+      },
+      {
+        "date": "2024-10-01",
+        "loan_applications": 3680,
+        "wealth_sales": 118500,
+        "credit_card_new": 20500
+      },
+      {
+        "date": "2024-11-01",
+        "loan_applications": 3820,
+        "wealth_sales": 122500,
+        "credit_card_new": 21500
+      },
+      {
+        "date": "2024-12-01",
+        "loan_applications": 3950,
+        "wealth_sales": 128000,
+        "credit_card_new": 22800
+      }
+    ]
+  },
+  "ai_agent": {
+    "knowledge_base": [
+      {
+        "question": "What is LPR?",
+        "answer": "LPR (Loan Prime Rate) is the loan market quoted rate, formed by 18 quoting banks adding points to the MLF rate. Currently, the 1-year LPR is 3.45%, and the 5-year+ LPR is 4.20%. New bank loans mainly reference LPR for pricing, while existing loans adjust at annual repricing dates."
+      },
+      {
+        "question": "How to identify telecom fraud?",
+        "answer": "Remember the 'Three Don'ts, One Verify' principle: Don't trust unknown calls, Don't disclose personal info, Don't transfer money, Verify through multiple channels. Common scams: impersonating authorities (safe account), fake investments (high returns), task-based rebates (advance payment), fake customer service (refund). Call 96110 if suspicious."
+      },
+      {
+        "question": "What is Anti-Money Laundering?",
+        "answer": "Anti-Money Laundering (AML) refers to financial institutions preventing money laundering through Customer Due Diligence (CDD), Suspicious Transaction Reporting (STR), and record keeping. According to the Anti-Money Laundering Law, financial institutions must establish internal controls. Customers handling large transactions must cooperate with due diligence."
+      }
+    ]
+  },
+  "risk_control": {
+    "transactions": [
+      {
+        "id": "FI001",
+        "customer": "Yuanjing Technology",
+        "amount": 500,
+        "type": "Business Loan",
+        "days_overdue": 0,
+        "income_ratio": 68,
+        "tx_count": 12,
+        "risk_label": null,
+        "detail": "Normal repayment"
+      },
+      {
+        "id": "FI002",
+        "customer": "Zhang San",
+        "amount": 20,
+        "type": "Consumer Loan",
+        "days_overdue": 95,
+        "income_ratio": 42,
+        "tx_count": 3,
+        "risk_label": "overdue_risk",
+        "detail": "95 days overdue, multiple collection attempts failed"
+      },
+      {
+        "id": "FI003",
+        "customer": "Dingsheng Trading",
+        "amount": 300,
+        "type": "Working Capital Loan",
+        "days_overdue": 15,
+        "income_ratio": 55,
+        "tx_count": 48,
+        "risk_label": "anti_money_laundering",
+        "detail": "48 transactions in 15 days, unusual transaction frequency"
+      },
+      {
+        "id": "FI004",
+        "customer": "Li Si",
+        "amount": 50,
+        "type": "Mortgage",
+        "days_overdue": 0,
+        "income_ratio": 180,
+        "tx_count": 2,
+        "risk_label": "credit_fraud",
+        "detail": "Income certificate does not match bank flow (180% difference)"
+      }
+    ],
+    "indicators": [
+      {
+        "id": "credit_fraud",
+        "name": "Credit Fraud Risk",
+        "value": 0.42,
+        "trend": "stable",
+        "threshold": 0.5,
+        "status": "safe",
+        "detail": "Quarterly fraud detection rate 75%, intercepted 28 suspicious applications"
+      },
+      {
+        "id": "overdue_risk",
+        "name": "Overdue Risk",
+        "value": 0.55,
+        "trend": "up",
+        "threshold": 0.5,
+        "status": "warning",
+        "detail": "NPL ratio 1.45%, watch-list loan balance up 8%"
+      }
+    ]
+  },
+  "chatbi": {
+    "tables": {
+      "Credit Business Ledger": [
+        {
+          "Loan No": "LN-2024-001",
+          "Customer Name": "Beijing Yuanjing Technology",
+          "Loan Type": "Business Loan",
+          "Amount (10K)": 500,
+          "Annual Rate Pct": 4.35,
+          "Term Months": 36,
+          "Issue Date": "2024-06-01",
+          "Maturity Date": "2027-05-31",
+          "Five-tier Classification": "Normal",
+          "Relationship Manager": "Wang Fang"
+        },
+        {
+          "Loan No": "LN-2024-002",
+          "Customer Name": "Shanghai Dingsheng Trading",
+          "Loan Type": "Working Capital Loan",
+          "Amount (10K)": 300,
+          "Annual Rate Pct": 4.5,
+          "Term Months": 12,
+          "Issue Date": "2024-08-15",
+          "Maturity Date": "2025-08-14",
+          "Five-tier Classification": "Normal",
+          "Relationship Manager": "Li Ming"
+        },
+        {
+          "Loan No": "LN-2024-003",
+          "Customer Name": "Guangzhou Innovation Works",
+          "Loan Type": "Fixed Asset Loan",
+          "Amount (10K)": 1200,
+          "Annual Rate Pct": 4.2,
+          "Term Months": 60,
+          "Issue Date": "2024-03-20",
+          "Maturity Date": "2029-03-19",
+          "Five-tier Classification": "Normal",
+          "Relationship Manager": "Zhao Qiang"
+        },
+        {
+          "Loan No": "LN-2024-004",
+          "Customer Name": "Shenzhen Smart Manufacturing Tech",
+          "Loan Type": "Business Loan",
+          "Amount (10K)": 200,
+          "Annual Rate Pct": 4.8,
+          "Term Months": 24,
+          "Issue Date": "2024-09-01",
+          "Maturity Date": "2026-08-31",
+          "Five-tier Classification": "Watch",
+          "Relationship Manager": "Liu Yang"
+        },
+        {
+          "Loan No": "LN-2024-005",
+          "Customer Name": "Chengdu Green Source Environmental",
+          "Loan Type": "Consumer Loan",
+          "Amount (10K)": 80,
+          "Annual Rate Pct": 5.2,
+          "Term Months": 12,
+          "Issue Date": "2024-10-10",
+          "Maturity Date": "2025-10-09",
+          "Five-tier Classification": "Normal",
+          "Relationship Manager": "Chen Jing"
+        }
+      ],
+      "Wealth Management Daily Sales": [
+        {
+          "Date": "2024-11-15",
+          "Product Type": "Money Market Fund",
+          "Sales (10K)": 2850,
+          "Customer Count": 1250,
+          "Avg Amount (10K)": 2.28,
+          "Main Product": "Tiantianbao"
+        },
+        {
+          "Date": "2024-11-15",
+          "Product Type": "Fixed Income+",
+          "Sales (10K)": 1680,
+          "Customer Count": 320,
+          "Avg Amount (10K)": 5.25,
+          "Main Product": "Stable Growth"
+        },
+        {
+          "Date": "2024-11-16",
+          "Product Type": "Money Market Fund",
+          "Sales (10K)": 3120,
+          "Customer Count": 1380,
+          "Avg Amount (10K)": 2.26,
+          "Main Product": "Tiantianbao"
+        },
+        {
+          "Date": "2024-11-16",
+          "Product Type": "Fixed Income+",
+          "Sales (10K)": 1750,
+          "Customer Count": 335,
+          "Avg Amount (10K)": 5.22,
+          "Main Product": "Stable Growth"
+        }
+      ]
+    }
+  }
+}

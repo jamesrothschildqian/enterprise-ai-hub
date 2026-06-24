@@ -1,0 +1,28 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 400 500" font-family="SimSun, serif">
+  <rect width="400" height="500" fill="#fff" stroke="#333" stroke-width="1"/>
+  <rect x="10" y="10" width="380" height="30" fill="#e65100" rx="3"/>
+  <text x="200" y="30" text-anchor="middle" fill="#fff" font-size="14" font-weight="bold">生产工单</text>
+  <line x1="10" y1="62" x2="390" y2="62" stroke="#ccc" stroke-width="1"/>
+  <text x="20" y="82" font-size="11" fill="#333">工单号：PO-2024-11-0889</text>
+  <text x="220" y="82" font-size="11" fill="#333">产品名称：精密轴承套件 6205-2RS</text>
+  <text x="20" y="102" font-size="11" fill="#333">产品编码：6205-2RS-B</text>
+  <text x="220" y="102" font-size="11" fill="#333">计划数量：10,000件</text>
+  <text x="20" y="122" font-size="11" fill="#333">生产日期：2024-11-20</text>
+  <text x="220" y="122" font-size="11" fill="#333">完工日期：2024-11-27</text>
+  <text x="20" y="142" font-size="11" fill="#333">产线：A-3</text>
+  <text x="220" y="142" font-size="11" fill="#333">工序：装配-质检-包装</text>
+  <text x="20" y="162" font-size="11" fill="#333">负责人：王建国</text>
+  <text x="220" y="162" font-size="11" fill="#333">状态：生产中</text>
+  <line x1="10" y1="172" x2="390" y2="172" stroke="#ccc" stroke-width="1"/>
+  <text x="20" y="192" font-size="11" fill="#333">物料清单：</text>
+  <text x="30" y="210" font-size="10" fill="#555">轴承外圈 6205-RS-OUTER  10,200 pcs</text>
+  <text x="30" y="226" font-size="10" fill="#555">轴承内圈 6205-RS-INNER  10,200 pcs</text>
+  <text x="30" y="242" font-size="10" fill="#555">滚珠 8mm-304SS         80,000 pcs</text>
+  <text x="30" y="258" font-size="10" fill="#555">密封圈 6205-RS-SEAL    20,400 pcs</text>
+  <text x="30" y="274" font-size="10" fill="#555">润滑脂 THK-AFG          20.4 KG</text>
+  <line x1="10" y1="284" x2="390" y2="284" stroke="#ccc" stroke-width="1"/>
+  <text x="20" y="304" font-size="11" fill="#333">质检要求：外观全检，尺寸抽检 20%</text>
+  <text x="20" y="324" font-size="11" fill="#333">包装要求：每100件/箱，贴MADE IN CHINA标签</text>
+  <rect x="10" y="340" width="380" height="40" fill="#f5f5f5" rx="2"/>
+  <text x="200" y="365" text-anchor="middle" font-size="11" fill="#999">模拟样例 · 仅用于演示</text>
+</svg>

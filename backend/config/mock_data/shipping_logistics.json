@@ -1,0 +1,56 @@
+﻿{
+  "doc_parser": {
+    "documents": [
+      {"id":"doc_sl_001","type":"ocean_waybill","title":"COSCO海运提单 COSU2024115888","content":"提单号: COSU2024115888\n船名: EVER GIVEN\n航次号: 025E\n托运人: 义乌小商品进出口公司\n收货人: TO ORDER\n通知方: Los Angeles Distributors Inc.\n装货港: 宁波港(NGB)\n卸货港: 洛杉矶港(LAX)\n交货地: Memphis,TN DC\n集装箱号/封号: MSCU4821954/SEAL77120\n件数: 850 PACKAGES\n毛重: 12,500.00 KGS\n体积: 65.000 CBM\n运费支付方式: FREIGHT COLLECT","fields":{"提单号":"COSU2024115888","船名":"EVER GIVEN","航次号":"025E","托运人":"义乌小商品进出口公司","装货港":"宁波港(NGB)","卸货港":"洛杉矶港(LAX)","集装箱号":"MSCU4821954","件数":"850 PACKAGES","毛重":"12,500.00 KGS"}},
+      {"id":"doc_sl_002","type":"air_waybill","title":"空运运单 157-88520964","content":"运单号: 157-88520964\n出发港: 上海浦东(PVG)\n目的港: 法兰克福(FRA)\n托运人: 上海芯锐电子有限公司\n收货人: Infineon Technologies AG\n件数: 15箱\n毛重: 285.00KG\n体积: 1.850CBM\n货物品名: 半导体芯片(HS:854231)\n航班号: CA935\n日期: 2024-11-18\n运费: CNY 32,850.00","fields":{"运单号":"157-88520964","出发港":"上海浦东(PVG)","目的港":"法兰克福(FRA)","托运人":"上海芯锐电子有限公司","收货人":"Infineon Technologies AG","件数":"15箱","毛重":"285.00KG","货物品名":"半导体芯片"}}
+    ]
+  },
+  "demand_forecast": {
+    "history": [
+      {"date":"2024-01-01","cargo_volume":185,"container_throughput":28500,"warehouse_turnover":82.5},
+      {"date":"2024-02-01","cargo_volume":152,"container_throughput":23800,"warehouse_turnover":78.3},
+      {"date":"2024-03-01","cargo_volume":205,"container_throughput":31200,"warehouse_turnover":85.6},
+      {"date":"2024-04-01","cargo_volume":198,"container_throughput":30500,"warehouse_turnover":84.2},
+      {"date":"2024-05-01","cargo_volume":215,"container_throughput":32800,"warehouse_turnover":86.8},
+      {"date":"2024-06-01","cargo_volume":225,"container_throughput":34200,"warehouse_turnover":88.1},
+      {"date":"2024-07-01","cargo_volume":232,"container_throughput":35500,"warehouse_turnover":87.5},
+      {"date":"2024-08-01","cargo_volume":228,"container_throughput":34800,"warehouse_turnover":86.3},
+      {"date":"2024-09-01","cargo_volume":245,"container_throughput":37200,"warehouse_turnover":89.2},
+      {"date":"2024-10-01","cargo_volume":238,"container_throughput":36500,"warehouse_turnover":88.5},
+      {"date":"2024-11-01","cargo_volume":252,"container_throughput":38500,"warehouse_turnover":90.1},
+      {"date":"2024-12-01","cargo_volume":248,"container_throughput":37800,"warehouse_turnover":89.8}
+    ]
+  },
+  "ai_agent": {
+    "knowledge_base": [
+      {"question":"如何优化运输路径？","answer":"运输路径优化需综合考虑：1.距离与时效平衡(选择最优路径而非最短路径)；2.多式联运衔接(海铁联运降低30%成本)；3.实时规避拥堵/恶劣天气；4.中转站容量约束；5.总体运输成本。使用VRP算法+实时数据可优化10-15%。"},
+      {"question":"什么是JIT配送？","answer":"JIT(Just In Time)准时制配送：在需要的时间、将需要的数量、送到需要的地点。可大幅降低库存成本(减少30-50%)，但对供应链协同、运输时效、信息系统要求极高。适合高价值、需求稳定的物料。"}
+    ]
+  },
+  "risk_control": {
+    "transactions": [
+      {"id":"SL001","waybill":"COSU2024115888","cargo":"日用百货","value":125000,"delay_hours":0,"damage_pct":0.05,"temp_deviation":0,"risk_label":null},
+      {"id":"SL002","waybill":"157-88520964","cargo":"半导体芯片","value":328500,"delay_hours":8,"damage_pct":0,"temp_deviation":0,"risk_label":null},
+      {"id":"SL003","waybill":"COSU2024115123","cargo":"冷冻牛肉","value":450000,"delay_hours":18,"damage_pct":0.3,"temp_deviation":4.5,"risk_label":"temperature_deviation","detail":"温度偏差4.5°C超过阈值，部分货物品质受影响"},
+      {"id":"SL004","waybill":"AWB-2024-3321","cargo":"电子产品","value":680000,"delay_hours":36,"damage_pct":0.8,"temp_deviation":0,"risk_label":"cargo_damage","detail":"货损率0.8%超过阈值0.5%，疑似包装不当"}
+    ],
+    "indicators": [
+      {"id":"cargo_damage","name":"货物破损风险","value":0.38,"trend":"down","threshold":0.5,"status":"safe","detail":"本月货损率0.12%，优于行业平均0.35%"},
+      {"id":"delay_delivery","name":"交付延误风险","value":0.62,"trend":"up","threshold":0.6,"status":"warning","detail":"12月旺季延误率上升至8.5%，需增加运力储备"}
+    ]
+  },
+  "chatbi": {
+    "tables": {
+      "在途货物追踪": [
+        {"运单号":"COSU2024115888","货物名称":"日用百货","发货地":"宁波港","目的地":"洛杉矶港","预计到达":"2024-12-05","当前位置":"太平洋-东经165°","状态":"航行中","预计延误":"0天"},
+        {"运单号":"157-88520964","货物名称":"半导体芯片","发货地":"上海浦东","目的地":"法兰克福","预计到达":"2024-11-28","当前位置":"广州白云机场","状态":"已安检","预计延误":"0天"},
+        {"运单号":"COSU2024115123","货物名称":"冷冻牛肉","发货地":"青岛港","目的地":"东京港","预计到达":"2024-11-25","当前位置":"青岛港堆场","状态":"待装船","预计延误":"1天"}
+      ],
+      "仓储库存报表": [
+        {"仓库":"华东1号仓","总库容CBM":50000,"已用库容CBM":38500,"利用率Pct":77,"品类数":1250,"周转天数":28,"本月入库":15200,"本月出库":14800},
+        {"仓库":"华南2号仓","总库容CBM":35000,"已用库容CBM":23800,"利用率Pct":68,"品类数":880,"周转天数":25,"本月入库":11200,"本月出库":10800}
+      ]
+    }
+  }
+}
+

@@ -1,0 +1,56 @@
+﻿{
+  "doc_parser": {
+    "documents": [
+      {"id":"doc_hr_001","type":"labor_contract","title":"劳动合同 HR-C-2024-0520","content":"合同编号: HR-C-2024-0520\n员工姓名: 王小明\n身份证号: 310101199601012345\n岗位: 高级软件开发工程师\n合同类型: 固定期限\n合同期限: 3年\n试用期月: 3\n基本工资: RMB 35,000.00\n绩效工资: RMB 5,000.00\n社保基数: RMB 35,000.00\n签署日期: 2024-11-01\n到期日期: 2027-10-31","fields":{"合同编号":"HR-C-2024-0520","员工姓名":"王小明","岗位":"高级软件开发工程师","合同类型":"固定期限","合同期限":"3年","基本工资":"RMB 35,000.00","签署日期":"2024-11-01"}},
+      {"id":"doc_hr_002","type":"resume","title":"王小明个人简历","content":"姓名: 王小明\n性别: 男\n年龄: 28\n学历: 硕士研究生\n毕业院校: 上海交通大学\n专业: 计算机科学与技术\n工作年限: 5年\n技能标签: Python/Java/机器学习/系统架构/项目管理/英语CET-6\n期望薪资: 35K-45K\n期望职位: 高级软件开发工程师/技术经理\n工作经历: 2022-2024 某科技公司 高级开发工程师(负责微服务架构设计)\n2019-2022 某互联网公司 软件开发工程师(负责后端API开发)\n项目经验: 高并发交易系统/大数据分析平台/AI推荐引擎","fields":{"姓名":"王小明","学历":"硕士研究生","毕业院校":"上海交通大学","专业":"计算机科学与技术","工作年限":"5年","技能标签":"Python,Java,机器学习,系统架构","期望薪资":"35K-45K","期望职位":"高级软件开发工程师"}}
+    ]
+  },
+  "demand_forecast": {
+    "history": [
+      {"date":"2024-01-01","recruitment_demand":85,"training_headcount":120,"turnover_rate":2.8},
+      {"date":"2024-02-01","recruitment_demand":62,"training_headcount":95,"turnover_rate":2.1},
+      {"date":"2024-03-01","recruitment_demand":95,"training_headcount":145,"turnover_rate":3.2},
+      {"date":"2024-04-01","recruitment_demand":88,"training_headcount":135,"turnover_rate":2.5},
+      {"date":"2024-05-01","recruitment_demand":102,"training_headcount":158,"turnover_rate":3.5},
+      {"date":"2024-06-01","recruitment_demand":98,"training_headcount":152,"turnover_rate":3.0},
+      {"date":"2024-07-01","recruitment_demand":110,"training_headcount":168,"turnover_rate":3.8},
+      {"date":"2024-08-01","recruitment_demand":105,"training_headcount":162,"turnover_rate":3.2},
+      {"date":"2024-09-01","recruitment_demand":118,"training_headcount":178,"turnover_rate":4.1},
+      {"date":"2024-10-01","recruitment_demand":115,"training_headcount":172,"turnover_rate":3.5},
+      {"date":"2024-11-01","recruitment_demand":125,"training_headcount":185,"turnover_rate":4.2},
+      {"date":"2024-12-01","recruitment_demand":120,"training_headcount":180,"turnover_rate":3.6}
+    ]
+  },
+  "ai_agent": {
+    "knowledge_base": [
+      {"question":"如何设计胜任力模型？","answer":"胜任力模型设计四步法：1.战略解码-明确岗位核心价值产出；2.BEI行为事件访谈-提取绩优人员关键行为特征；3.编码分析-归纳胜任力要素(通常6-8项)；4.分级定义-每项分3-5级写行为锚定。常见模型包括冰山模型和洋葱模型。"},
+      {"question":"员工离职三大原因？","answer":"据2024年调研：1.薪酬竞争力不足(42%)-低于市场P50分位；2.职业发展受限(28%)-晋升通道不清晰；3.管理方式问题(15%)-直接上级管理风格。留人策略：薪酬对标P75+双通道晋升+管理者领导力培训。"}
+    ]
+  },
+  "risk_control": {
+    "transactions": [
+      {"id":"HR001","employee":"赵雪","dept":"HR","position":"HRBP","years_of_service":2.8,"salary_pctile":35,"engagement_score":72,"succession_readiness":false,"risk_label":"talent_pipeline","detail":"HRBP岗位无继任人选"},
+      {"id":"HR002","employee":"王磊","dept":"技术部","position":"高级开发","years_of_service":3.2,"salary_pctile":28,"engagement_score":65,"succession_readiness":true,"risk_label":"high_turnover","detail":"薪酬仅P28分位，敬业度65分，离职意向高"},
+      {"id":"HR003","employee":"李婷","dept":"产品部","position":"产品经理","years_of_service":4.5,"salary_pctile":55,"engagement_score":82,"succession_readiness":false,"risk_label":null,"detail":"稳定"}
+    ],
+    "indicators": [
+      {"id":"high_turnover","name":"高离职风险","value":0.62,"trend":"up","threshold":0.6,"status":"warning","detail":"技术部核心员工流失率4.2%超过预警值"},
+      {"id":"talent_pipeline","name":"人才梯队风险","value":0.55,"trend":"up","threshold":0.5,"status":"warning","detail":"关键岗位继任覆盖率仅35%"}
+    ]
+  },
+  "chatbi": {
+    "tables": {
+      "员工花名册": [
+        {"工号":"EMP-001","姓名":"张伟","部门":"技术部","岗位":"技术总监","职级":"M5","入职日期":"2019-03-01","学历":"硕士","状态":"在职","直属上级":"CEO"},
+        {"工号":"EMP-002","姓名":"李婷","部门":"产品部","岗位":"产品经理","职级":"P4","入职日期":"2020-06-15","学历":"本科","状态":"在职","直属上级":"张伟"},
+        {"工号":"EMP-003","姓名":"王磊","部门":"技术部","岗位":"高级开发","职级":"P3","入职日期":"2021-09-01","学历":"本科","状态":"在职","直属上级":"张伟"},
+        {"工号":"EMP-004","姓名":"陈芳","部门":"市场部","岗位":"市场主管","职级":"P4","入职日期":"2020-01-10","学历":"硕士","状态":"在职","直属上级":"CEO"},
+        {"工号":"EMP-005","姓名":"刘洋","部门":"销售部","岗位":"销售代表","职级":"P2","入职日期":"2023-04-01","学历":"本科","状态":"试用期","直属上级":"陈芳"}
+      ],
+      "培训计划表": [
+        {"培训编号":"TR-001","培训名称":"领导力飞跃营","培训对象":"M3及以上","形式":"线下集训","计划日期":"2025-01-15","时长天":3,"预算元":150000,"讲师":"外部专家","状态":"筹备中"},
+        {"培训编号":"TR-002","培训名称":"Python全栈开发","培训对象":"技术部","形式":"线上+实操","计划日期":"2025-02-10","时长天":5,"预算元":80000,"讲师":"内部讲师","状态":"已报名"}
+      ]
+    }
+  }
+}

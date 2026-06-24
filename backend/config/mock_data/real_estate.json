@@ -1,0 +1,55 @@
+﻿{
+  "doc_parser": {
+    "documents": [
+      {"id":"doc_re_001","type":"engineering_change","title":"工程签证单 GCQ-2024-0088","content":"签证编号: GCQ-2024-0088\n工程名称: 万科璞悦山一期主体工程\n施工单位: 中建三局\n变更内容: 3#楼首层大堂高度由4.2m调整为5.8m，增加吊顶造型\n变更原因: 提升品质满足高端客户需求\n增加金额: RMB 385,000.00\n减少金额: RMB 0.00\n净增减: +RMB 385,000.00\n建设单位: 万科企业股份有限公司\n监理单位: 华城监理\n签证日期: 2024-11-15","fields":{"签证编号":"GCQ-2024-0088","工程名称":"万科璞悦山一期主体工程","施工单位":"中建三局","变更内容":"大堂高度调整及吊顶造型","增加金额":"RMB 385,000.00","净增减":"+RMB 385,000.00","建设单位":"万科企业股份有限公司","签证日期":"2024-11-15"}},
+      {"id":"doc_re_002","type":"sales_contract","title":"商品房买卖合同 PY-2024-0088","content":"合同编号: PY-2024-0088\n买方: 李强\n卖方: 万科企业股份有限公司\n房屋坐落: 深圳市南山区科技南路88号万科璞悦山3栋2002\n建筑面积: 128.50㎡\n套内面积: 102.38㎡\n成交总价: RMB 8,560,000.00\n付款方式: 按揭贷款(首付30%)\n贷款金额: RMB 5,992,000.00\n交房日期: 2025-06-30\n过户日期: 2025-03-15\n违约责任: 逾期交房按日支付总价万分之五违约金","fields":{"合同编号":"PY-2024-0088","买方":"李强","卖方":"万科企业股份有限公司","房屋坐落":"深圳市南山区","建筑面积":"128.50㎡","成交总价":"RMB 8,560,000.00","付款方式":"按揭贷款","交房日期":"2025-06-30"}}
+    ]
+  },
+  "demand_forecast": {
+    "history": [
+      {"date":"2024-01-01","new_home_sales":3850,"existing_home_sales":5280,"avg_price":28500},
+      {"date":"2024-02-01","new_home_sales":2820,"existing_home_sales":3850,"avg_price":27800},
+      {"date":"2024-03-01","new_home_sales":4280,"existing_home_sales":5820,"avg_price":29200},
+      {"date":"2024-04-01","new_home_sales":4050,"existing_home_sales":5650,"avg_price":28800},
+      {"date":"2024-05-01","new_home_sales":4450,"existing_home_sales":5920,"avg_price":29500},
+      {"date":"2024-06-01","new_home_sales":4680,"existing_home_sales":6150,"avg_price":30200},
+      {"date":"2024-07-01","new_home_sales":4820,"existing_home_sales":6350,"avg_price":30500},
+      {"date":"2024-08-01","new_home_sales":4950,"existing_home_sales":6480,"avg_price":30800},
+      {"date":"2024-09-01","new_home_sales":4520,"existing_home_sales":6280,"avg_price":29800},
+      {"date":"2024-10-01","new_home_sales":5120,"existing_home_sales":6720,"avg_price":31200},
+      {"date":"2024-11-01","new_home_sales":5250,"existing_home_sales":6950,"avg_price":31500},
+      {"date":"2024-12-01","new_home_sales":5380,"existing_home_sales":7120,"avg_price":31800}
+    ]
+  },
+  "ai_agent": {
+    "knowledge_base": [
+      {"question":"商业贷款额度如何计算？","answer":"商贷额度 = 房屋评估价×贷款成数（首套最高70%）。公积金贷款受账户余额(通常15-25倍)、月缴存额和当地最高限额三因素限制。组合贷=公积金贷满后剩余部分商贷。月供不超过家庭月收入50%。"},
+      {"question":"什么是容积率和得房率？","answer":"容积率=总建筑面积/用地面积，越低居住越舒适(别墅<0.5，多层1.0-1.5，高层2.0-4.0)。得房率=套内面积/建筑面积，一般高层78-82%，多层82-88%。"}
+    ]
+  },
+  "risk_control": {
+    "transactions": [
+      {"id":"RE001","project":"璞悦山","cost_ratio":112,"progress_pct":35,"payment_pct":42,"price_vs_market":95,"delay_days":0,"risk_label":"cost_overrun","detail":"支付比例42%超完成比例35%，超付7%"},
+      {"id":"RE002","project":"天汇广场","cost_ratio":98,"progress_pct":60,"payment_pct":58,"price_vs_market":88,"delay_days":45,"risk_label":null,"detail":"基本正常"},
+      {"id":"RE003","project":"春江天玺","cost_ratio":105,"progress_pct":50,"payment_pct":52,"price_vs_market":78,"delay_days":120,"risk_label":"delivery_delay","detail":"交付延期120天，滞后计划约4个月"}
+    ],
+    "indicators": [
+      {"id":"cost_overrun","name":"工程款超付风险","value":0.45,"trend":"stable","threshold":0.6,"status":"safe","detail":"璞悦山项目存在超付，已要求施工方退还"},
+      {"id":"delivery_delay","name":"交付延期风险","value":0.68,"trend":"up","threshold":0.65,"status":"warning","detail":"春江天玺延期4个月，需排查总包管理问题"}
+    ]
+  },
+  "chatbi": {
+    "tables": {
+      "楼盘销售统计": [
+        {"楼盘名称":"万科璞悦山","城市":"深圳","总户数":1200,"已售户数":985,"去化率Pct":82.1,"均价元PerM2":85600,"本月销售":35,"销售排名":1},
+        {"楼盘名称":"融创壹号院","城市":"上海","总户数":850,"已售户数":620,"去化率Pct":72.9,"均价元PerM2":125000,"本月销售":22,"销售排名":3},
+        {"楼盘名称":"保利天汇","城市":"广州","总户数":980,"已售户数":710,"去化率Pct":72.4,"均价元PerM2":68000,"本月销售":28,"销售排名":2},
+        {"楼盘名称":"龙湖春江天玺","城市":"杭州","总户数":650,"已售户数":520,"去化率Pct":80.0,"均价元PerM2":52000,"本月销售":18,"销售排名":4}
+      ],
+      "租赁房源登记": [
+        {"房源编号":"RENT-001","小区名称":"中海国际社区","户型":"3室2厅","面积M2":120,"月租金元":8500,"楼层":"15/32","朝向":"南北通透","装修":"精装","状态":"待租"},
+        {"房源编号":"RENT-002","小区名称":"绿地海珀日晖","户型":"2室1厅","面积M2":85,"月租金元":6200,"楼层":"22/38","朝向":"南","装修":"豪装","状态":"已租"}
+      ]
+    }
+  }
+}

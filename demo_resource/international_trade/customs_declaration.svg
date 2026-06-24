@@ -1,0 +1,29 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 400 540" font-family="SimSun, serif">
+  <rect width="400" height="540" fill="#fff" stroke="#333" stroke-width="1"/>
+  <rect x="10" y="10" width="380" height="30" fill="#1a237e" rx="3"/>
+  <text x="200" y="30" text-anchor="middle" fill="#fff" font-size="14" font-weight="bold">中华人民共和国海关出口货物报关单</text>
+  <text x="200" y="55" text-anchor="middle" fill="#666" font-size="10">报关单编号：432020240888866688</text>
+  <line x1="10" y1="62" x2="390" y2="62" stroke="#ccc" stroke-width="1"/>
+  <text x="20" y="82" font-size="11" fill="#333">申报日期：2024-11-15</text>
+  <text x="220" y="82" font-size="11" fill="#333">经营单位：浙江宏大进出口有限公司</text>
+  <text x="20" y="102" font-size="11" fill="#333">商品编码：8482.10.00</text>
+  <text x="220" y="102" font-size="11" fill="#333">商品名称：精密轴承套件</text>
+  <text x="20" y="122" font-size="11" fill="#333">数量：5000套</text>
+  <text x="220" y="122" font-size="11" fill="#333">总价：EUR 142,500.00</text>
+  <text x="20" y="142" font-size="11" fill="#333">币制：EUR（欧元）</text>
+  <text x="220" y="142" font-size="11" fill="#333">贸易国：德国</text>
+  <text x="20" y="162" font-size="11" fill="#333">运输方式：江海运输</text>
+  <text x="220" y="162" font-size="11" fill="#333">征免性质：一般征税</text>
+  <line x1="10" y1="172" x2="390" y2="172" stroke="#ccc" stroke-width="1"/>
+  <text x="20" y="192" font-size="11" fill="#333">装货港：NINGBO（宁波港）</text>
+  <text x="20" y="212" font-size="11" fill="#333">指运港：HAMBURG（汉堡港）</text>
+  <text x="20" y="232" font-size="11" fill="#333">集装箱号：MSCU4820347</text>
+  <text x="20" y="252" font-size="11" fill="#333">件数：200箱</text>
+  <text x="220" y="252" font-size="11" fill="#333">毛重：5200.00 KG</text>
+  <text x="20" y="272" font-size="11" fill="#333">净重：4800.00 KG</text>
+  <line x1="10" y1="282" x2="390" y2="282" stroke="#ccc" stroke-width="1"/>
+  <text x="20" y="302" font-size="10" fill="#666">备注：此批货物已办理原产地证，适用中欧优惠税率</text>
+  <text x="20" y="322" font-size="10" fill="#666">海关批注：</text>
+  <rect x="10" y="330" width="380" height="40" fill="#f5f5f5" rx="2"/>
+  <text x="200" y="355" text-anchor="middle" font-size="11" fill="#999">模拟样例 · 仅用于演示</text>
+</svg>

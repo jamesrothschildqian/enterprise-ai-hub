@@ -1,0 +1,2608 @@
+{
+  "international_trade": {
+    "basic": {
+      "name": "国际贸易",
+      "name_en": "International Trade",
+      "name_vi": "Thương mại Quốc tế",
+      "name_ms": "Perdagangan Antarabangsa",
+      "description": "覆盖进出口报关、信用证管理、汇率风险管理、跨境物流协同等场景",
+      "description_en": "Import/export customs declaration, L/C management, FX risk management, cross-border logistics coordination",
+      "description_vi": "Bao gồm khai báo hải quan XNK, quản lý L/C, quản lý rủi ro tỷ giá, phối hợp logistics xuyên biên giới",
+      "description_ms": "Merangkumi pengisytiharan kastam import/eksport, pengurusan L/C, pengurusan risiko FX, koordinasi logistik rentas sempadan"
+    },
+    "doc_parser": {
+      "document_types": [
+        {
+          "id": "customs_declaration",
+          "name": "报关单",
+          "name_en": "Customs Declaration",
+          "name_vi": "Tờ khai hải quan",
+          "name_ms": "Pengisytiharan Kastam",
+          "description": "进出口货物报关申报单据",
+          "description_en": "Import/export customs declaration documents",
+          "description_vi": "Chứng từ khai báo hải quan hàng hóa XNK",
+          "description_ms": "Dokumen pengisytiharan kastam import/eksport"
+        },
+        {
+          "id": "letter_of_credit",
+          "name": "信用证",
+          "name_en": "Letter of Credit",
+          "name_vi": "Thư tín dụng (L/C)",
+          "name_ms": "Surat Kredit (L/C)",
+          "description": "银行开具的国际贸易付款保证",
+          "description_en": "International trade payment guarantee issued by bank",
+          "description_vi": "Bảo lãnh thanh toán thương mại quốc tế do ngân hàng phát hành",
+          "description_ms": "Jaminan pembayaran perdagangan antarabangsa yang dikeluarkan oleh bank"
+        },
+        {
+          "id": "commercial_invoice",
+          "name": "商业发票",
+          "name_en": "Commercial Invoice",
+          "name_vi": "Hóa đơn thương mại",
+          "name_ms": "Invois Komersial",
+          "description": "出口商开具的货物价值证明",
+          "description_en": "Proof of goods value issued by exporter",
+          "description_vi": "Chứng nhận giá trị hàng hóa do nhà xuất khẩu phát hành",
+          "description_ms": "Bukti nilai barang yang dikeluarkan oleh pengeksport"
+        },
+        {
+          "id": "bill_of_lading",
+          "name": "海运提单",
+          "name_en": "Bill of Lading",
+          "name_vi": "Vận đơn đường biển",
+          "name_ms": "Bil Muatan",
+          "description": "承运人签发的货物收据与物权凭证",
+          "description_en": "Cargo receipt and document of title issued by carrier",
+          "description_vi": "Biên nhận hàng hóa và chứng từ quyền sở hữu do người chuyên chở phát hành",
+          "description_ms": "Resit kargo dan dokumen hak milik yang dikeluarkan oleh pembawa"
+        }
+      ],
+      "field_rules": {
+        "customs_declaration": [
+          "报关单编号",
+          "申报日期",
+          "经营单位",
+          "商品编码",
+          "商品名称",
+          "数量及单位",
+          "总价",
+          "币制",
+          "贸易国",
+          "运输方式",
+          "征免性质"
+        ],
+        "letter_of_credit": [
+          "信用证号",
+          "开证行",
+          "开证日期",
+          "有效期",
+          "申请人",
+          "受益人",
+          "金额",
+          "币种",
+          "最迟装运日",
+          "单据要求",
+          "付款方式"
+        ],
+        "commercial_invoice": [
+          "发票号",
+          "开票日期",
+          "卖方",
+          "买方",
+          "商品描述",
+          "数量",
+          "单价",
+          "总金额",
+          "贸易术语",
+          "原产国"
+        ],
+        "bill_of_lading": [
+          "提单号",
+          "船名",
+          "航次",
+          "托运人",
+          "收货人",
+          "通知方",
+          "装货港",
+          "卸货港",
+          "集装箱号",
+          "件数",
+          "毛重",
+          "体积"
+        ]
+      },
+      "prompt_templates": {
+        "default": "你是一位文档处理专家。请从以下{doc_type}文档中提取结构化信息。\n文档内容：\n{document_text}\n\n请提取以下字段：{fields}\n以JSON格式返回，字段名使用中文。",
+        "customs_declaration": "你是一位报关专家。从以下报关单提取：报关单编号、申报日期、经营单位、商品编码、商品名称、数量、总价、币制、贸易国。返回JSON。\n内容：{document_text}",
+        "letter_of_credit": "你是一位信用证审单专家。从以下信用证提取：信用证号、开证行、申请人、受益人、金额、有效期。核验一致性。\n内容：{document_text}",
+        "commercial_invoice": "你是一位贸易结算专家。从以下发票提取：发票号、日期、买方、卖方、商品、数量、单价、总金额、贸易术语。返回JSON。\n内容：{document_text}",
+        "bill_of_lading": "你是一位国际物流专家。从以下提单提取：提单号、船名、航次、装货港、卸货港、集装箱号、件重尺。返回JSON。\n内容：{document_text}"
+      }
+    },
+    "demand_forecast": {
+      "metrics": [
+        {
+          "key": "export_orders",
+          "name": "出口订单量",
+          "name_en": "Export Orders",
+          "name_vi": "Đơn hàng xuất khẩu",
+          "name_ms": "Pesanan Eksport",
+          "unit": "单",
+          "unit_en": "orders",
+          "unit_vi": "đơn",
+          "unit_ms": "pesanan"
+        },
+        {
+          "key": "export_amount",
+          "name": "出口金额",
+          "name_en": "Export Amount",
+          "name_vi": "Giá trị xuất khẩu",
+          "name_ms": "Nilai Eksport",
+          "unit": "万美元",
+          "unit_en": "USD 10K",
+          "unit_vi": "nghìn USD",
+          "unit_ms": "USD 10K"
+        },
+        {
+          "key": "new_customers",
+          "name": "新增客户数",
+          "name_en": "New Customers",
+          "name_vi": "Khách hàng mới",
+          "name_ms": "Pelanggan Baru",
+          "unit": "家",
+          "unit_en": "clients",
+          "unit_vi": "khách",
+          "unit_ms": "pelanggan"
+        }
+      ],
+      "default_periods": 30,
+      "algorithm": "moving_average"
+    },
+    "ai_agent": {
+      "system_prompt": "你是一位资深国际贸易顾问，精通进出口实务、信用证审单、贸易术语(Incoterms)、报关报检、外汇结算、国际物流。请用专业、简洁的中文回答企业用户的问题。回答应包含具体操作建议。",
+      "system_prompt_en": "You are a senior international trade advisor, expert in import/export practices, L/C document checking, Incoterms, customs clearance, foreign exchange settlement, and international logistics. Answer user questions in professional, concise English. Include actionable recommendations.",
+      "system_prompt_vi": "Bạn là chuyên gia tư vấn thương mại quốc tế, thành thạo thực tiễn XNK, kiểm tra chứng từ L/C, Incoterms, khai báo hải quan, thanh toán ngoại tệ, logistics quốc tế. Trả lời bằng tiếng Việt chuyên nghiệp, ngắn gọn. Bao gồm các đề xuất cụ thể.",
+      "system_prompt_ms": "Anda adalah perunding perdagangan antarabangsa kanan, pakar dalam amalan import/eksport, pemeriksaan dokumen L/C, Incoterms, pelepasan kastam, penyelesaian pertukaran asing, dan logistik antarabangsa. Jawab dalam Bahasa Melayu profesional dan ringkas. Sertakan cadangan yang boleh diambil tindakan.",
+      "greeting": "您好！我是国际贸易AI助手，可以为您解答进出口流程、信用证、贸易合规等问题。请提出您的问题。",
+      "greeting_en": "Hello! I am your International Trade AI assistant. I can help with import/export procedures, letters of credit, trade compliance, and more. Please ask your question.",
+      "greeting_vi": "Xin chào! Tôi là trợ lý AI Thương mại Quốc tế. Tôi có thể giúp bạn về quy trình XNK, thư tín dụng, tuân thủ thương mại, v.v. Hãy đặt câu hỏi của bạn.",
+      "greeting_ms": "Helo! Saya adalah pembantu AI Perdagangan Antarabangsa. Saya boleh membantu dengan prosedur import/eksport, surat kredit, pematuhan perdagangan, dan banyak lagi. Sila tanya soalan anda.",
+      "capabilities": [
+        "贸易实务咨询",
+        "信用证审单",
+        "报关流程指导",
+        "汇率风险管理",
+        "贸易合规咨询"
+      ],
+      "capabilities_en": [
+        "Trade Practices",
+        "L/C Document Check",
+        "Customs Guidance",
+        "FX Risk Management",
+        "Trade Compliance"
+      ],
+      "capabilities_vi": [
+        "Tư vấn thực tiễn thương mại",
+        "Kiểm tra chứng từ L/C",
+        "Hướng dẫn quy trình hải quan",
+        "Quản lý rủi ro tỷ giá",
+        "Tư vấn tuân thủ thương mại"
+      ],
+      "capabilities_ms": [
+        "Amalan Perdagangan",
+        "Pemeriksaan Dokumen L/C",
+        "Panduan Kastam",
+        "Pengurusan Risiko FX",
+        "Pematuhan Perdagangan"
+      ],
+      "batch_generation_prompts": {
+        "marketing": "请为以下{company_name}公司撰写一份面向{target_market}市场的英文营销邮件，突出其{product}的核心优势。要求：专业、简洁、有说服力。",
+        "invitation": "请为{company_name}公司撰写一份展会邀约函，邀请客户参观其在{exhibition_name}的展位。展会信息：{exhibition_info}。要求：礼貌、专业、突出参展亮点。"
+      },
+      "kb_keywords": [
+        "进出口",
+        "信用证",
+        "报关",
+        "汇率",
+        "贸易术语",
+        "Incoterms",
+        "原产地证",
+        "商检",
+        "退税",
+        "外汇核销",
+        "提单",
+        "海关",
+        "配额",
+        "关税",
+        "跨境电商"
+      ],
+      "kb_keywords_en": [
+        "import/export",
+        "L/C",
+        "customs declaration",
+        "exchange rate",
+        "Incoterms",
+        "certificate of origin",
+        "inspection",
+        "tax refund",
+        "forex verification",
+        "bill of lading",
+        "customs",
+        "quota",
+        "tariff",
+        "cross-border e-commerce"
+      ],
+      "kb_keywords_vi": [
+        "xuất nhập khẩu",
+        "L/C",
+        "khai báo hải quan",
+        "tỷ giá",
+        "Incoterms",
+        "giấy chứng nhận xuất xứ",
+        "kiểm tra",
+        "hoàn thuế",
+        "xác nhận ngoại tệ",
+        "vận đơn",
+        "hải quan",
+        "hạn ngạch",
+        "thuế quan",
+        "thương mại điện tử xuyên biên giới"
+      ],
+      "kb_keywords_ms": [
+        "import/eksport",
+        "L/C",
+        "pengisytiharan kastam",
+        "kadar pertukaran",
+        "Incoterms",
+        "sijil asal",
+        "pemeriksaan",
+        "bayaran balik cukai",
+        "pengesahan forex",
+        "bil muatan",
+        "kastam",
+        "kuota",
+        "tarif",
+        "e-dagang rentas sempadan"
+      ]
+    },
+    "risk_control": {
+      "risk_labels": [
+        {
+          "id": "payment_overdue",
+          "name": "回款逾期",
+          "name_en": "Payment Overdue",
+          "name_vi": "Quá hạn thanh toán",
+          "name_ms": "Pembayaran Tertunggak",
+          "severity": "high",
+          "description": "客户未在信用期限内支付货款",
+          "description_en": "Customer failed to pay within credit period",
+          "description_vi": "Khách hàng không thanh toán trong thời hạn tín dụng",
+          "description_ms": "Pelanggan gagal membayar dalam tempoh kredit"
+        },
+        {
+          "id": "exchange_rate_loss",
+          "name": "汇兑损失",
+          "name_en": "Exchange Rate Loss",
+          "name_vi": "Tổn thất tỷ giá",
+          "name_ms": "Kerugian Kadar Pertukaran",
+          "severity": "medium",
+          "description": "汇率波动导致应收账款缩水超过2%",
+          "description_en": "FX fluctuation causes receivables to shrink >2%",
+          "description_vi": "Biến động tỷ giá làm khoản phải thu giảm >2%",
+          "description_ms": "Turun naik FX menyebabkan penghutang mengecut >2%"
+        },
+        {
+          "id": "document_discrepancy",
+          "name": "单据不符",
+          "name_en": "Document Discrepancy",
+          "name_vi": "Chứng từ không phù hợp",
+          "name_ms": "Percanggahan Dokumen",
+          "severity": "medium",
+          "description": "信用证单据存在不符点，有拒付风险",
+          "description_en": "Letter of credit documents contain discrepancies, risk of refusal of payment",
+          "description_vi": "Chứng từ L/C có điểm không phù hợp, rủi ro bị từ chối thanh toán",
+          "description_ms": "Dokumen L/C mengandungi percanggahan, risiko penolakan pembayaran"
+        },
+        {
+          "id": "logistics_delay",
+          "name": "物流延误",
+          "name_en": "Logistics Delay",
+          "name_vi": "Chậm trễ logistics",
+          "name_ms": "Kelewatan Logistik",
+          "severity": "low",
+          "description": "运输途中出现延误，可能影响交期",
+          "description_en": "Delay during transit, may affect delivery date",
+          "description_vi": "Chậm trễ trong quá trình vận chuyển, có thể ảnh hưởng đến ngày giao hàng",
+          "description_ms": "Kelewatan semasa transit, boleh menjejaskan tarikh penghantaran"
+        },
+        {
+          "id": "compliance_violation",
+          "name": "合规违规",
+          "name_en": "Compliance Violation",
+          "name_vi": "Vi phạm tuân thủ",
+          "name_ms": "Pelanggaran Pematuhan",
+          "severity": "high",
+          "description": "出口管制/制裁清单命中或原产地规则违规",
+          "description_en": "Export control/sanctions list hit or rules of origin violation",
+          "description_vi": "Kiểm soát xuất khẩu/danh sách trừng phạt hoặc vi phạm quy tắc xuất xứ",
+          "description_ms": "Kawalan eksport/senarai sekatan dilanggar atau pelanggaran peraturan asal"
+        }
+      ],
+      "rules": [
+        {
+          "id": "rule_payment_30d",
+          "label": "payment_overdue",
+          "condition": "回款天数>30",
+          "condition_en": "Payment days>30",
+          "condition_vi": "Ngày thanh toán>30",
+          "condition_ms": "Hari pembayaran>30",
+          "threshold": 30
+        },
+        {
+          "id": "rule_exchange_2pct",
+          "label": "exchange_rate_loss",
+          "condition": "汇率波动>2%",
+          "condition_en": "FX fluctuation>2%",
+          "condition_vi": "Biến động tỷ giá>2%",
+          "condition_ms": "Turun naik FX>2%",
+          "threshold": 2.0
+        },
+        {
+          "id": "rule_doc_discrepancy",
+          "label": "document_discrepancy",
+          "condition": "单据不符点>0",
+          "condition_en": "Doc discrepancies>0",
+          "condition_vi": "Điểm không phù hợp>0",
+          "condition_ms": "Percanggahan dokumen>0",
+          "threshold": 0
+        }
+      ]
+    },
+    "chatbi": {
+      "table_schemas": [
+        {
+          "name": "进出口订单明细",
+          "name_en": "Order Details",
+          "name_vi": "Chi tiết Đơn hàng",
+          "name_ms": "Butiran Pesanan",
+          "columns": [
+            "订单编号",
+            "客户名称",
+            "国家",
+            "产品类别",
+            "数量",
+            "单价USD",
+            "总金额USD",
+            "贸易术语",
+            "下单日期",
+            "交货日期",
+            "状态"
+          ],
+          "columns_en": [
+            "Order No.",
+            "Customer Name",
+            "Country",
+            "Product Category",
+            "Quantity",
+            "Unit Price USD",
+            "Total Amount USD",
+            "Trade Terms",
+            "Order Date",
+            "Delivery Date",
+            "Status"
+          ],
+          "columns_vi": [
+            "Mã ĐH",
+            "Tên KH",
+            "Quốc gia",
+            "Loại SP",
+            "Số lượng",
+            "Đơn giá USD",
+            "Tổng tiền USD",
+            "Điều khoản TM",
+            "Ngày ĐH",
+            "Ngày GH",
+            "Trạng thái"
+          ],
+          "columns_ms": [
+            "No. Pesanan",
+            "Nama Pelanggan",
+            "Negara",
+            "Kategori Produk",
+            "Kuantiti",
+            "Harga Seunit USD",
+            "Jumlah USD",
+            "Terma Perdagangan",
+            "Tarikh Pesanan",
+            "Tarikh Hantar",
+            "Status"
+          ],
+          "primary_key": "订单编号",
+          "primary_key_en": "Order No.",
+          "primary_key_vi": "Mã ĐH",
+          "primary_key_ms": "No. Pesanan"
+        },
+        {
+          "name": "汇率跟踪表",
+          "name_en": "Exchange Rate Tracker",
+          "name_vi": "Bảng theo dõi Tỷ giá",
+          "name_ms": "Penjejak Kadar Pertukaran",
+          "columns": [
+            "币种",
+            "当前汇率",
+            "月涨跌幅",
+            "季涨跌幅",
+            "年涨跌幅",
+            "预测方向"
+          ],
+          "columns_en": [
+            "Currency",
+            "Current Rate",
+            "Monthly Change",
+            "Quarterly Change",
+            "Annual Change",
+            "Forecast Direction"
+          ],
+          "columns_vi": [
+            "Tiền tệ",
+            "Tỷ giá HN",
+            "Thay đổi Tháng",
+            "Thay đổi Quý",
+            "Thay đổi Năm",
+            "Hướng Dự báo"
+          ],
+          "columns_ms": [
+            "Mata Wang",
+            "Kadar Semasa",
+            "Perubahan Bulanan",
+            "Perubahan Suku Tahun",
+            "Perubahan Tahunan",
+            "Arah Ramalan"
+          ],
+          "primary_key": "币种",
+          "primary_key_en": "Currency",
+          "primary_key_vi": "Tiền tệ",
+          "primary_key_ms": "Mata Wang"
+        }
+      ],
+      "query_prompt": "你是一位数据分析师。用户问：{user_query}\n可用的数据表：{tables}\n请生成数据查询逻辑，返回要查询的表名、过滤条件和聚合方式。以JSON格式返回。"
+    }
+  },
+  "smart_manufacturing": {
+    "basic": {
+      "name": "智能制造",
+      "name_en": "Smart Manufacturing",
+      "name_vi": "Sản xuất Thông minh",
+      "name_ms": "Pembuatan Pintar",
+      "description": "覆盖生产排程优化、设备预测维护、质量缺陷检测、供应链协同等场景",
+      "description_en": "Production scheduling optimization, predictive equipment maintenance, quality defect detection, supply chain coordination",
+      "description_vi": "Bao gồm tối ưu hóa lịch sản xuất, bảo trì dự đoán thiết bị, phát hiện lỗi chất lượng, phối hợp chuỗi cung ứng",
+      "description_ms": "Merangkumi pengoptimuman jadual pengeluaran, penyelenggaraan ramalan peralatan, pengesanan kecacatan kualiti, koordinasi rantaian bekalan"
+    },
+    "doc_parser": {
+      "document_types": [
+        {
+          "id": "production_order",
+          "name": "生产工单",
+          "name_en": "Production Order",
+          "name_vi": "Lệnh sản xuất",
+          "name_ms": "Perintah Pengeluaran",
+          "description": "生产任务下达与执行单据",
+          "description_en": "Production task assignment and execution document",
+          "description_vi": "Chứng từ giao và thực hiện nhiệm vụ sản xuất",
+          "description_ms": "Dokumen penugasan dan pelaksanaan tugas pengeluaran"
+        },
+        {
+          "id": "qc_report",
+          "name": "质检报告",
+          "name_en": "QC Report",
+          "name_vi": "Báo cáo kiểm tra chất lượng",
+          "name_ms": "Laporan Kawalan Kualiti",
+          "description": "产品质量检验记录",
+          "description_en": "Product quality inspection record",
+          "description_vi": "Hồ sơ kiểm tra chất lượng sản phẩm",
+          "description_ms": "Rekod pemeriksaan kualiti produk"
+        },
+        {
+          "id": "maintenance_record",
+          "name": "设备维护记录",
+          "name_en": "Maintenance Record",
+          "name_vi": "Hồ sơ bảo trì thiết bị",
+          "name_ms": "Rekod Penyelenggaraan",
+          "description": "设备保养与维修记录",
+          "description_en": "Equipment maintenance and repair record",
+          "description_vi": "Hồ sơ bảo dưỡng và sửa chữa thiết bị",
+          "description_ms": "Rekod penyelenggaraan dan pembaikan peralatan"
+        },
+        {
+          "id": "sop_document",
+          "name": "作业指导书",
+          "name_en": "SOP Document",
+          "name_vi": "Hướng dẫn thao tác chuẩn",
+          "name_ms": "Dokumen SOP",
+          "description": "标准作业程序文件",
+          "description_en": "Standard operating procedure document",
+          "description_vi": "Tài liệu quy trình thao tác chuẩn",
+          "description_ms": "Dokumen prosedur operasi standard"
+        }
+      ],
+      "field_rules": {
+        "production_order": [
+          "工单号",
+          "产品名称",
+          "产品编码",
+          "计划数量",
+          "生产日期",
+          "完工日期",
+          "产线",
+          "工序",
+          "负责人",
+          "状态"
+        ],
+        "qc_report": [
+          "报告编号",
+          "产品批次",
+          "检验项目",
+          "规格要求",
+          "实测值",
+          "判定结果",
+          "检验员",
+          "检验日期",
+          "备注"
+        ],
+        "maintenance_record": [
+          "设备编号",
+          "设备名称",
+          "维护类型",
+          "维护日期",
+          "维护内容",
+          "维护人员",
+          "更换零件",
+          "下次维护日期"
+        ],
+        "sop_document": [
+          "文件编号",
+          "产品名称",
+          "工序编号",
+          "工序名称",
+          "操作步骤",
+          "质量标准",
+          "设备参数",
+          "安全注意事项"
+        ]
+      },
+      "prompt_templates": {
+        "default": "你是一位制造业文档处理专家。从以下{doc_type}提取结构化字段。\n内容：{document_text}\n字段：{fields}\n返回JSON。",
+        "production_order": "你是一位生产管理专家。从生产工单提取：工单号、产品、数量、日期、产线、负责人、状态。返回JSON。\n内容：{document_text}",
+        "qc_report": "你是一位质量工程师。从质检报告提取：报告编号、批次、检验项目、规格值、实测值、判定结果。返回JSON。\n内容：{document_text}"
+      }
+    },
+    "demand_forecast": {
+      "metrics": [
+        {
+          "key": "output_qty",
+          "name": "产量",
+          "name_en": "Output",
+          "name_vi": "Sản lượng",
+          "name_ms": "Keluaran",
+          "unit": "件",
+          "unit_en": "units",
+          "unit_vi": "sản phẩm",
+          "unit_ms": "unit"
+        },
+        {
+          "key": "equipment_utilization",
+          "name": "设备利用率",
+          "name_en": "Equipment Utilization",
+          "name_vi": "Tỷ lệ sử dụng thiết bị",
+          "name_ms": "Penggunaan Peralatan",
+          "unit": "%",
+          "unit_en": "%",
+          "unit_vi": "%",
+          "unit_ms": "%"
+        },
+        {
+          "key": "delivery_rate",
+          "name": "交货达成率",
+          "name_en": "Delivery Rate",
+          "name_vi": "Tỷ lệ giao hàng",
+          "name_ms": "Kadar Penghantaran",
+          "unit": "%",
+          "unit_en": "%",
+          "unit_vi": "%",
+          "unit_ms": "%"
+        }
+      ],
+      "default_periods": 30,
+      "algorithm": "moving_average"
+    },
+    "ai_agent": {
+      "system_prompt": "你是一位资深制造业专家，精通生产排程、设备管理、质量控制、精益生产和工业4.0。请用专业、简洁的中文回答企业用户的问题。回答应包含具体操作建议。",
+      "system_prompt_en": "You are a senior manufacturing expert, expert in production scheduling, equipment management, quality control, lean manufacturing and Industry 4.0. Answer questions in professional, concise English. Include actionable recommendations.",
+      "system_prompt_vi": "Bạn là chuyên gia sản xuất cao cấp, thành thạo lịch sản xuất, quản lý thiết bị, kiểm soát chất lượng, Lean Manufacturing và Công nghiệp 4.0. Trả lời bằng tiếng Việt chuyên nghiệp. Bao gồm đề xuất cụ thể.",
+      "system_prompt_ms": "Anda adalah pakar pembuatan kanan, pakar dalam penjadualan pengeluaran, pengurusan peralatan, kawalan kualiti, pembuatan tanpa lemak dan Industri 4.0. Jawab dalam Bahasa Melayu profesional. Sertakan cadangan yang boleh diambil tindakan.",
+      "greeting": "您好！我是智能制造AI助手，可以为您解答生产排程、设备维护、质量控制等问题。请提出您的问题。",
+      "greeting_en": "Hello! I am your Smart Manufacturing AI assistant. I can help with production scheduling, equipment maintenance, quality control, and more. Please ask your question.",
+      "greeting_vi": "Xin chào! Tôi là trợ lý AI Sản xuất Thông minh. Tôi có thể giúp bạn về lịch sản xuất, bảo trì thiết bị, kiểm soát chất lượng, v.v.",
+      "greeting_ms": "Helo! Saya adalah pembantu AI Pembuatan Pintar. Saya boleh membantu dengan penjadualan pengeluaran, penyelenggaraan peralatan, kawalan kualiti, dan banyak lagi.",
+      "capabilities": [
+        "生产调度优化",
+        "设备故障诊断",
+        "质量异常分析",
+        "供应链协同",
+        "工业数据分析"
+      ],
+      "capabilities_en": [
+        "Production Scheduling",
+        "Equipment Diagnostics",
+        "Quality Analysis",
+        "Supply Chain Coordination",
+        "Industrial Data Analytics"
+      ],
+      "capabilities_vi": [
+        "Tối ưu hóa điều độ sản xuất",
+        "Chẩn đoán lỗi thiết bị",
+        "Phân tích bất thường chất lượng",
+        "Phối hợp chuỗi cung ứng",
+        "Phân tích dữ liệu công nghiệp"
+      ],
+      "capabilities_ms": [
+        "Penjadualan Pengeluaran",
+        "Diagnostik Peralatan",
+        "Analisis Kualiti",
+        "Koordinasi Rantaian Bekalan",
+        "Analitis Data Perindustrian"
+      ],
+      "batch_generation_prompts": {
+        "marketing": "请为以下{company_name}公司撰写一份面向{target_market}市场的英文营销邮件，突出其{product}的核心优势。要求：专业、简洁、有说服力。",
+        "invitation": "请为{company_name}公司撰写一份展会邀约函，邀请客户参观其在{exhibition_name}的展位。展会信息：{exhibition_info}。要求：礼貌、专业、突出参展亮点。"
+      },
+      "kb_keywords": [
+        "生产排程",
+        "设备维护",
+        "质量控制",
+        "精益生产",
+        "工业4.0",
+        "OEE",
+        "SPC",
+        "TPM",
+        "MES",
+        "ERP",
+        "数字孪生",
+        "物联网",
+        "预测维护",
+        "良率",
+        "产能"
+      ],
+      "kb_keywords_en": [
+        "production scheduling",
+        "equipment maintenance",
+        "quality control",
+        "lean manufacturing",
+        "Industry 4.0",
+        "OEE",
+        "SPC",
+        "TPM",
+        "MES",
+        "ERP",
+        "digital twin",
+        "IoT",
+        "predictive maintenance",
+        "yield",
+        "capacity"
+      ],
+      "kb_keywords_vi": [
+        "lịch sản xuất",
+        "bảo trì thiết bị",
+        "kiểm soát chất lượng",
+        "sản xuất tinh gọn",
+        "Công nghiệp 4.0",
+        "OEE",
+        "SPC",
+        "TPM",
+        "MES",
+        "ERP",
+        "bản sao số",
+        "IoT",
+        "bảo trì dự đoán",
+        "tỷ lệ đạt",
+        "năng lực"
+      ],
+      "kb_keywords_ms": [
+        "penjadualan pengeluaran",
+        "penyelenggaraan peralatan",
+        "kawalan kualiti",
+        "pembuatan tanpa lemak",
+        "Industri 4.0",
+        "OEE",
+        "SPC",
+        "TPM",
+        "MES",
+        "ERP",
+        "kembar digital",
+        "IoT",
+        "penyelenggaraan ramalan",
+        "hasil",
+        "kapasiti"
+      ]
+    },
+    "risk_control": {
+      "risk_labels": [
+        {
+          "id": "equipment_abnormal",
+          "name": "设备异常",
+          "name_en": "Equipment Abnormality",
+          "name_vi": "Bất thường thiết bị",
+          "name_ms": "Keabnormalan Peralatan",
+          "severity": "high",
+          "description": "设备振动/温度等参数超限，存在故障风险",
+          "description_en": "Equipment vibration/temperature parameters exceed limits, risk of failure",
+          "description_vi": "Thông số rung/nhiệt độ thiết bị vượt ngưỡng, rủi ro hỏng hóc",
+          "description_ms": "Parameter getaran/suhu peralatan melebihi had, risiko kegagalan"
+        },
+        {
+          "id": "quality_defect",
+          "name": "质量缺陷",
+          "name_en": "Quality Defect",
+          "name_vi": "Lỗi chất lượng",
+          "name_ms": "Kecacatan Kualiti",
+          "severity": "medium",
+          "description": "产品不良率超过控制上限",
+          "description_en": "Product defect rate exceeds control limit",
+          "description_vi": "Tỷ lệ lỗi sản phẩm vượt quá giới hạn kiểm soát",
+          "description_ms": "Kadar kecacatan produk melebihi had kawalan"
+        },
+        {
+          "id": "production_delay",
+          "name": "生产延误",
+          "name_en": "Production Delay",
+          "name_vi": "Chậm trễ sản xuất",
+          "name_ms": "Kelewatan Pengeluaran",
+          "severity": "low",
+          "description": "订单交期可能延误",
+          "description_en": "Order delivery may be delayed",
+          "description_vi": "Có thể chậm trễ giao hàng đơn hàng",
+          "description_ms": "Penghantaran pesanan mungkin tertunda"
+        }
+      ],
+      "rules": [
+        {
+          "id": "rule_vibration",
+          "label": "equipment_abnormal",
+          "condition": "振动值>4.5",
+          "condition_en": "Vibration>4.5",
+          "condition_vi": "Rung động>4.5",
+          "condition_ms": "Getaran>4.5",
+          "threshold": 4.5
+        },
+        {
+          "id": "rule_defect_rate",
+          "label": "quality_defect",
+          "condition": "不良率>3%",
+          "condition_en": "Defect rate>3%",
+          "condition_vi": "Tỷ lệ lỗi>3%",
+          "condition_ms": "Kadar kecacatan>3%",
+          "threshold": 3.0
+        },
+        {
+          "id": "rule_delivery",
+          "label": "production_delay",
+          "condition": "产能负荷>95%",
+          "condition_en": "Capacity load>95%",
+          "condition_vi": "Tải năng lực>95%",
+          "condition_ms": "Beban kapasiti>95%",
+          "threshold": 95.0
+        }
+      ]
+    },
+    "chatbi": {
+      "table_schemas": [
+        {
+          "name": "生产日报汇总",
+          "name_en": "Daily Production Summary",
+          "name_vi": "Tổng hợp Sản xuất Hàng ngày",
+          "name_ms": "Ringkasan Pengeluaran Harian",
+          "columns": [
+            "日期",
+            "产线",
+            "计划产量",
+            "实际产量",
+            "良品数",
+            "不良品数",
+            "良率Pct",
+            "设备OEEPct"
+          ],
+          "columns_en": [
+            "Date",
+            "Line",
+            "Planned Output",
+            "Actual Output",
+            "Good Units",
+            "Defective Units",
+            "Yield Pct",
+            "OEE Pct"
+          ],
+          "columns_vi": [
+            "Ngày",
+            "Dây chuyền",
+            "Sản lượng KH",
+            "Sản lượng TT",
+            "SP Đạt",
+            "SP Lỗi",
+            "Tỷ lệ Đạt",
+            "OEE Pct"
+          ],
+          "columns_ms": [
+            "Tarikh",
+            "Barisan",
+            "Keluaran Dirancang",
+            "Keluaran Sebenar",
+            "Unit Baik",
+            "Unit Rosak",
+            "Hasil Pct",
+            "OEE Pct"
+          ],
+          "primary_key": "日期",
+          "primary_key_en": "Date",
+          "primary_key_vi": "Ngày",
+          "primary_key_ms": "Tarikh"
+        },
+        {
+          "name": "设备状态监控",
+          "name_en": "Equipment Status Monitor",
+          "name_vi": "Giám sát Trạng thái Thiết bị",
+          "name_ms": "Pemantau Status Peralatan",
+          "columns": [
+            "设备编号",
+            "设备名称",
+            "运行状态",
+            "转速RPM",
+            "温度C",
+            "振动mmPerS",
+            "运行时长H",
+            "下次维护日"
+          ],
+          "columns_en": [
+            "Equipment ID",
+            "Equipment Name",
+            "Running Status",
+            "RPM",
+            "Temp C",
+            "Vibration mm/s",
+            "Run Hours",
+            "Next Maintenance Date"
+          ],
+          "columns_vi": [
+            "Mã TB",
+            "Tên TB",
+            "Trạng thái",
+            "RPM",
+            "Nhiệt độ C",
+            "Rung mm/s",
+            "Giờ HĐ",
+            "Ngày BT Tiếp theo"
+          ],
+          "columns_ms": [
+            "ID Peralatan",
+            "Nama Peralatan",
+            "Status",
+            "RPM",
+            "Suhu C",
+            "Getaran mm/s",
+            "Jam Operasi",
+            "Tarikh Penyelenggaraan Seterusnya"
+          ],
+          "primary_key": "设备编号",
+          "primary_key_en": "Equipment ID",
+          "primary_key_vi": "Mã TB",
+          "primary_key_ms": "ID Peralatan"
+        }
+      ],
+      "query_prompt": "你是一位制造业数据分析师。用户问：{user_query}\n数据表：{tables}\n生成查询逻辑JSON，包含表名、筛选条件、聚合字段。"
+    }
+  },
+  "finance": {
+    "basic": {
+      "name": "金融",
+      "name_en": "Finance",
+      "name_vi": "Tài chính",
+      "name_ms": "Kewangan",
+      "description": "覆盖信贷审批、理财销售、保险核保、反欺诈、合规监管等场景",
+      "description_en": "Credit approval, wealth management sales, insurance underwriting, anti-fraud, compliance monitoring",
+      "description_vi": "Bao gồm phê duyệt tín dụng, bán hàng quản lý tài sản, bảo hiểm, chống gian lận, giám sát tuân thủ",
+      "description_ms": "Merangkumi kelulusan kredit, jualan pengurusan kekayaan, pengunderaitan insurans, anti-penipuan, pematuhan kawal selia"
+    },
+    "doc_parser": {
+      "document_types": [
+        {
+          "id": "loan_contract",
+          "name": "信贷合同",
+          "name_en": "Loan Contract",
+          "name_vi": "Hợp đồng tín dụng",
+          "name_ms": "Kontrak Pinjaman",
+          "description": "银行与客户签订的贷款协议",
+          "description_en": "Loan agreement between bank and customer",
+          "description_vi": "Thỏa thuận vay giữa ngân hàng và khách hàng",
+          "description_ms": "Perjanjian pinjaman antara bank dan pelanggan"
+        },
+        {
+          "id": "wealth_management_subscription",
+          "name": "理财认购协议",
+          "name_en": "Wealth Management Subscription",
+          "name_vi": "Hợp đồng mua sản phẩm quản lý tài sản",
+          "name_ms": "Langganan Pengurusan Kekayaan",
+          "description": "理财产品认购合同",
+          "description_en": "Wealth management product subscription contract",
+          "description_vi": "Hợp đồng mua sản phẩm quản lý tài sản",
+          "description_ms": "Kontrak langganan produk pengurusan kekayaan"
+        },
+        {
+          "id": "insurance_contract",
+          "name": "保险合同",
+          "name_en": "Insurance Contract",
+          "name_vi": "Hợp đồng bảo hiểm",
+          "name_ms": "Kontrak Insurans",
+          "description": "保险公司承保凭证",
+          "description_en": "Insurance policy document",
+          "description_vi": "Chứng từ bảo hiểm",
+          "description_ms": "Dokumen polisi insurans"
+        }
+      ],
+      "field_rules": {
+        "loan_contract": [
+          "合同编号",
+          "借款人",
+          "贷款金额",
+          "贷款期限",
+          "利率",
+          "还款方式",
+          "担保方式",
+          "放款日期",
+          "到期日期",
+          "状态"
+        ],
+        "wealth_management_subscription": [
+          "产品代码",
+          "产品名称",
+          "投资者",
+          "认购金额",
+          "认购日期",
+          "到期日期",
+          "预期收益率",
+          "风险等级",
+          "状态"
+        ],
+        "insurance_contract": [
+          "保单号",
+          "投保人",
+          "被保险人",
+          "险种",
+          "保额",
+          "保费",
+          "保险期间",
+          "生效日期",
+          "状态"
+        ]
+      },
+      "prompt_templates": {
+        "default": "你是一位金融文档处理专家。从以下{doc_type}提取结构化字段。\n内容：{document_text}\n字段：{fields}\n返回JSON。",
+        "loan_contract": "你是一位信贷专家。从贷款合同提取：合同编号、借款人、金额、期限、利率。返回JSON。\n内容：{document_text}",
+        "wealth_management_subscription": "你是一位理财专家。从认购协议提取：产品代码、投资者、金额、期限、收益率。返回JSON。\n内容：{document_text}"
+      }
+    },
+    "demand_forecast": {
+      "metrics": [
+        {
+          "key": "wealth_management_sales",
+          "name": "理财销量",
+          "name_en": "Wealth Mgmt Sales",
+          "name_vi": "Doanh số bán quản lý tài sản",
+          "name_ms": "Jualan Pengurusan Kekayaan",
+          "unit": "亿元",
+          "unit_en": "100M CNY",
+          "unit_vi": "trăm triệu NDT",
+          "unit_ms": "100M RMB"
+        },
+        {
+          "key": "credit_volume",
+          "name": "信贷投放量",
+          "name_en": "Credit Volume",
+          "name_vi": "Khối lượng tín dụng",
+          "name_ms": " volum Kredit",
+          "unit": "亿元",
+          "unit_en": "100M CNY",
+          "unit_vi": "trăm triệu NDT",
+          "unit_ms": "100M RMB"
+        },
+        {
+          "key": "premium_income",
+          "name": "保费收入",
+          "name_en": "Premium Income",
+          "name_vi": "Doanh thu phí bảo hiểm",
+          "name_ms": "Pendapatan Premium",
+          "unit": "亿元",
+          "unit_en": "100M CNY",
+          "unit_vi": "trăm triệu NDT",
+          "unit_ms": "100M RMB"
+        }
+      ],
+      "default_periods": 30,
+      "algorithm": "moving_average"
+    },
+    "ai_agent": {
+      "system_prompt": "你是一位资深金融专家，精通信贷审批、理财规划、保险核保、反欺诈和金融合规。请用专业、简洁的中文回答企业用户的问题。回答应包含具体操作建议。",
+      "system_prompt_en": "You are a senior financial expert, expert in credit approval, wealth planning, insurance underwriting, anti-fraud and financial compliance. Answer in professional, concise English. Include actionable recommendations.",
+      "system_prompt_vi": "Bạn là chuyên gia tài chính cao cấp, thành thạo phê duyệt tín dụng, lập kế hoạch tài chính, bảo hiểm, chống gian lận và tuân thủ tài chính. Trả lời bằng tiếng Việt chuyên nghiệp.",
+      "system_prompt_ms": "Anda adalah pakar kewangan kanan, pakar dalam kelulusan kredit, perancangan kekayaan, pengunderaitan insurans, anti-penipuan dan pematuhan kewangan. Jawab dalam Bahasa Melayu profesional.",
+      "greeting": "您好！我是金融AI助手，可以为您解答信贷审批、理财规划、保险理赔、反欺诈等问题。请提出您的问题。",
+      "greeting_en": "Hello! I am your Finance AI assistant. I can help with credit approval, wealth planning, insurance claims, anti-fraud, and more.",
+      "greeting_vi": "Xin chào! Tôi là trợ lý AI Tài chính. Tôi có thể giúp bạn về phê duyệt tín dụng, lập kế hoạch tài chính, bảo hiểm, chống gian lận, v.v.",
+      "greeting_ms": "Helo! Saya adalah pembantu AI Kewangan. Saya boleh membantu dengan kelulusan kredit, perancangan kekayaan, tuntutan insurans, anti-penipuan, dan banyak lagi.",
+      "capabilities": [
+        "信贷审批咨询",
+        "理财规划建议",
+        "保险理赔指导",
+        "反欺诈分析",
+        "金融合规咨询"
+      ],
+      "capabilities_en": [
+        "Credit Approval",
+        "Wealth Planning",
+        "Insurance Claims",
+        "Anti-fraud Analysis",
+        "Financial Compliance"
+      ],
+      "capabilities_vi": [
+        "Tư vấn phê duyệt tín dụng",
+        "Tư vấn lập kế hoạch tài chính",
+        "Hướng dẫn bồi thường bảo hiểm",
+        "Phân tích chống gian lận",
+        "Tư vấn tuân thủ tài chính"
+      ],
+      "capabilities_ms": [
+        "Kelulusan Kredit",
+        "Perancangan Kekayaan",
+        "Tuntutan Insurans",
+        "Analisis Anti-Penipuan",
+        "Pematuhan Kewangan"
+      ],
+      "batch_generation_prompts": {
+        "marketing": "请为以下{company_name}公司撰写一份面向{target_market}市场的英文营销邮件，突出其{product}的核心优势。要求：专业、简洁、有说服力。",
+        "invitation": "请为{company_name}公司撰写一份展会邀约函，邀请客户参观其在{exhibition_name}的展位。展会信息：{exhibition_info}。要求：礼貌、专业、突出参展亮点。"
+      },
+      "kb_keywords": [
+        "信贷",
+        "理财",
+        "保险",
+        "反欺诈",
+        "合规",
+        "KYC",
+        "AML",
+        "风险评估",
+        "信用评级",
+        "投资",
+        "基金",
+        "证券",
+        "信托",
+        "担保",
+        "抵押"
+      ],
+      "kb_keywords_en": [
+        "credit",
+        "wealth management",
+        "insurance",
+        "anti-fraud",
+        "compliance",
+        "KYC",
+        "AML",
+        "risk assessment",
+        "credit rating",
+        "investment",
+        "fund",
+        "securities",
+        "trust",
+        "guarantee",
+        "mortgage"
+      ],
+      "kb_keywords_vi": [
+        "tín dụng",
+        "quản lý tài sản",
+        "bảo hiểm",
+        "chống gian lận",
+        "tuân thủ",
+        "KYC",
+        "AML",
+        "đánh giá rủi ro",
+        "xếp hạng tín dụng",
+        "đầu tư",
+        "quỹ",
+        "chứng khoán",
+        "ủy thác",
+        "bảo lãnh",
+        "thế chấp"
+      ],
+      "kb_keywords_ms": [
+        "kredit",
+        "pengurusan kekayaan",
+        "insurans",
+        "anti-penipuan",
+        "pematuhan",
+        "KYC",
+        "AML",
+        "penilaian risiko",
+        "penarafan kredit",
+        "pelaburan",
+        "dana",
+        "sekuriti",
+        "amanah",
+        "jaminan",
+        "gadai janji"
+      ]
+    },
+    "risk_control": {
+      "risk_labels": [
+        {
+          "id": "fraud_risk",
+          "name": "欺诈风险",
+          "name_en": "Fraud Risk",
+          "name_vi": "Rủi ro gian lận",
+          "name_ms": "Risiko Penipuan",
+          "severity": "high",
+          "description": "异常交易模式，疑似欺诈行为",
+          "description_en": "Abnormal transaction pattern, suspected fraud",
+          "description_vi": "Mô hình giao dịch bất thường, nghi ngờ gian lận",
+          "description_ms": "Corak transaksi tidak normal, disyaki penipuan"
+        },
+        {
+          "id": "credit_risk",
+          "name": "信用风险",
+          "name_en": "Credit Risk",
+          "name_vi": "Rủi ro tín dụng",
+          "name_ms": "Risiko Kredit",
+          "severity": "medium",
+          "description": "借款人还款能力或意愿下降",
+          "description_en": "Borrower's repayment ability or willingness declining",
+          "description_vi": "Khả năng hoặc ý định trả nợ của người vay giảm",
+          "description_ms": "Keupayaan atau kesediaan pembayaran balik peminjam menurun"
+        },
+        {
+          "id": "compliance_risk",
+          "name": "合规风险",
+          "name_en": "Compliance Risk",
+          "name_vi": "Rủi ro tuân thủ",
+          "name_ms": "Risiko Pematuhan",
+          "severity": "high",
+          "description": "可能违反监管规定的业务操作",
+          "description_en": "Business operations that may violate regulatory requirements",
+          "description_vi": "Hoạt động kinh doanh có thể vi phạm quy định giám sát",
+          "description_ms": "Operasi perniagaan yang mungkin melanggar keperluan kawal selia"
+        },
+        {
+          "id": "market_risk",
+          "name": "市场风险",
+          "name_en": "Market Risk",
+          "name_vi": "Rủi ro thị trường",
+          "name_ms": "Risiko Pasaran",
+          "severity": "low",
+          "description": "市场波动导致资产价值下跌",
+          "description_en": "Market volatility causing asset value decline",
+          "description_vi": "Biến động thị trường làm giảm giá trị tài sản",
+          "description_ms": "Turun naik pasaran menyebabkan penurunan nilai aset"
+        }
+      ],
+      "rules": [
+        {
+          "id": "rule_fraud",
+          "label": "fraud_risk",
+          "condition": "交易频次>10次/天",
+          "condition_en": "Tx frequency>10/day",
+          "condition_vi": "Tần suất GD>10/ngày",
+          "condition_ms": "Kekerapan transaksi>10/hari",
+          "threshold": 10
+        },
+        {
+          "id": "rule_credit",
+          "label": "credit_risk",
+          "condition": "逾期天数>30",
+          "condition_en": "Overdue days>30",
+          "condition_vi": "Ngày quá hạn>30",
+          "condition_ms": "Hari tertunggak>30",
+          "threshold": 30
+        },
+        {
+          "id": "rule_compliance",
+          "label": "compliance_risk",
+          "condition": "金额>500万",
+          "condition_en": "Amount>5M",
+          "condition_vi": "Số tiền>5 triệu",
+          "condition_ms": "Jumlah>5 juta",
+          "threshold": 500
+        }
+      ]
+    },
+    "chatbi": {
+      "table_schemas": [
+        {
+          "name": "理财销售明细",
+          "name_en": "Wealth Management Sales",
+          "name_vi": "Chi tiết Bán hàng Quản lý Tài sản",
+          "name_ms": "Jualan Pengurusan Kekayaan",
+          "columns": [
+            "产品代码",
+            "产品名称",
+            "投资者",
+            "认购金额",
+            "认购日期",
+            "到期日期",
+            "预期收益率",
+            "风险等级",
+            "销售渠道"
+          ],
+          "columns_en": [
+            "Product Code",
+            "Product Name",
+            "Investor",
+            "Subscription Amount",
+            "Subscription Date",
+            "Maturity Date",
+            "Expected Yield",
+            "Risk Level",
+            "Sales Channel"
+          ],
+          "columns_vi": [
+            "Mã SP",
+            "Tên SP",
+            "Nhà ĐT",
+            "Số tiền MH",
+            "Ngày MH",
+            "Ngày ĐH",
+            "Lợi suất",
+            "Mức RR",
+            "Kênh BH"
+          ],
+          "columns_ms": [
+            "Kod Produk",
+            "Nama Produk",
+            "Pelabur",
+            "Jumlah Langganan",
+            "Tarikh Langganan",
+            "Tarikh Matang",
+            "Hasil Dijangka",
+            "Tahap Risiko",
+            "Saluran Jualan"
+          ],
+          "primary_key": "产品代码",
+          "primary_key_en": "Product Code",
+          "primary_key_vi": "Mã SP",
+          "primary_key_ms": "Kod Produk"
+        },
+        {
+          "name": "信贷审批跟踪",
+          "name_en": "Credit Approval Tracker",
+          "name_vi": "Theo dõi Phê duyệt Tín dụng",
+          "name_ms": "Penjejak Kelulusan Kredit",
+          "columns": [
+            "申请编号",
+            "申请人",
+            "贷款金额",
+            "期限",
+            "利率",
+            "审批状态",
+            "审批人",
+            "审批日期"
+          ],
+          "columns_en": [
+            "Application ID",
+            "Applicant",
+            "Loan Amount",
+            "Term",
+            "Rate",
+            "Approval Status",
+            "Approver",
+            "Approval Date"
+          ],
+          "columns_vi": [
+            "Mã Đơn",
+            "Người Vay",
+            "Số tiền Vay",
+            "Thời hạn",
+            "Lãi suất",
+            "Trạng thái",
+            "Người PD",
+            "Ngày PD"
+          ],
+          "columns_ms": [
+            "ID Permohonan",
+            "Pemohon",
+            "Jumlah Pinjaman",
+            "Tempoh",
+            "Kadar",
+            "Status Kelulusan",
+            "Pelulus",
+            "Tarikh Kelulusan"
+          ],
+          "primary_key": "申请编号",
+          "primary_key_en": "Application ID",
+          "primary_key_vi": "Mã Đơn",
+          "primary_key_ms": "ID Permohonan"
+        }
+      ],
+      "query_prompt": "你是一位金融数据分析师。用户问：{user_query}\n数据表：{tables}\n生成查询逻辑JSON。"
+    }
+  },
+  "shipping_logistics": {
+    "basic": {
+      "name": "航运物流",
+      "name_en": "Shipping & Logistics",
+      "name_vi": "Vận tải Biển & Logistics",
+      "name_ms": "Perkapalan & Logistik",
+      "description": "覆盖海运订舱、报关报检、仓储管理、在途追踪、货损理赔等场景",
+      "description_en": "Shipping booking, customs clearance, warehouse management, in-transit tracking, cargo damage claims",
+      "description_vi": "Bao gồm đặt chỗ vận tải biển, khai báo hải quan, quản lý kho, theo dõi hành trình, bồi thường hỏng hóc",
+      "description_ms": "Merangkumi tempahan penghantaran, pelepasan kastam, pengurusan gudang, penjejakan dalam transit, tuntutan kerosakan kargo"
+    },
+    "doc_parser": {
+      "document_types": [
+        {
+          "id": "shipping_booking",
+          "name": "海运订舱单",
+          "name_en": "Shipping Booking Note",
+          "name_vi": "Phiếu đặt chỗ vận tải biển",
+          "name_ms": "Nota Tempahan Perkapalan",
+          "description": "货主向船公司订舱的申请单据",
+          "description_en": "Shipper's application for cargo space booking",
+          "description_vi": "Chứng từ yêu cầu đặt chỗ của chủ hàng",
+          "description_ms": "Dokumen permohonan tempahan ruang kargo oleh penghantar"
+        },
+        {
+          "id": "cargo_manifest",
+          "name": "舱单",
+          "name_en": "Cargo Manifest",
+          "name_vi": "Bản kê hàng hóa",
+          "name_ms": "Manifes Kargo",
+          "description": "船舶所载全部货物的汇总清单",
+          "description_en": "Summary list of all cargo on board",
+          "description_vi": "Danh sách tổng hợp tất cả hàng hóa trên tàu",
+          "description_ms": "Senarai ringkasan semua kargo di atas kapal"
+        },
+        {
+          "id": "warehouse_receipt",
+          "name": "仓储入库单",
+          "name_en": "Warehouse Receipt",
+          "name_vi": "Phiếu nhập kho",
+          "name_ms": "Resit Gudang",
+          "description": "货物入库凭证",
+          "description_en": "Cargo warehouse entry receipt",
+          "description_vi": "Biên nhận nhập kho hàng hóa",
+          "description_ms": "Resit kemasukan gudang kargo"
+        }
+      ],
+      "field_rules": {
+        "shipping_booking": [
+          "订舱号",
+          "货主",
+          "船名",
+          "航次",
+          "装货港",
+          "卸货港",
+          "集装箱号",
+          "货物品名",
+          "件数",
+          "毛重",
+          "体积",
+          "预计离港日"
+        ],
+        "cargo_manifest": [
+          "舱单编号",
+          "船名",
+          "航次",
+          "出发港",
+          "目的港",
+          "集装箱数",
+          "总件数",
+          "总毛重",
+          "总立方",
+          "签发日期"
+        ],
+        "warehouse_receipt": [
+          "入库单号",
+          "货物名称",
+          "入库日期",
+          "入库数量",
+          "库存单位",
+          "存放位置",
+          "货主",
+          "仓库管理员",
+          "备注"
+        ]
+      },
+      "prompt_templates": {
+        "default": "你是一位航运物流文档处理专家。从以下{doc_type}提取结构化字段。\n内容：{document_text}\n字段：{fields}\n返回JSON。",
+        "shipping_booking": "你是一位船务专家。从订舱单提取：订舱号、货主、船名、航次、装卸港。返回JSON。\n内容：{document_text}"
+      }
+    },
+    "demand_forecast": {
+      "metrics": [
+        {
+          "key": "cargo_volume",
+          "name": "货运量",
+          "name_en": "Cargo Volume",
+          "name_vi": "Khối lượng hàng hóa",
+          "name_ms": " volum Kargo",
+          "unit": "万吨",
+          "unit_en": "10K tons",
+          "unit_vi": "nghìn tấn",
+          "unit_ms": "ribu tan"
+        },
+        {
+          "key": "vessel_utilization",
+          "name": "船舶装载率",
+          "name_en": "Vessel Utilization",
+          "name_vi": "Tỷ lệ chất xếp tàu",
+          "name_ms": "Penggunaan Kapal",
+          "unit": "%",
+          "unit_en": "%",
+          "unit_vi": "%",
+          "unit_ms": "%"
+        },
+        {
+          "key": "order_fulfillment",
+          "name": "订单满足率",
+          "name_en": "Order Fulfillment Rate",
+          "name_vi": "Tỷ lệ đáp ứng đơn hàng",
+          "name_ms": "Kadar Pemenuhan Pesanan",
+          "unit": "%",
+          "unit_en": "%",
+          "unit_vi": "%",
+          "unit_ms": "%"
+        }
+      ],
+      "default_periods": 30,
+      "algorithm": "moving_average"
+    },
+    "ai_agent": {
+      "system_prompt": "你是一位资深航运物流专家，精通海运订舱、报关报检、仓储管理、国际货运和供应链管理。请用专业、简洁的中文回答企业用户的问题。回答应包含具体操作建议。",
+      "system_prompt_en": "You are a senior shipping & logistics expert, expert in shipping booking, customs clearance, warehouse management, international freight, and supply chain management. Answer in professional, concise English. Include actionable recommendations.",
+      "system_prompt_vi": "Bạn là chuyên gia vận tải & logistics cao cấp, thành thạo đặt chỗ vận tải biển, khai báo hải quan, quản lý kho, vận chuyển quốc tế. Trả lời bằng tiếng Việt chuyên nghiệp.",
+      "system_prompt_ms": "Anda adalah pakar perkapalan & logistik kanan, pakar dalam tempahan penghantaran, pelepasan kastam, pengurusan gudang, pengangkutan antarabangsa. Jawab dalam Bahasa Melayu profesional.",
+      "greeting": "您好！我是航运物流AI助手，可以为您解答海运订舱、报关报检、仓储管理、货运追踪等问题。请提出您的问题。",
+      "greeting_en": "Hello! I am your Shipping & Logistics AI assistant. I can help with shipping booking, customs clearance, warehouse management, cargo tracking, and more.",
+      "greeting_vi": "Xin chào! Tôi là trợ lý AI Vận tải & Logistics. Tôi có thể giúp bạn về đặt chỗ vận tải, khai báo hải quan, quản lý kho, theo dõi hàng hóa, v.v.",
+      "greeting_ms": "Helo! Saya adalah pembantu AI Perkapalan & Logistik. Saya boleh membantu dengan tempahan penghantaran, pelepasan kastam, pengurusan gudang, penjejakan kargo, dan banyak lagi.",
+      "capabilities": [
+        "订舱与航线优化",
+        "报关报检协同",
+        "仓储库存管理",
+        "货运实时追踪",
+        "供应链可视化管理"
+      ],
+      "capabilities_en": [
+        "Booking & Route Optimization",
+        "Customs Coordination",
+        "Warehouse Inventory Management",
+        "Real-time Cargo Tracking",
+        "Supply Chain Visibility"
+      ],
+      "capabilities_vi": [
+        "Đặt chỗ & Tối ưu tuyến đường",
+        "Phối hợp khai báo hải quan",
+        "Quản lý kho hàng",
+        "Theo dõi hàng hóa thời gian thực",
+        "Quản lý chuỗi cung ứng"
+      ],
+      "capabilities_ms": [
+        "Tempahan & Pengoptimuman Laluan",
+        "Koordinasi Kastam",
+        "Pengurusan Inventori Gudang",
+        "Penjejakan Kargo Masa Nyata",
+        "Keterlihatan Rantaian Bekalan"
+      ],
+      "batch_generation_prompts": {
+        "marketing": "请为以下{company_name}公司撰写一份面向{target_market}市场的英文营销邮件，突出其{product}的核心优势。要求：专业、简洁、有说服力。",
+        "invitation": "请为{company_name}公司撰写一份展会邀约函，邀请客户参观其在{exhibition_name}的展位。展会信息：{exhibition_info}。要求：礼貌、专业、突出参展亮点。"
+      },
+      "kb_keywords": [
+        "海运",
+        "空运",
+        "陆运",
+        "报关",
+        "报检",
+        "仓储",
+        "货运",
+        "集装箱",
+        "提单",
+        "码头",
+        "海关",
+        "商检",
+        "FOB",
+        "CIF",
+        "DDP"
+      ],
+      "kb_keywords_en": [
+        "shipping",
+        "air freight",
+        "land transport",
+        "customs clearance",
+        "inspection",
+        "warehousing",
+        "cargo",
+        "container",
+        "bill of lading",
+        "terminal",
+        "customs",
+        "commodity inspection",
+        "FOB",
+        "CIF",
+        "DDP"
+      ],
+      "kb_keywords_vi": [
+        "vận tải biển",
+        "vận tải hàng không",
+        "vận tải đường bộ",
+        "khai báo hải quan",
+        "kiểm tra",
+        "kho bãi",
+        "hàng hóa",
+        "container",
+        "vận đơn",
+        "cảng",
+        "hải quan",
+        "kiểm nghiệm",
+        "FOB",
+        "CIF",
+        "DDP"
+      ],
+      "kb_keywords_ms": [
+        "perkapalan",
+        "pengangkutan udara",
+        "pengangkutan darat",
+        "pelepasan kastam",
+        "pemeriksaan",
+        "pergudangan",
+        "kargo",
+        "container",
+        "bil muatan",
+        "terminal",
+        "kastam",
+        "pemeriksaan komoditi",
+        "FOB",
+        "CIF",
+        "DDP"
+      ]
+    },
+    "risk_control": {
+      "risk_labels": [
+        {
+          "id": "cargo_damage",
+          "name": "货损风险",
+          "name_en": "Cargo Damage Risk",
+          "name_vi": "Rủi ro hỏng hóc hàng hóa",
+          "name_ms": "Risiko Kerosakan Kargo",
+          "severity": "high",
+          "description": "运输途中发生货物损坏或灭失",
+          "description_en": "Cargo damage or loss during transit",
+          "description_vi": "Hàng hóa bị hư hỏng hoặc mất mát trong quá trình vận chuyển",
+          "description_ms": "Kerosakan atau kehilangan kargo semasa transit"
+        },
+        {
+          "id": "customs_hold",
+          "name": "海关查验",
+          "name_en": "Customs Hold",
+          "name_vi": "Tạm giữ hải quan",
+          "name_ms": "Tahanan Kastam",
+          "severity": "medium",
+          "description": "货物被海关扣留查验",
+          "description_en": "Cargo detained by customs for inspection",
+          "description_vi": "Hàng hóa bị hải quan tạm giữ để kiểm tra",
+          "description_ms": "Kargo ditahan oleh kastam untuk pemeriksaan"
+        },
+        {
+          "id": "schedule_delay",
+          "name": "船期延误",
+          "name_en": "Schedule Delay",
+          "name_vi": "Chậm lịch tàu",
+          "name_ms": "Kelewatan Jadual",
+          "severity": "low",
+          "description": "船舶未按预定时间离港或到港",
+          "description_en": "Vessel did not depart or arrive as scheduled",
+          "description_vi": "Tàu không khởi hành hoặc đến theo lịch trình",
+          "description_ms": "Kapal tidak berlepas atau tiba seperti yang dijadualkan"
+        }
+      ],
+      "rules": [
+        {
+          "id": "rule_damage",
+          "label": "cargo_damage",
+          "condition": "货损率>2%",
+          "condition_en": "Damage rate>2%",
+          "condition_vi": "Tỷ lệ hỏng>2%",
+          "condition_ms": "Kadar kerosakan>2%",
+          "threshold": 2.0
+        },
+        {
+          "id": "rule_customs",
+          "label": "customs_hold",
+          "condition": "查验天数>3",
+          "condition_en": "Inspection days>3",
+          "condition_vi": "Ngày kiểm tra>3",
+          "condition_ms": "Hari pemeriksaan>3",
+          "threshold": 3
+        },
+        {
+          "id": "rule_delay",
+          "label": "schedule_delay",
+          "condition": "延误小时>24",
+          "condition_en": "Delay hours>24",
+          "condition_vi": "Giờ chậm trễ>24",
+          "condition_ms": "Jam kelewatan>24",
+          "threshold": 24
+        }
+      ]
+    },
+    "chatbi": {
+      "table_schemas": [
+        {
+          "name": "货运订单追踪",
+          "name_en": "Cargo Order Tracking",
+          "name_vi": "Theo dõi Đơn hàng Vận chuyển",
+          "name_ms": "Penjejakan Pesanan Kargo",
+          "columns": [
+            "订舱号",
+            "货主",
+            "船名",
+            "航次",
+            "装货港",
+            "卸货港",
+            "集装箱号",
+            "货物品名",
+            "件数",
+            "毛重",
+            "预计离港",
+            "实际离港",
+            "预计到港",
+            "状态"
+          ],
+          "columns_en": [
+            "Booking No.",
+            "Shipper",
+            "Vessel",
+            "Voyage",
+            "POL",
+            "POD",
+            "Container No.",
+            "Cargo Description",
+            "Pkgs",
+            "Gross Wt",
+            "ETD",
+            "ATD",
+            "ETA",
+            "Status"
+          ],
+          "columns_vi": [
+            "Mã ĐC",
+            "Chủ hàng",
+            "Tàu",
+            "Hành trình",
+            "Cảng xếp",
+            "Cảng dỡ",
+            "Container",
+            "Mô tả HG",
+            "Kiện",
+            "TL tịnh",
+            "ETD",
+            "ATD",
+            "ETA",
+            "Trạng thái"
+          ],
+          "columns_ms": [
+            "No. Tempahan",
+            "Penghantar",
+            "Kapal",
+            "Pelayaran",
+            "POL",
+            "POD",
+            "No. Kontena",
+            "Huraian Kargo",
+            "Bungkusan",
+            "Berat Kasar",
+            "ETD",
+            "ATD",
+            "ETA",
+            "Status"
+          ],
+          "primary_key": "订舱号",
+          "primary_key_en": "Booking No.",
+          "primary_key_vi": "Mã ĐC",
+          "primary_key_ms": "No. Tempahan"
+        },
+        {
+          "name": "库存明细表",
+          "name_en": "Inventory Details",
+          "name_vi": "Chi tiết Tồn kho",
+          "name_ms": "Butiran Inventori",
+          "columns": [
+            "仓库",
+            "库位",
+            "货物名称",
+            "SKU",
+            "库存数量",
+            "可用数量",
+            "锁定数量",
+            "安全库存",
+            "库存状态"
+          ],
+          "columns_en": [
+            "Warehouse",
+            "Location",
+            "Cargo Name",
+            "SKU",
+            "Stock Qty",
+            "Available Qty",
+            "Locked Qty",
+            "Safety Stock",
+            "Status"
+          ],
+          "columns_vi": [
+            "Kho",
+            "Vị trí",
+            "Tên HG",
+            "SKU",
+            "SL tồn",
+            "SL khả dụng",
+            "SL khóa",
+            "Tồn an toàn",
+            "Trạng thái"
+          ],
+          "columns_ms": [
+            "Gudang",
+            "Lokasi",
+            "Nama Kargo",
+            "SKU",
+            "Kuantiti Stok",
+            "Kuantiti Tersedia",
+            "Kuantiti Dikunci",
+            "Stok Keselamatan",
+            "Status"
+          ],
+          "primary_key": "SKU",
+          "primary_key_en": "SKU",
+          "primary_key_vi": "SKU",
+          "primary_key_ms": "SKU"
+        }
+      ],
+      "query_prompt": "你是一位物流数据分析师。用户问：{user_query}\n数据表：{tables}\n生成查询逻辑JSON。"
+    }
+  },
+  "real_estate": {
+    "basic": {
+      "name": "房地产",
+      "name_en": "Real Estate",
+      "name_vi": "Bất động sản",
+      "name_ms": "Hartanah",
+      "description": "覆盖售楼签约、合同备案、客户管理、按揭审批、交付验收等场景",
+      "description_en": "Sales contracting, contract registration, customer management, mortgage approval, delivery inspection",
+      "description_vi": "Bao gồm ký hợp đồng bán nhà, đăng ký hợp đồng, quản lý khách hàng, phê duyệt thế chấp, bàn giao nghiệm thu",
+      "description_ms": "Merangkumi kontrak jualan, pendaftaran kontrak, pengurusan pelanggan, kelulusan gadai janji, penyerahan dan penerimaan"
+    },
+    "doc_parser": {
+      "document_types": [
+        {
+          "id": "sales_contract",
+          "name": "售楼合同",
+          "name_en": "Sales Contract",
+          "name_vi": "Hợp đồng mua bán nhà",
+          "name_ms": "Kontrak Jualan",
+          "description": "商品房买卖合同",
+          "description_en": "Commercial housing sales contract",
+          "description_vi": "Hợp đồng mua bán nhà ở thương mại",
+          "description_ms": "Kontrak jualan perumahan komersial"
+        },
+        {
+          "id": "lease_contract",
+          "name": "租赁合同",
+          "name_en": "Lease Contract",
+          "name_vi": "Hợp đồng cho thuê",
+          "name_ms": "Kontrak Pajakan",
+          "description": "房屋租赁协议",
+          "description_en": "Property lease agreement",
+          "description_vi": "Thỏa thuận cho thuê nhà",
+          "description_ms": "Perjanjian pajakan hartanah"
+        },
+        {
+          "id": "engineering_voucher",
+          "name": "工程签证单",
+          "name_en": "Engineering Voucher",
+          "name_vi": "Phiếu xác nhận công trình",
+          "name_ms": "Voucher Kejuruteraan",
+          "description": "工程变更及签证文件",
+          "description_en": "Engineering change and verification document",
+          "description_vi": "Chứng từ thay đổi và xác nhận công trình",
+          "description_ms": "Dokumen perubahan dan pengesahan kejuruteraan"
+        }
+      ],
+      "field_rules": {
+        "sales_contract": [
+          "合同编号",
+          "买方",
+          "卖方",
+          "物业地址",
+          "面积",
+          "总价",
+          "单价",
+          "付款方式",
+          "交房日期",
+          "签约日期"
+        ],
+        "lease_contract": [
+          "合同编号",
+          "出租方",
+          "承租方",
+          "物业地址",
+          "租赁面积",
+          "租金",
+          "租期",
+          "起租日期",
+          "终止日期",
+          "押金"
+        ],
+        "engineering_voucher": [
+          "签证编号",
+          "项目名称",
+          "施工单位",
+          "变更内容",
+          "增加金额",
+          "减少金额",
+          "签证日期",
+          "审批人",
+          "状态"
+        ]
+      },
+      "prompt_templates": {
+        "default": "你是一位房地产文档处理专家。从以下{doc_type}提取结构化字段。\n内容：{document_text}\n字段：{fields}\n返回JSON。",
+        "sales_contract": "你是一位房产专家。从售楼合同提取：合同编号、买方、卖方、物业地址、面积、总价。返回JSON。\n内容：{document_text}"
+      }
+    },
+    "demand_forecast": {
+      "metrics": [
+        {
+          "key": "new_home_sales",
+          "name": "新房成交量",
+          "name_en": "New Home Sales",
+          "name_vi": "Khối lượng giao dịch nhà mới",
+          "name_ms": "Jualan Rumah Baru",
+          "unit": "套",
+          "unit_en": "units",
+          "unit_vi": "căn",
+          "unit_ms": "unit"
+        },
+        {
+          "key": "viewing_count",
+          "name": "带看量",
+          "name_en": "Viewing Count",
+          "name_vi": "Lượt xem nhà",
+          "name_ms": "Kiraan Lawatan",
+          "unit": "次",
+          "unit_en": "visits",
+          "unit_vi": "lượt",
+          "unit_ms": "lawatan"
+        },
+        {
+          "key": "contract_conversion",
+          "name": "签约转化率",
+          "name_en": "Contract Conversion Rate",
+          "name_vi": "Tỷ lệ chuyển đổi ký hợp đồng",
+          "name_ms": "Kadar Penukaran Kontrak",
+          "unit": "%",
+          "unit_en": "%",
+          "unit_vi": "%",
+          "unit_ms": "%"
+        }
+      ],
+      "default_periods": 30,
+      "algorithm": "moving_average"
+    },
+    "ai_agent": {
+      "system_prompt": "你是一位资深房地产专家，精通房产交易、租赁管理、市场分析、土地政策和项目开发。请用专业、简洁的中文回答企业用户的问题。回答应包含具体操作建议。",
+      "system_prompt_en": "You are a senior real estate expert, expert in property transactions, lease management, market analysis, land policy and project development. Answer in professional, concise English. Include actionable recommendations.",
+      "system_prompt_vi": "Bạn là chuyên gia bất động sản cao cấp, thành thạo giao dịch nhà đất, quản lý cho thuê, phân tích thị trường, chính sách đất đai. Trả lời bằng tiếng Việt chuyên nghiệp.",
+      "system_prompt_ms": "Anda adalah pakar hartanah kanan, pakar dalam transaksi hartanah, pengurusan pajakan, analisis pasaran, dasar tanah. Jawab dalam Bahasa Melayu profesional.",
+      "greeting": "您好！我是房地产AI助手，可以为您解答房产交易、租赁管理、市场分析、政策解读等问题。请提出您的问题。",
+      "greeting_en": "Hello! I am your Real Estate AI assistant. I can help with property transactions, lease management, market analysis, policy interpretation, and more.",
+      "greeting_vi": "Xin chào! Tôi là trợ lý AI Bất động sản. Tôi có thể giúp bạn về giao dịch nhà đất, quản lý cho thuê, phân tích thị trường, v.v.",
+      "greeting_ms": "Helo! Saya adalah pembantu AI Hartanah. Saya boleh membantu dengan transaksi hartanah, pengurusan pajakan, analisis pasaran, dan banyak lagi.",
+      "capabilities": [
+        "房产交易咨询",
+        "租赁管理指导",
+        "市场趋势分析",
+        "政策法规解读",
+        "项目评估"
+      ],
+      "capabilities_en": [
+        "Property Transaction Advisory",
+        "Lease Management",
+        "Market Trend Analysis",
+        "Policy & Regulation",
+        "Project Evaluation"
+      ],
+      "capabilities_vi": [
+        "Tư vấn giao dịch bất động sản",
+        "Hướng dẫn quản lý cho thuê",
+        "Phân tích xu hướng thị trường",
+        "Đọc hiểu chính sách và quy định",
+        "Đánh giá dự án"
+      ],
+      "capabilities_ms": [
+        "Nasihat Transaksi Hartanah",
+        "Pengurusan Pajakan",
+        "Analisis Trend Pasaran",
+        "Dasar & Peraturan",
+        "Penilaian Projek"
+      ],
+      "batch_generation_prompts": {
+        "marketing": "请为以下{company_name}公司撰写一份面向{target_market}市场的英文营销邮件，突出其{product}的核心优势。要求：专业、简洁、有说服力。",
+        "invitation": "请为{company_name}公司撰写一份展会邀约函，邀请客户参观其在{exhibition_name}的展位。展会信息：{exhibition_info}。要求：礼貌、专业、突出参展亮点。"
+      },
+      "kb_keywords": [
+        "房产交易",
+        "租赁",
+        "物业管理",
+        "按揭贷款",
+        "公积金",
+        "契税",
+        "土地使用",
+        "容积率",
+        "预售证",
+        "产权",
+        "网签",
+        "不动产登记",
+        "评估",
+        "限购",
+        "限贷"
+      ],
+      "kb_keywords_en": [
+        "property transaction",
+        "lease",
+        "property management",
+        "mortgage",
+        "housing fund",
+        "deed tax",
+        "land use",
+        "FAR",
+        "pre-sale permit",
+        "property rights",
+        "online signing",
+        "real estate registration",
+        "appraisal",
+        "purchase restriction",
+        "loan restriction"
+      ],
+      "kb_keywords_vi": [
+        "giao dịch bất động sản",
+        "cho thuê",
+        "quản lý tài sản",
+        "thế chấp",
+        "quỹ nhà ở",
+        "thuế trước bạ",
+        "sử dụng đất",
+        "FAR",
+        "giấy phép bán trước",
+        "quyền sở hữu",
+        "ký trực tuyến",
+        "đăng ký bất động sản",
+        "thẩm định",
+        "hạn chế mua",
+        "hạn chế vay"
+      ],
+      "kb_keywords_ms": [
+        "transaksi hartanah",
+        "pajakan",
+        "pengurusan hartanah",
+        "gadai janji",
+        "dana perumahan",
+        "cukai duti",
+        "guna tanah",
+        "FAR",
+        "permit pra-jualan",
+        "hak milik",
+        "penandatanganan dalam talian",
+        "pendaftaran hartanah",
+        "penilaian",
+        "sekatan pembelian",
+        "sekatan pinjaman"
+      ]
+    },
+    "risk_control": {
+      "risk_labels": [
+        {
+          "id": "overpayment_risk",
+          "name": "超付风险",
+          "name_en": "Overpayment Risk",
+          "name_vi": "Rủi ro thanh toán vượt",
+          "name_ms": "Risiko Pembayaran Lebihan",
+          "severity": "high",
+          "description": "工程款支付超过实际完成产值",
+          "description_en": "Project payment exceeds actual completed output",
+          "description_vi": "Thanh toán công trình vượt quá sản lượng thực tế",
+          "description_ms": "Pembayaran projek melebihi output sebenar yang disiapkan"
+        },
+        {
+          "id": "contract_dispute",
+          "name": "合同纠纷",
+          "name_en": "Contract Dispute",
+          "name_vi": "Tranh chấp hợp đồng",
+          "name_ms": "Pertikaian Kontrak",
+          "severity": "medium",
+          "description": "买卖双方对合同条款存在争议",
+          "description_en": "Dispute between buyer and seller over contract terms",
+          "description_vi": "Tranh chấp giữa người mua và người bán về điều khoản hợp đồng",
+          "description_ms": "Pertikaian antara pembeli dan penjual mengenai terma kontrak"
+        },
+        {
+          "id": "title_defect",
+          "name": "产权瑕疵",
+          "name_en": "Title Defect",
+          "name_vi": "Khiếm khuyết quyền sở hữu",
+          "name_ms": "Kecacatan Hak Milik",
+          "severity": "high",
+          "description": "物业存在抵押或产权纠纷",
+          "description_en": "Property has mortgage or title dispute",
+          "description_vi": "Tài sản có thế chấp hoặc tranh chấp quyền sở hữu",
+          "description_ms": "Harta mempunyai gadai janji atau pertikaian hak milik"
+        }
+      ],
+      "rules": [
+        {
+          "id": "rule_overpayment",
+          "label": "overpayment_risk",
+          "condition": "支付比例>完成比例+10%",
+          "condition_en": "Payment ratio > completion ratio + 10%",
+          "condition_vi": "Tỷ lệ thanh toán > tỷ lệ hoàn thành + 10%",
+          "condition_ms": "Nisbah pembayaran > nisbah penyiapan + 10%",
+          "threshold": 10
+        },
+        {
+          "id": "rule_dispute",
+          "label": "contract_dispute",
+          "condition": "争议条款数>2",
+          "condition_en": "Disputed clauses>2",
+          "condition_vi": "Điều khoản tranh chấp>2",
+          "condition_ms": "Klausa dipertikaikan>2",
+          "threshold": 2
+        }
+      ]
+    },
+    "chatbi": {
+      "table_schemas": [
+        {
+          "name": "销售台账",
+          "name_en": "Sales Ledger",
+          "name_vi": "Sổ Cái Bán hàng",
+          "name_ms": "Lejar Jualan",
+          "columns": [
+            "合同编号",
+            "楼盘名称",
+            "房号",
+            "买方",
+            "面积",
+            "单价",
+            "总价",
+            "付款方式",
+            "签约日期",
+            "交房日期",
+            "状态"
+          ],
+          "columns_en": [
+            "Contract No.",
+            "Project Name",
+            "Unit No.",
+            "Buyer",
+            "Area",
+            "Unit Price",
+            "Total Price",
+            "Payment Method",
+            "Signing Date",
+            "Delivery Date",
+            "Status"
+          ],
+          "columns_vi": [
+            "Mã HĐ",
+            "Dự án",
+            "Căn số",
+            "Người mua",
+            "Diện tích",
+            "Đơn giá",
+            "Tổng giá",
+            "PTTT",
+            "Ngày Ký",
+            "Ngày GH",
+            "Trạng thái"
+          ],
+          "columns_ms": [
+            "No. Kontrak",
+            "Nama Projek",
+            "No. Unit",
+            "Pembeli",
+            "Keluasan",
+            "Harga Unit",
+            "Jumlah Harga",
+            "Kaedah Bayaran",
+            "Tarikh Tandatangan",
+            "Tarikh Serahan",
+            "Status"
+          ],
+          "primary_key": "合同编号",
+          "primary_key_en": "Contract No.",
+          "primary_key_vi": "Mã HĐ",
+          "primary_key_ms": "No. Kontrak"
+        },
+        {
+          "name": "工程进度款",
+          "name_en": "Project Progress Payment",
+          "name_vi": "Thanh toán Tiến độ Dự án",
+          "name_ms": "Pembayaran Kemajuan Projek",
+          "columns": [
+            "项目名称",
+            "施工单位",
+            "合同金额",
+            "本期申请",
+            "本期核定",
+            "累计支付",
+            "支付比例",
+            "完成比例",
+            "状态"
+          ],
+          "columns_en": [
+            "Project Name",
+            "Contractor",
+            "Contract Amount",
+            "Current Applied",
+            "Current Approved",
+            "Cumulative Paid",
+            "Payment Ratio",
+            "Completion Ratio",
+            "Status"
+          ],
+          "columns_vi": [
+            "Dự án",
+            "Nhà thầu",
+            "GT HĐ",
+            "Đề xuất KT",
+            "Được duyệt",
+            "Đã thanh toán",
+            "Tỷ lệ TT",
+            "Tỷ lệ HT",
+            "Trạng thái"
+          ],
+          "columns_ms": [
+            "Nama Projek",
+            "Kontraktor",
+            "Jumlah Kontrak",
+            "Permohonan Semasa",
+            "Diluluskan Semasa",
+            "Dibayar Terkumpul",
+            "Nisbah Pembayaran",
+            "Nisbah Penyiapan",
+            "Status"
+          ],
+          "primary_key": "项目名称",
+          "primary_key_en": "Project Name",
+          "primary_key_vi": "Dự án",
+          "primary_key_ms": "Nama Projek"
+        }
+      ],
+      "query_prompt": "你是一位房地产数据分析师。用户问：{user_query}\n数据表：{tables}\n生成查询逻辑JSON。"
+    }
+  },
+  "hr": {
+    "basic": {
+      "name": "HR人力资源",
+      "name_en": "HR",
+      "name_vi": "Nhân sự (HR)",
+      "name_ms": "Sumber Manusia (HR)",
+      "description": "覆盖员工入职、合同管理、绩效考核、培训发展和离职管理等场景",
+      "description_en": "Employee onboarding, contract management, performance reviews, training development, offboarding",
+      "description_vi": "Bao gồm tiếp nhận nhân viên, quản lý hợp đồng, đánh giá hiệu suất, phát triển đào tạo và quản lý nghỉ việc",
+      "description_ms": "Merangkumi orientasi pekerja, pengurusan kontrak, penilaian prestasi, pembangunan latihan dan pengurusan peletakan jawatan"
+    },
+    "doc_parser": {
+      "document_types": [
+        {
+          "id": "labor_contract",
+          "name": "劳动合同",
+          "name_en": "Labor Contract",
+          "name_vi": "Hợp đồng lao động",
+          "name_ms": "Kontrak Pekerjaan",
+          "description": "企业与员工签订的劳动合同",
+          "description_en": "Employment contract between company and employee",
+          "description_vi": "Hợp đồng lao động giữa công ty và nhân viên",
+          "description_ms": "Kontrak pekerjaan antara syarikat dan pekerja"
+        },
+        {
+          "id": "performance_review",
+          "name": "绩效评估表",
+          "name_en": "Performance Review",
+          "name_vi": "Phiếu đánh giá hiệu suất",
+          "name_ms": "Penilaian Prestasi",
+          "description": "员工绩效考核记录",
+          "description_en": "Employee performance assessment record",
+          "description_vi": "Hồ sơ đánh giá hiệu suất nhân viên",
+          "description_ms": "Rekod penilaian prestasi pekerja"
+        },
+        {
+          "id": "training_record",
+          "name": "培训记录",
+          "name_en": "Training Record",
+          "name_vi": "Hồ sơ đào tạo",
+          "name_ms": "Rekod Latihan",
+          "description": "员工培训与发展记录",
+          "description_en": "Employee training and development record",
+          "description_vi": "Hồ sơ đào tạo và phát triển nhân viên",
+          "description_ms": "Rekod latihan dan pembangunan pekerja"
+        }
+      ],
+      "field_rules": {
+        "labor_contract": [
+          "合同编号",
+          "员工姓名",
+          "身份证号",
+          "岗位",
+          "合同期限",
+          "试用期",
+          "薪资",
+          "入职日期",
+          "合同到期日",
+          "状态"
+        ],
+        "performance_review": [
+          "评估编号",
+          "员工姓名",
+          "部门",
+          "评估周期",
+          "评分",
+          "评级",
+          "评估人",
+          "评估日期",
+          "评语"
+        ],
+        "training_record": [
+          "记录编号",
+          "员工姓名",
+          "培训课程",
+          "培训机构",
+          "培训日期",
+          "培训时长",
+          "费用",
+          "考核结果",
+          "证书"
+        ]
+      },
+      "prompt_templates": {
+        "default": "你是一位HR文档处理专家。从以下{doc_type}提取结构化字段。\n内容：{document_text}\n字段：{fields}\n返回JSON。",
+        "labor_contract": "你是一位HR专家。从劳动合同提取：合同编号、员工、岗位、薪资、期限。返回JSON。\n内容：{document_text}"
+      }
+    },
+    "demand_forecast": {
+      "metrics": [
+        {
+          "key": "hiring_completion",
+          "name": "招聘完成量",
+          "name_en": "Hiring Completion",
+          "name_vi": "Khối lượng tuyển dụng",
+          "name_ms": "Penyiapan Pengambilan",
+          "unit": "人",
+          "unit_en": "people",
+          "unit_vi": "người",
+          "unit_ms": "orang"
+        },
+        {
+          "key": "training_coverage",
+          "name": "培训覆盖人数",
+          "name_en": "Training Coverage",
+          "name_vi": "Số người được đào tạo",
+          "name_ms": "Liputan Latihan",
+          "unit": "人",
+          "unit_en": "people",
+          "unit_vi": "người",
+          "unit_ms": "orang"
+        },
+        {
+          "key": "employee_satisfaction",
+          "name": "员工满意度",
+          "name_en": "Employee Satisfaction",
+          "name_vi": "Mức độ hài lòng của nhân viên",
+          "name_ms": "Kepuasan Pekerja",
+          "unit": "%",
+          "unit_en": "%",
+          "unit_vi": "%",
+          "unit_ms": "%"
+        }
+      ],
+      "default_periods": 30,
+      "algorithm": "moving_average"
+    },
+    "ai_agent": {
+      "system_prompt": "你是一位资深HR专家，精通招聘、绩效管理、培训发展、员工关系和劳动法规。请用专业、简洁的中文回答企业用户的问题。回答应包含具体操作建议。",
+      "system_prompt_en": "You are a senior HR expert, expert in recruitment, performance management, training development, employee relations and labor law. Answer in professional, concise English. Include actionable recommendations.",
+      "system_prompt_vi": "Bạn là chuyên gia nhân sự cao cấp, thành thạo tuyển dụng, quản lý hiệu suất, đào tạo, quan hệ nhân viên và luật lao động. Trả lời bằng tiếng Việt chuyên nghiệp.",
+      "system_prompt_ms": "Anda adalah pakar HR kanan, pakar dalam pengambilan, pengurusan prestasi, pembangunan latihan, hubungan pekerja dan undang-undang buruh. Jawab dalam Bahasa Melayu profesional.",
+      "greeting": "您好！我是HR AI助手，可以为您解答招聘、绩效管理、培训发展、员工关系等人力资源问题。请提出您的问题。",
+      "greeting_en": "Hello! I am your HR AI assistant. I can help with recruitment, performance management, training development, employee relations, and more.",
+      "greeting_vi": "Xin chào! Tôi là trợ lý AI Nhân sự. Tôi có thể giúp bạn về tuyển dụng, quản lý hiệu suất, đào tạo, quan hệ nhân viên, v.v.",
+      "greeting_ms": "Helo! Saya adalah pembantu AI Sumber Manusia. Saya boleh membantu dengan pengambilan, pengurusan prestasi, pembangunan latihan, hubungan pekerja, dan banyak lagi.",
+      "capabilities": [
+        "招聘流程咨询",
+        "绩效管理建议",
+        "培训发展计划",
+        "员工关系处理",
+        "劳动法规解读"
+      ],
+      "capabilities_en": [
+        "Recruitment Advisory",
+        "Performance Management",
+        "Training & Development",
+        "Employee Relations",
+        "Labor Law Guidance"
+      ],
+      "capabilities_vi": [
+        "Tư vấn quy trình tuyển dụng",
+        "Tư vấn quản lý hiệu suất",
+        "Kế hoạch phát triển đào tạo",
+        "Xử lý quan hệ nhân viên",
+        "Đọc hiểu luật lao động"
+      ],
+      "capabilities_ms": [
+        "Nasihat Pengambilan",
+        "Pengurusan Prestasi",
+        "Latihan & Pembangunan",
+        "Hubungan Pekerja",
+        "Panduan Undang-undang Buruh"
+      ],
+      "batch_generation_prompts": {
+        "marketing": "请为以下{company_name}公司撰写一份面向{target_market}市场的英文营销邮件，突出其{product}的核心优势。要求：专业、简洁、有说服力。",
+        "invitation": "请为{company_name}公司撰写一份展会邀约函，邀请客户参观其在{exhibition_name}的展位。展会信息：{exhibition_info}。要求：礼貌、专业、突出参展亮点。"
+      },
+      "kb_keywords": [
+        "招聘",
+        "绩效",
+        "培训",
+        "薪酬",
+        "劳动关系",
+        "社保",
+        "公积金",
+        "考勤",
+        "工时",
+        "休假",
+        "工伤",
+        "辞退",
+        "离职",
+        "竞业限制",
+        "保密协议"
+      ],
+      "kb_keywords_en": [
+        "recruitment",
+        "performance",
+        "training",
+        "compensation",
+        "labor relations",
+        "social insurance",
+        "housing fund",
+        "attendance",
+        "working hours",
+        "leave",
+        "work injury",
+        "dismissal",
+        "resignation",
+        "non-compete",
+        "NDA"
+      ],
+      "kb_keywords_vi": [
+        "tuyển dụng",
+        "hiệu suất",
+        "đào tạo",
+        "lương thưởng",
+        "quan hệ lao động",
+        "bảo hiểm xã hội",
+        "quỹ nhà ở",
+        "chấm công",
+        "giờ làm việc",
+        "nghỉ phép",
+        "thương tật",
+        "sa thải",
+        "nghỉ việc",
+        "không cạnh tranh",
+        "thỏa thuận bảo mật"
+      ],
+      "kb_keywords_ms": [
+        "pengambilan",
+        "prestasi",
+        "latihan",
+        "pampasan",
+        "hubungan buruh",
+        "insurans sosial",
+        "dana perumahan",
+        "kehadiran",
+        "waktu kerja",
+        "cuti",
+        "kecederaan kerja",
+        "pemecatan",
+        "perletakan jawatan",
+        "larangan persaingan",
+        "perjanjian kerahsiaan"
+      ]
+    },
+    "risk_control": {
+      "risk_labels": [
+        {
+          "id": "turnover_risk",
+          "name": "离职风险",
+          "name_en": "Turnover Risk",
+          "name_vi": "Rủi ro nghỉ việc",
+          "name_ms": "Risiko Pusing Ganti",
+          "severity": "high",
+          "description": "核心员工有离职倾向",
+          "description_en": "Key employee shows turnover intention",
+          "description_vi": "Nhân viên chủ chốt có xu hướng nghỉ việc",
+          "description_ms": "Pekerja utama menunjukkan niat untuk berhenti"
+        },
+        {
+          "id": "compliance_risk_hr",
+          "name": "合规风险",
+          "name_en": "Compliance Risk",
+          "name_vi": "Rủi ro tuân thủ",
+          "name_ms": "Risiko Pematuhan",
+          "severity": "medium",
+          "description": "劳动合同或社保缴纳不合规",
+          "description_en": "Labor contract or social insurance non-compliance",
+          "description_vi": "Hợp đồng lao động hoặc bảo hiểm xã hội không tuân thủ",
+          "description_ms": "Ketidakpatuhan kontrak pekerjaan atau insurans sosial"
+        },
+        {
+          "id": "performance_risk",
+          "name": "绩效风险",
+          "name_en": "Performance Risk",
+          "name_vi": "Rủi ro hiệu suất",
+          "name_ms": "Risiko Prestasi",
+          "severity": "low",
+          "description": "员工连续绩效不达标",
+          "description_en": "Employee continuously fails to meet performance targets",
+          "description_vi": "Nhân viên liên tục không đạt chỉ tiêu hiệu suất",
+          "description_ms": "Pekerja secara berterusan gagal mencapai sasaran prestasi"
+        }
+      ],
+      "rules": [
+        {
+          "id": "rule_turnover",
+          "label": "turnover_risk",
+          "condition": "在职时长<6月",
+          "condition_en": "Tenure<6 months",
+          "condition_vi": "Thời gian làm việc<6 tháng",
+          "condition_ms": "Tempoh perkhidmatan<6 bulan",
+          "threshold": 6
+        },
+        {
+          "id": "rule_compliance_hr",
+          "label": "compliance_risk_hr",
+          "condition": "合同到期<30天",
+          "condition_en": "Contract expiry<30 days",
+          "condition_vi": "Hợp đồng hết hạn<30 ngày",
+          "condition_ms": "Tamat kontrak<30 hari",
+          "threshold": 30
+        },
+        {
+          "id": "rule_performance",
+          "label": "performance_risk",
+          "condition": "连续2季<C级",
+          "condition_en": "2 consecutive quarters < C grade",
+          "condition_vi": "2 quý liên tiếp < C",
+          "condition_ms": "2 suku berturut-turut < gred C",
+          "threshold": 2
+        }
+      ]
+    },
+    "chatbi": {
+      "table_schemas": [
+        {
+          "name": "员工花名册",
+          "name_en": "Employee Roster",
+          "name_vi": "Danh sách Nhân viên",
+          "name_ms": "Senarai Pekerja",
+          "columns": [
+            "工号",
+            "姓名",
+            "部门",
+            "岗位",
+            "职级",
+            "入职日期",
+            "合同到期日",
+            "状态"
+          ],
+          "columns_en": [
+            "Employee ID",
+            "Name",
+            "Department",
+            "Position",
+            "Level",
+            "Hire Date",
+            "Contract End Date",
+            "Status"
+          ],
+          "columns_vi": [
+            "Mã NV",
+            "Họ tên",
+            "Phòng ban",
+            "Chức vụ",
+            "Cấp bậc",
+            "Ngày vào",
+            "Ngày HĐ hết hạn",
+            "Trạng thái"
+          ],
+          "columns_ms": [
+            "ID Pekerja",
+            "Nama",
+            "Jabatan",
+            "Jawatan",
+            "Gred",
+            "Tarikh Mula",
+            "Tarikh Tamat Kontrak",
+            "Status"
+          ],
+          "primary_key": "工号",
+          "primary_key_en": "Employee ID",
+          "primary_key_vi": "Mã NV",
+          "primary_key_ms": "ID Pekerja"
+        },
+        {
+          "name": "培训记录表",
+          "name_en": "Training Record",
+          "name_vi": "Bảng Ghi nhận Đào tạo",
+          "name_ms": "Rekod Latihan",
+          "columns": [
+            "记录编号",
+            "员工姓名",
+            "培训课程",
+            "培训日期",
+            "培训时长",
+            "费用",
+            "考核结果",
+            "证书"
+          ],
+          "columns_en": [
+            "Record ID",
+            "Employee Name",
+            "Course",
+            "Training Date",
+            "Duration",
+            "Cost",
+            "Assessment Result",
+            "Certificate"
+          ],
+          "columns_vi": [
+            "Mã Ghi nhận",
+            "NV",
+            "Khóa học",
+            "Ngày ĐT",
+            "Thời lượng",
+            "Phí",
+            "Kết quả",
+            "Chứng chỉ"
+          ],
+          "columns_ms": [
+            "ID Rekod",
+            "Nama Pekerja",
+            "Kursus",
+            "Tarikh Latihan",
+            "Tempoh",
+            "Kos",
+            "Hasil Penilaian",
+            "Sijil"
+          ],
+          "primary_key": "记录编号",
+          "primary_key_en": "Record ID",
+          "primary_key_vi": "Mã Ghi nhận",
+          "primary_key_ms": "ID Rekod"
+        }
+      ],
+      "query_prompt": "你是一位HR数据分析师。用户问：{user_query}\n数据表：{tables}\n生成查询逻辑JSON。"
+    }
+  }
+}

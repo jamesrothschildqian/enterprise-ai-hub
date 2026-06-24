@@ -1,0 +1,251 @@
+{
+  "doc_parser": {
+    "documents": [
+      {
+        "id": "doc_sl_001",
+        "type": "ocean_waybill",
+        "title": "COSCO Ocean Bill of Lading COSU2024115888",
+        "content": "Bill of Lading No: COSU2024115888\nVessel: EVER GIVEN\nVoyage: 025E\nShipper: Yiwu Small Commodities Import & Export Co., Ltd\nConsignee: TO ORDER\nNotify Party: Los Angeles Distributors Inc.\nPort of Loading: Ningbo (NGB)\nPort of Discharge: Los Angeles (LAX)\nPlace of Delivery: Memphis, TN DC\nContainer No/Seal: MSCU4821954/SEAL77120\nPackages: 850 PACKAGES\nGross Weight: 12,500.00 KGS\nMeasurement: 65.000 CBM\nFreight Payment: FREIGHT COLLECT",
+        "fields": {
+          "Bill of Lading No": "COSU2024115888",
+          "Vessel": "EVER GIVEN",
+          "Voyage": "025E",
+          "Shipper": "Yiwu Small Commodities Import & Export Co., Ltd",
+          "Port of Loading": "Ningbo (NGB)",
+          "Port of Discharge": "Los Angeles (LAX)",
+          "Container No": "MSCU4821954",
+          "Packages": "850 PACKAGES",
+          "Gross Weight": "12,500.00 KGS"
+        }
+      },
+      {
+        "id": "doc_sl_002",
+        "type": "air_waybill",
+        "title": "Air Waybill 157-88520964",
+        "content": "Air Waybill No: 157-88520964\nDeparture: Shanghai Pudong (PVG)\nDestination: Frankfurt (FRA)\nShipper: Shanghai Xinrui Electronics Co., Ltd\nConsignee: Infineon Technologies AG\nPackages: 15 cartons\nGross Weight: 285.00KG\nVolume: 1.850CBM\nCargo Description: Semiconductor Chips (HS:854231)\nFlight No: CA935\nDate: 2024-11-18\nFreight: CNY 32,850.00",
+        "fields": {
+          "Air Waybill No": "157-88520964",
+          "Departure": "Shanghai Pudong (PVG)",
+          "Destination": "Frankfurt (FRA)",
+          "Shipper": "Shanghai Xinrui Electronics Co., Ltd",
+          "Consignee": "Infineon Technologies AG",
+          "Packages": "15 cartons",
+          "Gross Weight": "285.00KG",
+          "Cargo Description": "Semiconductor Chips"
+        }
+      }
+    ]
+  },
+  "demand_forecast": {
+    "history": [
+      {
+        "date": "2024-01-01",
+        "cargo_volume": 185,
+        "container_throughput": 28500,
+        "warehouse_turnover": 82.5
+      },
+      {
+        "date": "2024-02-01",
+        "cargo_volume": 152,
+        "container_throughput": 23800,
+        "warehouse_turnover": 78.3
+      },
+      {
+        "date": "2024-03-01",
+        "cargo_volume": 205,
+        "container_throughput": 31200,
+        "warehouse_turnover": 85.6
+      },
+      {
+        "date": "2024-04-01",
+        "cargo_volume": 198,
+        "container_throughput": 30500,
+        "warehouse_turnover": 84.2
+      },
+      {
+        "date": "2024-05-01",
+        "cargo_volume": 215,
+        "container_throughput": 32800,
+        "warehouse_turnover": 86.8
+      },
+      {
+        "date": "2024-06-01",
+        "cargo_volume": 225,
+        "container_throughput": 34200,
+        "warehouse_turnover": 88.1
+      },
+      {
+        "date": "2024-07-01",
+        "cargo_volume": 232,
+        "container_throughput": 35500,
+        "warehouse_turnover": 87.5
+      },
+      {
+        "date": "2024-08-01",
+        "cargo_volume": 228,
+        "container_throughput": 34800,
+        "warehouse_turnover": 86.3
+      },
+      {
+        "date": "2024-09-01",
+        "cargo_volume": 245,
+        "container_throughput": 37200,
+        "warehouse_turnover": 89.2
+      },
+      {
+        "date": "2024-10-01",
+        "cargo_volume": 238,
+        "container_throughput": 36500,
+        "warehouse_turnover": 88.5
+      },
+      {
+        "date": "2024-11-01",
+        "cargo_volume": 252,
+        "container_throughput": 38500,
+        "warehouse_turnover": 90.1
+      },
+      {
+        "date": "2024-12-01",
+        "cargo_volume": 248,
+        "container_throughput": 37800,
+        "warehouse_turnover": 89.8
+      }
+    ]
+  },
+  "ai_agent": {
+    "knowledge_base": [
+      {
+        "question": "How to optimize transport routes?",
+        "answer": "Transport route optimization requires comprehensive consideration: 1. Balance distance and transit time (choose the optimal route, not just the shortest); 2. Multi-modal transport coordination (sea-rail reduces costs by 30%); 3. Real-time avoidance of congestion/bad weather; 4. Transshipment hub capacity constraints; 5. Total transport cost. Using VRP algorithms + real-time data can optimize 10-15%."
+      },
+      {
+        "question": "What is JIT delivery?",
+        "answer": "JIT (Just In Time) delivery: deliver the right quantity, to the right place, at the right time. It can significantly reduce inventory costs (by 30-50%), but requires high supply chain coordination, transport punctuality, and information systems. Suitable for high-value materials with stable demand."
+      }
+    ]
+  },
+  "risk_control": {
+    "transactions": [
+      {
+        "id": "SL001",
+        "waybill": "COSU2024115888",
+        "cargo": "General Merchandise",
+        "value": 125000,
+        "delay_hours": 0,
+        "damage_pct": 0.05,
+        "temp_deviation": 0,
+        "risk_label": null
+      },
+      {
+        "id": "SL002",
+        "waybill": "157-88520964",
+        "cargo": "Semiconductor Chips",
+        "value": 328500,
+        "delay_hours": 8,
+        "damage_pct": 0,
+        "temp_deviation": 0,
+        "risk_label": null
+      },
+      {
+        "id": "SL003",
+        "waybill": "COSU2024115123",
+        "cargo": "Frozen Beef",
+        "value": 450000,
+        "delay_hours": 18,
+        "damage_pct": 0.3,
+        "temp_deviation": 4.5,
+        "risk_label": "temperature_deviation",
+        "detail": "Temperature deviation 4.5°C exceeds threshold, partial cargo quality affected"
+      },
+      {
+        "id": "SL004",
+        "waybill": "AWB-2024-3321",
+        "cargo": "Electronic Products",
+        "value": 680000,
+        "delay_hours": 36,
+        "damage_pct": 0.8,
+        "temp_deviation": 0,
+        "risk_label": "cargo_damage",
+        "detail": "Damage rate 0.8% exceeds threshold 0.5%, suspected improper packaging"
+      }
+    ],
+    "indicators": [
+      {
+        "id": "cargo_damage",
+        "name": "Cargo Damage Risk",
+        "value": 0.38,
+        "trend": "down",
+        "threshold": 0.5,
+        "status": "safe",
+        "detail": "Monthly damage rate 0.12%, better than industry average 0.35%"
+      },
+      {
+        "id": "delay_delivery",
+        "name": "Delivery Delay Risk",
+        "value": 0.62,
+        "trend": "up",
+        "threshold": 0.6,
+        "status": "warning",
+        "detail": "December peak season delay rate rising to 8.5%, need to increase capacity reserve"
+      }
+    ]
+  },
+  "chatbi": {
+    "tables": {
+      "In-Transit Cargo Tracking": [
+        {
+          "Waybill No": "COSU2024115888",
+          "Cargo Name": "General Merchandise",
+          "Origin": "Ningbo Port",
+          "Destination": "Los Angeles Port",
+          "ETA": "2024-12-05",
+          "Current Location": "Pacific Ocean - 165°E",
+          "Status": "In Transit",
+          "Estimated Delay": "0 days"
+        },
+        {
+          "Waybill No": "157-88520964",
+          "Cargo Name": "Semiconductor Chips",
+          "Origin": "Shanghai Pudong",
+          "Destination": "Frankfurt",
+          "ETA": "2024-11-28",
+          "Current Location": "Guangzhou Baiyun Airport",
+          "Status": "Security Checked",
+          "Estimated Delay": "0 days"
+        },
+        {
+          "Waybill No": "COSU2024115123",
+          "Cargo Name": "Frozen Beef",
+          "Origin": "Qingdao Port",
+          "Destination": "Tokyo Port",
+          "ETA": "2024-11-25",
+          "Current Location": "Qingdao Port Yard",
+          "Status": "Awaiting Loading",
+          "Estimated Delay": "1 day"
+        }
+      ],
+      "Warehouse Inventory Report": [
+        {
+          "Warehouse": "East China Warehouse 1",
+          "Total Capacity CBM": 50000,
+          "Used Capacity CBM": 38500,
+          "Utilization Pct": 77,
+          "SKU Count": 1250,
+          "Turnover Days": 28,
+          "Monthly Inbound": 15200,
+          "Monthly Outbound": 14800
+        },
+        {
+          "Warehouse": "South China Warehouse 2",
+          "Total Capacity CBM": 35000,
+          "Used Capacity CBM": 23800,
+          "Utilization Pct": 68,
+          "SKU Count": 880,
+          "Turnover Days": 25,
+          "Monthly Inbound": 11200,
+          "Monthly Outbound": 10800
+        }
+      ]
+    }
+  }
+}

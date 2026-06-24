@@ -1,0 +1,80 @@
+{
+  "doc_parser": {
+    "documents": [
+      {
+        "id": "doc_sm_001",
+        "type": "production_order",
+        "title": "Production Order PO-2024-1120",
+        "content": "Work Order No: PO-2024-1120\nProduct Name: Precision Motor Rotor Y2-132M\nProduct Code: ROTOR-Y2-132M\nPlanned Qty: 1200 pcs\nProduction Date: 2024-11-20\nCompletion Date: 2024-11-25\nProduction Line: Line A\nProcesses: Winding \u2192 Assembly \u2192 Dynamic Balance \u2192 Testing\nResponsible Person: Wang Jianguo\nStatus: In Production\nProcess Parameters: Winding Speed 1200rpm / Tension 2.5N / Baking Temp 150\u00b0C",
+        "fields": {"Work Order No":"PO-2024-1120","Product Name":"Precision Motor Rotor Y2-132M","Product Code":"ROTOR-Y2-132M","Planned Qty":"1200 pcs","Production Date":"2024-11-20","Completion Date":"2024-11-25","Production Line":"Line A","Responsible Person":"Wang Jianguo","Status":"In Production"}
+      },
+      {
+        "id": "doc_sm_002",
+        "type": "qc_report",
+        "title": "QC Report QC-2024-886",
+        "content": "Report No: QC-2024-886\nBatch No: BATCH-2024-11-15\nInspection Item: Outer Diameter (50.00\u00b10.02mm)\nSpecification: 50.00\u00b10.02mm\nMeasured Value: 50.01mm\nResult: Pass\nInspection Item 2: Dynamic Balance (\u22640.5g\u00b7mm/kg)\nMeasured Value 2: 0.32g\u00b7mm/kg\nResult 2: Pass\nInspector: Zhang Ming\nInspection Date: 2024-11-15\nRemarks: 20% sampling rate, all passed",
+        "fields": {"Report No":"QC-2024-886","Batch No":"BATCH-2024-11-15","Inspection Item":"Outer Diameter","Specification":"50.00\u00b10.02mm","Measured Value":"50.01mm","Result":"Pass","Inspector":"Zhang Ming","Inspection Date":"2024-11-15"}
+      },
+      {
+        "id": "doc_sm_003",
+        "type": "maintenance_record",
+        "title": "Equipment Maintenance Record MC-001",
+        "content": "Equipment No: MC-001\nEquipment Name: CNC Machining Center (Model: DMG MORI DMU80)\nMaintenance Type: Level 2 Maintenance\nMaintenance Date: 2024-11-18\nMaintenance Content: Replace spindle bearing, calibrate XYZ axis accuracy, replace coolant, clean filter\nMaintenance Personnel: Li Zhiqiang\nReplaced Parts: Spindle Bearing SKF-7206 / Seal Ring / Filter Element\nNext Maintenance Date: 2025-02-18\nPost-maintenance Accuracy: XYZ positioning accuracy \u00b10.003mm",
+        "fields": {"Equipment No":"MC-001","Equipment Name":"CNC Machining Center","Maintenance Type":"Level 2 Maintenance","Maintenance Date":"2024-11-18","Maintenance Content":"Replace spindle bearing, calibrate XYZ axis accuracy","Maintenance Personnel":"Li Zhiqiang","Next Maintenance Date":"2025-02-18"}
+      }
+    ]
+  },
+  "demand_forecast": {
+    "history": [
+      {"date":"2024-01-01","output_qty":85600,"equipment_utilization":78.5,"delivery_rate":92.3},
+      {"date":"2024-02-01","output_qty":72300,"equipment_utilization":75.2,"delivery_rate":90.8},
+      {"date":"2024-03-01","output_qty":92100,"equipment_utilization":82.1,"delivery_rate":93.5},
+      {"date":"2024-04-01","output_qty":88700,"equipment_utilization":80.6,"delivery_rate":94.1},
+      {"date":"2024-05-01","output_qty":95800,"equipment_utilization":84.3,"delivery_rate":93.8},
+      {"date":"2024-06-01","output_qty":93500,"equipment_utilization":83.5,"delivery_rate":95.2},
+      {"date":"2024-07-01","output_qty":102300,"equipment_utilization":86.8,"delivery_rate":94.5},
+      {"date":"2024-08-01","output_qty":98900,"equipment_utilization":85.2,"delivery_rate":95.8},
+      {"date":"2024-09-01","output_qty":108500,"equipment_utilization":88.1,"delivery_rate":96.2},
+      {"date":"2024-10-01","output_qty":105200,"equipment_utilization":87.3,"delivery_rate":95.5},
+      {"date":"2024-11-01","output_qty":112800,"equipment_utilization":89.5,"delivery_rate":96.8},
+      {"date":"2024-12-01","output_qty":110100,"equipment_utilization":88.9,"delivery_rate":97.1}
+    ]
+  },
+  "ai_agent": {
+    "knowledge_base": [
+      {"question":"How to improve equipment OEE?","answer":"Improving OEE requires a three-pronged approach: 1. Increase availability (reduce unplanned downtime, implement TPM); 2. Improve performance rate (optimize cycle time, reduce idling and minor stops); 3. Improve quality rate (reduce defect rate, implement SPC). Start with analyzing the six major equipment losses (breakdowns, setup/changeover, idle, reduced speed, defects, startup losses)."},
+      {"question":"What is Digital Twin?","answer":"Digital Twin creates a virtual mapping model of physical equipment, synchronizing real-time operational data to enable simulation, prediction, and optimization. In manufacturing, it is commonly used for production line simulation (e.g., Siemens Tecnomatix), predictive equipment maintenance, and process parameter optimization."},
+      {"question":"Difference between Lean Manufacturing and Six Sigma?","answer":"Lean Manufacturing focuses on eliminating 7 wastes (overproduction, waiting, transport, overprocessing, inventory, motion, defects) and pursuing continuous flow. Six Sigma focuses on reducing variation, using DMAIC (Define, Measure, Analyze, Improve, Control) to reduce defects to 3.4ppm. They complement each other; Lean Six Sigma is the best practice."},
+      {"question":"How to choose SPC control charts?","answer":"For variable data use Xbar-R chart (subgroup size \u226410) or Xbar-S chart (subgroup size >10). For attribute data use p chart (defect rate) or c chart (defect count). Selection criteria: data type (variable/attribute), subgroup size, and whether constant."}
+    ]
+  },
+  "risk_control": {
+    "transactions": [
+      {"id":"SM001","equipment":"CNC Machining Center","vibration":5.2,"temperature":48.3,"run_hours":2850,"defect_rate":2.8,"risk_label":"equipment_abnormal","detail":"Spindle vibration 5.2mm/s exceeds threshold 4.5"},
+      {"id":"SM002","equipment":"Injection Molding Machine","vibration":2.1,"temperature":185,"run_hours":1200,"defect_rate":1.2,"risk_label":null,"detail":"Normal operation"},
+      {"id":"SM003","equipment":"Press Machine","vibration":6.8,"temperature":55,"run_hours":3200,"defect_rate":4.5,"risk_label":"equipment_abnormal","detail":"Press machine vibration 6.8mm/s, defect rate 4.5% exceeds threshold"},
+      {"id":"SM004","equipment":"Welding Robot","vibration":1.5,"temperature":38,"run_hours":800,"defect_rate":0.8,"risk_label":null,"detail":"Normal operation"}
+    ],
+    "indicators": [
+      {"id":"equipment_abnormal","name":"Production Line Abnormal Loss Risk","value":0.65,"trend":"up","threshold":0.6,"status":"warning","detail":"CNC spindle vibration exceeds limit, press machine defect rate 4.5%"},
+      {"id":"quality_defect","name":"Quality Defect Risk","value":0.35,"trend":"down","threshold":0.5,"status":"safe","detail":"Overall yield rate 98.8%, within control range"}
+    ]
+  },
+  "chatbi": {
+    "tables": {
+      "Daily Production Summary": [
+        {"Date":"2024-11-15","Production Line":"Line A","Planned Output":1200,"Actual Output":1185,"Good Units":1172,"Defective Units":13,"Yield Pct":98.9,"Equipment OEE Pct":85.3},
+        {"Date":"2024-11-15","Production Line":"Line B","Planned Output":1000,"Actual Output":1012,"Good Units":998,"Defective Units":14,"Yield Pct":98.6,"Equipment OEE Pct":82.5},
+        {"Date":"2024-11-15","Production Line":"Line C","Planned Output":800,"Actual Output":795,"Good Units":788,"Defective Units":7,"Yield Pct":99.1,"Equipment OEE Pct":88.2},
+        {"Date":"2024-11-16","Production Line":"Line A","Planned Output":1200,"Actual Output":1192,"Good Units":1180,"Defective Units":12,"Yield Pct":99.0,"Equipment OEE Pct":86.1},
+        {"Date":"2024-11-16","Production Line":"Line B","Planned Output":1000,"Actual Output":988,"Good Units":975,"Defective Units":13,"Yield Pct":98.7,"Equipment OEE Pct":81.8}
+      ],
+      "Equipment Status Monitor": [
+        {"Equipment No":"MC-001","Equipment Name":"CNC Machining Center","Running Status":"Running","Speed RPM":3500,"Temp C":42.5,"Vibration mm/s":0.12,"Run Hours":128,"Next Maintenance Date":"2024-12-01"},
+        {"Equipment No":"MC-002","Equipment Name":"Injection Molding Machine","Running Status":"Running","Speed RPM":120,"Temp C":185.3,"Vibration mm/s":0.08,"Run Hours":96,"Next Maintenance Date":"2024-11-28"},
+        {"Equipment No":"MC-003","Equipment Name":"Press Machine","Running Status":"Down for Maintenance","Speed RPM":0,"Temp C":28.0,"Vibration mm/s":0.02,"Run Hours":0,"Next Maintenance Date":"2024-11-20"},
+        {"Equipment No":"RB-001","Equipment Name":"Welding Robot","Running Status":"Running","Speed RPM":45,"Temp C":38.2,"Vibration mm/s":0.15,"Run Hours":200,"Next Maintenance Date":"2024-12-15"}
+      ]
+    }
+  }
+}

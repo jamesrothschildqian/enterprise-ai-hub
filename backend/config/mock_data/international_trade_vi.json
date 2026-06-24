@@ -1,0 +1,385 @@
+{
+  "doc_parser": {
+    "documents": [
+      {
+        "id": "doc_it_001",
+        "type": "customs_declaration",
+        "title": "Export Customs Declaration Nov 2024",
+        "content": "Declaration No: BG-2024-11258\nDeclaration Date: 2024-11-15\nOperator: Zhejiang Yuanda Import & Export Co., Ltd (Code: 3301967123)\nHS Code: 8482.10\nProduct Name: Deep Groove Ball Bearings\nQty & Unit: 5000 sets\nTotal Amount: EUR 142,500.00\nCurrency: EUR\nTrade Country: Germany\nTransport: Ocean\nTax Type: General Taxation\nContainer No: MSCU4821954\nPackages: 120\nGross Weight: 6500KG",
+        "fields": {
+          "Declaration No": "BG-2024-11258",
+          "Declaration Date": "2024-11-15",
+          "Operator": "Zhejiang Yuanda Import & Export Co., Ltd",
+          "HS Code": "8482.10",
+          "Product Name": "Deep Groove Ball Bearings",
+          "Qty": "5000 sets",
+          "Total Amount": "EUR 142,500.00",
+          "Currency": "EUR",
+          "Trade Country": "Germany"
+        }
+      },
+      {
+        "id": "doc_it_002",
+        "type": "letter_of_credit",
+        "title": "Deutsche Bank Sight L/C",
+        "content": "L/C No: LC-2024-5566\nIssuing Bank: Deutsche Bank AG Frankfurt\nIssue Date: 2024-10-20\nExpiry: 2024-12-31\nApplicant: Global Trade Solutions GmbH\nBeneficiary: Zhejiang Yuanda Import & Export Co., Ltd\nAmount: EUR 142,500.00\nCurrency: EUR\nLatest Shipment: 2024-12-15\nDocuments Required: Commercial Invoice (3 copies), Bill of Lading (full set), Packing List (3 copies), Certificate of Origin, Insurance Policy\nPayment: Sight Payment",
+        "fields": {
+          "L/C No": "LC-2024-5566",
+          "Issuing Bank": "Deutsche Bank AG Frankfurt",
+          "Issue Date": "2024-10-20",
+          "Expiry": "2024-12-31",
+          "Applicant": "Global Trade Solutions GmbH",
+          "Beneficiary": "Zhejiang Yuanda Import & Export Co., Ltd",
+          "Amount": "EUR 142,500.00",
+          "Currency": "EUR",
+          "Latest Shipment": "2024-12-15"
+        }
+      },
+      {
+        "id": "doc_it_003",
+        "type": "commercial_invoice",
+        "title": "Commercial Invoice INV-2024-8852",
+        "content": "Invoice No: INV-2024-8852\nInvoice Date: 2024-11-16\nSeller: Zhejiang Yuanda Import & Export Co., Ltd\nBuyer: Global Trade Solutions GmbH\nDescription: Precision Ball Bearings 6205-2RS\nQty: 5,000 sets\nUnit Price: EUR 28.50\nTotal Amount: EUR 142,500.00\nTrade Term: CIF Hamburg\nCountry of Origin: China\nPayment: T/T 30 days after B/L date",
+        "fields": {
+          "Invoice No": "INV-2024-8852",
+          "Invoice Date": "2024-11-16",
+          "Seller": "Zhejiang Yuanda Import & Export Co., Ltd",
+          "Buyer": "Global Trade Solutions GmbH",
+          "Description": "Precision Ball Bearings 6205-2RS",
+          "Qty": "5,000 sets",
+          "Unit Price": "EUR 28.50",
+          "Total Amount": "EUR 142,500.00",
+          "Trade Term": "CIF Hamburg",
+          "Country of Origin": "China"
+        }
+      },
+      {
+        "id": "doc_it_004",
+        "type": "bill_of_lading",
+        "title": "COSCO Ocean Bill of Lading",
+        "content": "B/L No: COSU2024115888\nVessel: COSCO PRIDE\nVoyage: 024W\nShipper: Zhejiang Yuanda Import & Export Co., Ltd\nConsignee: TO ORDER OF SHIPPER\nNotify Party: Global Trade Solutions GmbH\nPort of Loading: Ningbo (NGB)\nPort of Discharge: Hamburg (HAM)\nContainer No/Seal: MSCU4821954/SEAL88452\nPackages: 120 PACKAGES\nGross Weight: 6,500.00 KGS\nMeasurement: 28.500 CBM\nLoading Date: 2024-11-20\nFreight: FREIGHT PREPAID",
+        "fields": {
+          "B/L No": "COSU2024115888",
+          "Vessel": "COSCO PRIDE",
+          "Voyage": "024W",
+          "Shipper": "Zhejiang Yuanda Import & Export Co., Ltd",
+          "Consignee": "TO ORDER OF SHIPPER",
+          "Port of Loading": "Ningbo (NGB)",
+          "Port of Discharge": "Hamburg (HAM)",
+          "Container No": "MSCU4821954",
+          "Packages": "120 PACKAGES",
+          "Gross Weight": "6,500.00 KGS",
+          "Measurement": "28.500 CBM"
+        }
+      }
+    ]
+  },
+  "demand_forecast": {
+    "history": [
+      {
+        "date": "2024-01-01",
+        "export_orders": 1280,
+        "export_amount": 2850,
+        "new_customers": 12
+      },
+      {
+        "date": "2024-02-01",
+        "export_orders": 1120,
+        "export_amount": 2520,
+        "new_customers": 8
+      },
+      {
+        "date": "2024-03-01",
+        "export_orders": 1450,
+        "export_amount": 3180,
+        "new_customers": 15
+      },
+      {
+        "date": "2024-04-01",
+        "export_orders": 1380,
+        "export_amount": 3050,
+        "new_customers": 11
+      },
+      {
+        "date": "2024-05-01",
+        "export_orders": 1520,
+        "export_amount": 3350,
+        "new_customers": 14
+      },
+      {
+        "date": "2024-06-01",
+        "export_orders": 1480,
+        "export_amount": 3280,
+        "new_customers": 13
+      },
+      {
+        "date": "2024-07-01",
+        "export_orders": 1620,
+        "export_amount": 3560,
+        "new_customers": 16
+      },
+      {
+        "date": "2024-08-01",
+        "export_orders": 1580,
+        "export_amount": 3480,
+        "new_customers": 10
+      },
+      {
+        "date": "2024-09-01",
+        "export_orders": 1720,
+        "export_amount": 3750,
+        "new_customers": 18
+      },
+      {
+        "date": "2024-10-01",
+        "export_orders": 1680,
+        "export_amount": 3650,
+        "new_customers": 15
+      },
+      {
+        "date": "2024-11-01",
+        "export_orders": 1820,
+        "export_amount": 3920,
+        "new_customers": 20
+      },
+      {
+        "date": "2024-12-01",
+        "export_orders": 1750,
+        "export_amount": 3850,
+        "new_customers": 17
+      }
+    ]
+  },
+  "ai_agent": {
+    "knowledge_base": [
+      {
+        "question": "What is CIF trade term?",
+        "answer": "CIF (Cost, Insurance and Freight) means the seller delivers the goods to the destination port and bears the cost of transport and insurance. Risk transfers to the buyer once goods pass the ship's rail at the port of loading."
+      },
+      {
+        "question": "Difference between Sight L/C and Usance L/C?",
+        "answer": "Sight L/C requires the issuing bank to pay immediately upon presentation of compliant documents. Usance L/C allows deferred payment (e.g., 30/60/90 days). Beneficiaries of Usance L/C can arrange discount financing."
+      },
+      {
+        "question": "How to calculate export exchange cost?",
+        "answer": "Export exchange cost = total export cost (CNY) / net export foreign exchange income (USD). If the cost is lower than the bank's buying rate, it's profitable. E.g., cost = CNY 800,000, income = USD 100,000, cost = 8.0. If bank buying rate is 8.15, it's profitable."
+      },
+      {
+        "question": "Which documents require inspection?",
+        "answer": "Legally inspected goods include: animal products, plant products, food, cosmetics, dangerous goods, electromechanical products. Refer to the 'Import and Export Commodity Inspection Catalog' for details."
+      },
+      {
+        "question": "What is the function of a Bill of Lading?",
+        "answer": "A Bill of Lading has three functions: 1. Receipt of goods - proof the carrier received the cargo; 2. Transport contract - contract terms between carrier and shipper; 3. Document of title - can be transferred by endorsement for claiming goods."
+      }
+    ]
+  },
+  "risk_control": {
+    "transactions": [
+      {
+        "id": "T001",
+        "customer": "Global Trade GmbH",
+        "amount": 142500,
+        "currency": "EUR",
+        "days_overdue": 35,
+        "country": "DE",
+        "product": "Bearings",
+        "risk_label": "payment_overdue"
+      },
+      {
+        "id": "T002",
+        "customer": "Pacific Importers",
+        "amount": 10200,
+        "currency": "USD",
+        "days_overdue": 12,
+        "country": "US",
+        "product": "Electronic Components",
+        "risk_label": null
+      },
+      {
+        "id": "T003",
+        "customer": "EuroParts Ltd",
+        "amount": 135000,
+        "currency": "GBP",
+        "days_overdue": 42,
+        "country": "GB",
+        "product": "Auto Parts",
+        "risk_label": "payment_overdue"
+      },
+      {
+        "id": "T004",
+        "customer": "Sunrise Trading",
+        "amount": 100000,
+        "currency": "JPY",
+        "days_overdue": 5,
+        "country": "JP",
+        "product": "Textile Fabric",
+        "risk_label": null
+      },
+      {
+        "id": "T005",
+        "customer": "Gulf Traders",
+        "amount": 480000,
+        "currency": "USD",
+        "days_overdue": 60,
+        "country": "AE",
+        "product": "Machinery",
+        "risk_label": "payment_overdue"
+      },
+      {
+        "id": "T006",
+        "customer": "Maple Supply",
+        "amount": 85600,
+        "currency": "CAD",
+        "days_overdue": 28,
+        "country": "CA",
+        "product": "Timber",
+        "risk_label": null
+      },
+      {
+        "id": "T007",
+        "customer": "Samba Trading",
+        "amount": 220000,
+        "currency": "BRL",
+        "days_overdue": 55,
+        "country": "BR",
+        "product": "Machinery Equipment",
+        "risk_label": "exchange_rate_loss"
+      }
+    ],
+    "indicators": [
+      {
+        "id": "payment_overdue",
+        "name": "Payment Overdue Risk",
+        "value": 0.72,
+        "trend": "up",
+        "threshold": 0.7,
+        "status": "warning",
+        "detail": "Key client Global Trade overdue 35 days, EuroParts overdue 42 days"
+      },
+      {
+        "id": "exchange_rate_loss",
+        "name": "Exchange Rate Loss Risk",
+        "value": 0.55,
+        "trend": "up",
+        "threshold": 0.6,
+        "status": "safe",
+        "detail": "BRL/CNY monthly decline 3.5%, Samba Trading exposed"
+      },
+      {
+        "id": "logistics_risk",
+        "name": "Logistics Delay Risk",
+        "value": 0.48,
+        "trend": "stable",
+        "threshold": 0.6,
+        "status": "safe",
+        "detail": "Peak season capacity tight, recommend booking 2 weeks in advance"
+      }
+    ]
+  },
+  "chatbi": {
+    "tables": {
+      "Order Details": [
+        {
+          "Order No": "ORD-2024-001",
+          "Customer": "Global Trade GmbH",
+          "Country": "Germany",
+          "Product Category": "Precision Bearings",
+          "Qty": 5000,
+          "Unit Price USD": 28.5,
+          "Total USD": 142500,
+          "Trade Term": "CIF",
+          "Order Date": "2024-11-05",
+          "Delivery Date": "2024-12-20",
+          "Status": "Shipped"
+        },
+        {
+          "Order No": "ORD-2024-002",
+          "Customer": "Pacific Importers",
+          "Country": "USA",
+          "Product Category": "Electronic Components",
+          "Qty": 12000,
+          "Unit Price USD": 0.85,
+          "Total USD": 10200,
+          "Trade Term": "FOB",
+          "Order Date": "2024-11-08",
+          "Delivery Date": "2024-12-15",
+          "Status": "Cleared"
+        },
+        {
+          "Order No": "ORD-2024-003",
+          "Customer": "EuroParts Ltd",
+          "Country": "UK",
+          "Product Category": "Auto Parts",
+          "Qty": 3000,
+          "Unit Price USD": 45.0,
+          "Total USD": 135000,
+          "Trade Term": "CIF",
+          "Order Date": "2024-11-12",
+          "Delivery Date": "2024-12-28",
+          "Status": "In Production"
+        },
+        {
+          "Order No": "ORD-2024-004",
+          "Customer": "Sunrise Trading",
+          "Country": "Japan",
+          "Product Category": "Textile Fabric",
+          "Qty": 8000,
+          "Unit Price USD": 12.5,
+          "Total USD": 100000,
+          "Trade Term": "FOB",
+          "Order Date": "2024-11-15",
+          "Delivery Date": "2024-12-25",
+          "Status": "Shipped"
+        },
+        {
+          "Order No": "ORD-2024-005",
+          "Customer": "Gulf Traders",
+          "Country": "UAE",
+          "Product Category": "Machinery",
+          "Qty": 150,
+          "Unit Price USD": 3200.0,
+          "Total USD": 480000,
+          "Trade Term": "CFR",
+          "Order Date": "2024-11-18",
+          "Delivery Date": "2025-01-10",
+          "Status": "In Production"
+        }
+      ],
+      "Exchange Rate Tracker": [
+        {
+          "Currency": "USD/CNY",
+          "Current Rate": 7.24,
+          "Monthly Change": "+0.8%",
+          "Quarterly Change": "+2.1%",
+          "Annual Change": "+3.5%",
+          "Forecast": "Appreciating"
+        },
+        {
+          "Currency": "EUR/CNY",
+          "Current Rate": 7.85,
+          "Monthly Change": "-0.3%",
+          "Quarterly Change": "+1.2%",
+          "Annual Change": "+2.8%",
+          "Forecast": "Stable"
+        },
+        {
+          "Currency": "GBP/CNY",
+          "Current Rate": 9.12,
+          "Monthly Change": "+0.5%",
+          "Quarterly Change": "+1.8%",
+          "Annual Change": "+4.2%",
+          "Forecast": "Appreciating"
+        },
+        {
+          "Currency": "JPY/CNY",
+          "Current Rate": 0.048,
+          "Monthly Change": "-1.2%",
+          "Quarterly Change": "-3.5%",
+          "Annual Change": "-6.8%",
+          "Forecast": "Depreciating"
+        }
+      ]
+    }
+  }
+}

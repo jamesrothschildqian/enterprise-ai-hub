@@ -1,0 +1,92 @@
+﻿{
+  "doc_parser": {
+    "documents": [
+      {
+        "id": "doc_it_001",
+        "type": "customs_declaration",
+        "title": "2024年11月出口报关单",
+        "content": "报关单编号: BG-2024-11258\n申报日期: 2024-11-15\n经营单位: 浙江远大进出口有限公司(代码: 3301967123)\n商品编码: 8482.10\n商品名称: 深沟球轴承\n数量及单位: 5000套\n总价: EUR 142,500.00\n币制: 欧元\n贸易国: 德国\n运输方式: 江海运输\n征免性质: 一般征税\n集装箱号: MSCU4821954\n件数: 120\n毛重: 6500KG",
+        "fields": {"报关单编号":"BG-2024-11258","申报日期":"2024-11-15","经营单位":"浙江远大进出口有限公司","商品编码":"8482.10","商品名称":"深沟球轴承","数量":"5000套","总价":"EUR 142,500.00","币制":"欧元","贸易国":"德国"}
+      },
+      {
+        "id": "doc_it_002",
+        "type": "letter_of_credit",
+        "title": " Deutsche Bank 即期信用证",
+        "content": "信用证号: LC-2024-5566\n开证行: Deutsche Bank AG Frankfurt\n开证日期: 2024-10-20\n有效期: 2024-12-31\n申请人: Global Trade Solutions GmbH\n受益人: 浙江远大进出口有限公司\n金额: EUR 142,500.00\n币种: EUR\n最迟装运日: 2024-12-15\n单据要求: 商业发票(3份)、海运提单(全套)、装箱单(3份)、原产地证、保险单\n付款方式: 即期付款",
+        "fields": {"信用证号":"LC-2024-5566","开证行":"Deutsche Bank AG Frankfurt","开证日期":"2024-10-20","有效期":"2024-12-31","申请人":"Global Trade Solutions GmbH","受益人":"浙江远大进出口有限公司","金额":"EUR 142,500.00","币种":"EUR","最迟装运日":"2024-12-15"}
+      },
+      {
+        "id": "doc_it_003",
+        "type": "commercial_invoice",
+        "title": "商业发票 INV-2024-8852",
+        "content": "发票号: INV-2024-8852\n开票日期: 2024-11-16\n卖方: 浙江远大进出口有限公司\n买方: Global Trade Solutions GmbH\n商品描述: Precision Ball Bearings 6205-2RS\n数量: 5,000套\n单价: EUR 28.50\n总金额: EUR 142,500.00\n贸易术语: CIF Hamburg\n原产国: China\n付款条件: T/T 30 days after B/L date",
+        "fields": {"发票号":"INV-2024-8852","开票日期":"2024-11-16","卖方":"浙江远大进出口有限公司","买方":"Global Trade Solutions GmbH","商品描述":"Precision Ball Bearings 6205-2RS","数量":"5,000套","单价":"EUR 28.50","总金额":"EUR 142,500.00","贸易术语":"CIF Hamburg","原产国":"China"}
+      },
+      {
+        "id": "doc_it_004",
+        "type": "bill_of_lading",
+        "title": "COSCO海运提单",
+        "content": "提单号: COSU2024115888\n船名: COSCO PRIDE\n航次: 024W\n托运人: 浙江远大进出口有限公司\n收货人: TO ORDER OF SHIPPER\n通知方: Global Trade Solutions GmbH\n装货港: 宁波港(NGB)\n卸货港: 汉堡港(HAM)\n集装箱号/封号: MSCU4821954/SEAL88452\n件数: 120 PACKAGES\n毛重: 6,500.00 KGS\n体积: 28.500 CBM\n装船日期: 2024-11-20\n运费支付: FREIGHT PREPAID",
+        "fields": {"提单号":"COSU2024115888","船名":"COSCO PRIDE","航次":"024W","托运人":"浙江远大进出口有限公司","收货人":"TO ORDER OF SHIPPER","装货港":"宁波港(NGB)","卸货港":"汉堡港(HAM)","集装箱号":"MSCU4821954","件数":"120 PACKAGES","毛重":"6,500.00 KGS","体积":"28.500 CBM"}
+      }
+    ]
+  },
+  "demand_forecast": {
+    "history": [
+      {"date":"2024-01-01","export_orders":1280,"export_amount":2850,"new_customers":12},
+      {"date":"2024-02-01","export_orders":1120,"export_amount":2520,"new_customers":8},
+      {"date":"2024-03-01","export_orders":1450,"export_amount":3180,"new_customers":15},
+      {"date":"2024-04-01","export_orders":1380,"export_amount":3050,"new_customers":11},
+      {"date":"2024-05-01","export_orders":1520,"export_amount":3350,"new_customers":14},
+      {"date":"2024-06-01","export_orders":1480,"export_amount":3280,"new_customers":13},
+      {"date":"2024-07-01","export_orders":1620,"export_amount":3560,"new_customers":16},
+      {"date":"2024-08-01","export_orders":1580,"export_amount":3480,"new_customers":10},
+      {"date":"2024-09-01","export_orders":1720,"export_amount":3750,"new_customers":18},
+      {"date":"2024-10-01","export_orders":1680,"export_amount":3650,"new_customers":15},
+      {"date":"2024-11-01","export_orders":1820,"export_amount":3920,"new_customers":20},
+      {"date":"2024-12-01","export_orders":1750,"export_amount":3850,"new_customers":17}
+    ]
+  },
+  "ai_agent": {
+    "knowledge_base": [
+      {"question":"什么是CIF贸易术语？","answer":"CIF(Cost, Insurance and Freight)指成本加保险费加运费，卖方须负责将货物运至指定目的港，并承担运费和保险费。货物在装运港越过船舷后的风险由买方承担。"},
+      {"question":"即期信用证和远期信用证的区别？","answer":"即期信用证(Sight L/C)指受益人提交符合要求的单据后，开证行立即付款。远期信用证(Usance L/C)指开证行在收到单据后30天/60天/90天等未来日期付款。远期信用证下受益人可办理贴现融资。"},
+      {"question":"如何计算出口换汇成本？","answer":"出口换汇成本 = 出口总成本(人民币)/出口外汇净收入(美元)。换汇成本低于银行外汇买入价表示盈利。例如：成本CNY 800,000，收入USD 100,000，换汇成本=8.0，若银行买入价8.15，则盈利。"},
+      {"question":"哪些单据需要商检？","answer":"法定检验商品包括：动物产品、植物产品、食品、化妆品、危险品、机电产品等。具体参照《出入境检验检疫机构实施检验检疫的进出口商品目录》。非法检商品可凭合同要求申请检验。"},
+      {"question":"海运提单的作用？","answer":"海运提单具有三大作用：1. 货物收据——承运人收到货物的证明；2. 运输合同证明——承运人与托运人的合同条款；3. 物权凭证——可通过背书转让，持有人有权提货。"}
+    ]
+  },
+  "risk_control": {
+    "transactions": [
+      {"id":"T001","customer":"Global Trade GmbH","amount":142500,"currency":"EUR","days_overdue":35,"country":"DE","product":"轴承","risk_label":"payment_overdue"},
+      {"id":"T002","customer":"Pacific Importers","amount":10200,"currency":"USD","days_overdue":12,"country":"US","product":"电子元件","risk_label":null},
+      {"id":"T003","customer":"EuroParts Ltd","amount":135000,"currency":"GBP","days_overdue":42,"country":"GB","product":"汽车配件","risk_label":"payment_overdue"},
+      {"id":"T004","customer":"Sunrise Trading","amount":100000,"currency":"JPY","days_overdue":5,"country":"JP","product":"纺织面料","risk_label":null},
+      {"id":"T005","customer":"Gulf Traders","amount":480000,"currency":"USD","days_overdue":60,"country":"AE","product":"机械装备","risk_label":"payment_overdue"},
+      {"id":"T006","customer":"Maple Supply","amount":85600,"currency":"CAD","days_overdue":28,"country":"CA","product":"木材","risk_label":null},
+      {"id":"T007","customer":"Samba Trading","amount":220000,"currency":"BRL","days_overdue":55,"country":"BR","product":"机械设备","risk_label":"exchange_rate_loss"}
+    ],
+    "indicators": [
+      {"id":"payment_overdue","name":"回款逾期风险","value":0.72,"trend":"up","threshold":0.7,"status":"warning","detail":"大客户Global Trade逾期35天，EuroParts逾期42天"},
+      {"id":"exchange_rate_loss","name":"汇兑损失风险","value":0.55,"trend":"up","threshold":0.6,"status":"safe","detail":"BRL对CNY月跌幅3.5%，Samba Trading面临汇损"},
+      {"id":"logistics_risk","name":"物流延误风险","value":0.48,"trend":"stable","threshold":0.6,"status":"safe","detail":"12月旺季舱位紧张，建议提前2周订舱"}
+    ]
+  },
+  "chatbi": {
+    "tables": {
+      "进出口订单明细": [
+        {"订单编号":"ORD-2024-001","客户名称":"Global Trade GmbH","国家":"德国","产品类别":"精密轴承","数量":5000,"单价USD":28.5,"总金额USD":142500,"贸易术语":"CIF","下单日期":"2024-11-05","交货日期":"2024-12-20","状态":"已发货"},
+        {"订单编号":"ORD-2024-002","客户名称":"Pacific Importers","国家":"美国","产品类别":"电子元件","数量":12000,"单价USD":0.85,"总金额USD":10200,"贸易术语":"FOB","下单日期":"2024-11-08","交货日期":"2024-12-15","状态":"已报关"},
+        {"订单编号":"ORD-2024-003","客户名称":"EuroParts Ltd","国家":"英国","产品类别":"汽车配件","数量":3000,"单价USD":45.0,"总金额USD":135000,"贸易术语":"CIF","下单日期":"2024-11-12","交货日期":"2024-12-28","状态":"生产中"},
+        {"订单编号":"ORD-2024-004","客户名称":"Sunrise Trading","国家":"日本","产品类别":"纺织面料","数量":8000,"单价USD":12.5,"总金额USD":100000,"贸易术语":"FOB","下单日期":"2024-11-15","交货日期":"2024-12-25","状态":"已发货"},
+        {"订单编号":"ORD-2024-005","客户名称":"Gulf Traders","国家":"阿联酋","产品类别":"机械装备","数量":150,"单价USD":3200.0,"总金额USD":480000,"贸易术语":"CFR","下单日期":"2024-11-18","交货日期":"2025-01-10","状态":"生产中"}
+      ],
+      "汇率跟踪表": [
+        {"币种":"USD/CNY","当前汇率":7.24,"月涨跌幅":"+0.8%","季涨跌幅":"+2.1%","年涨跌幅":"+3.5%","预测方向":"升值"},
+        {"币种":"EUR/CNY","当前汇率":7.85,"月涨跌幅":"-0.3%","季涨跌幅":"+1.2%","年涨跌幅":"+2.8%","预测方向":"稳定"},
+        {"币种":"GBP/CNY","当前汇率":9.12,"月涨跌幅":"+0.5%","季涨跌幅":"+1.8%","年涨跌幅":"+4.2%","预测方向":"升值"},
+        {"币种":"JPY/CNY","当前汇率":0.048,"月涨跌幅":"-1.2%","季涨跌幅":"-3.5%","年涨跌幅":"-6.8%","预测方向":"贬值"}
+      ]
+    }
+  }
+}

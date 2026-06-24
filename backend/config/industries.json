@@ -1,0 +1,52 @@
+{
+  "industries": [
+    {
+      "id": "international_trade",
+      "name": "国际贸易",
+      "name_en": "International Trade",
+      "icon": "global",
+      "description": "覆盖进出口报关、信用证管理、汇率风险管理、跨境物流协同等场景",
+      "modules": ["doc_parser", "demand_forecast", "ai_agent", "risk_control", "chatbi"]
+    },
+    {
+      "id": "smart_manufacturing",
+      "name": "智能制造",
+      "name_en": "Smart Manufacturing",
+      "icon": "factory",
+      "description": "覆盖生产排程优化、设备预测维护、质量缺陷检测、供应链协同等场景",
+      "modules": ["doc_parser", "demand_forecast", "ai_agent", "risk_control", "chatbi"]
+    },
+    {
+      "id": "finance",
+      "name": "金融",
+      "name_en": "Finance & Banking",
+      "icon": "bank",
+      "description": "覆盖信贷审批、反欺诈检测、智能投顾、监管合规分析等场景",
+      "modules": ["doc_parser", "demand_forecast", "ai_agent", "risk_control", "chatbi"]
+    },
+    {
+      "id": "shipping_logistics",
+      "name": "航运物流",
+      "name_en": "Shipping & Logistics",
+      "icon": "car",
+      "description": "覆盖运力调度优化、路径规划、仓储管理、实时追踪等场景",
+      "modules": ["doc_parser", "demand_forecast", "ai_agent", "risk_control", "chatbi"]
+    },
+    {
+      "id": "real_estate",
+      "name": "房地产",
+      "name_en": "Real Estate",
+      "icon": "home",
+      "description": "覆盖楼盘估值分析、市场趋势预测、客户画像匹配、合同审核等场景",
+      "modules": ["doc_parser", "demand_forecast", "ai_agent", "risk_control", "chatbi"]
+    },
+    {
+      "id": "hr",
+      "name": "HR人力资源",
+      "name_en": "Human Resources",
+      "icon": "team",
+      "description": "覆盖简历智能筛选、员工流失预测、培训需求分析、组织效能评估等场景",
+      "modules": ["doc_parser", "demand_forecast", "ai_agent", "risk_control", "chatbi"]
+    }
+  ]
+}

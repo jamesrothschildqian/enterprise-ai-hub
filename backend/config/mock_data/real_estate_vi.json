@@ -1,0 +1,253 @@
+{
+  "doc_parser": {
+    "documents": [
+      {
+        "id": "doc_re_001",
+        "type": "engineering_change",
+        "title": "Engineering Change Order GCQ-2024-0088",
+        "content": "Change Order No: GCQ-2024-0088\nProject Name: Vanke Puyueshan Phase I Main Construction\nConstruction Company: China Construction Third Bureau\nChange Description: Building 3 lobby height adjusted from 4.2m to 5.8m, add ceiling decoration\nChange Reason: Quality upgrade to meet high-end customer needs\nAddition Amount: RMB 385,000.00\nDeduction Amount: RMB 0.00\nNet Change: +RMB 385,000.00\nOwner: Vanke Co., Ltd.\nSupervisor: Huacheng Supervision\nChange Date: 2024-11-15",
+        "fields": {
+          "Change Order No": "GCQ-2024-0088",
+          "Project Name": "Vanke Puyueshan Phase I Main Construction",
+          "Construction Company": "China Construction Third Bureau",
+          "Change Description": "Lobby height adjustment and ceiling decoration",
+          "Addition Amount": "RMB 385,000.00",
+          "Net Change": "+RMB 385,000.00",
+          "Owner": "Vanke Co., Ltd.",
+          "Change Date": "2024-11-15"
+        }
+      },
+      {
+        "id": "doc_re_002",
+        "type": "sales_contract",
+        "title": "Commercial Housing Sales Contract PY-2024-0088",
+        "content": "Contract No: PY-2024-0088\nBuyer: Li Qiang\nSeller: Vanke Co., Ltd.\nProperty Location: Room 2002, Building 3, Vanke Puyueshan, No. 88 Keji South Road, Nanshan District, Shenzhen\nFloor Area: 128.50㎡\nUnit Area: 102.38㎡\nTotal Price: RMB 8,560,000.00\nPayment Method: Mortgage Loan (30% Down Payment)\nLoan Amount: RMB 5,992,000.00\nDelivery Date: 2025-06-30\nTransfer Date: 2025-03-15\nDefault Clause: 0.05% of total price per day for late delivery",
+        "fields": {
+          "Contract No": "PY-2024-0088",
+          "Buyer": "Li Qiang",
+          "Seller": "Vanke Co., Ltd.",
+          "Property Location": "Nanshan District, Shenzhen",
+          "Floor Area": "128.50㎡",
+          "Total Price": "RMB 8,560,000.00",
+          "Payment Method": "Mortgage Loan",
+          "Delivery Date": "2025-06-30"
+        }
+      }
+    ]
+  },
+  "demand_forecast": {
+    "history": [
+      {
+        "date": "2024-01-01",
+        "new_home_sales": 3850,
+        "existing_home_sales": 5280,
+        "avg_price": 28500
+      },
+      {
+        "date": "2024-02-01",
+        "new_home_sales": 2820,
+        "existing_home_sales": 3850,
+        "avg_price": 27800
+      },
+      {
+        "date": "2024-03-01",
+        "new_home_sales": 4280,
+        "existing_home_sales": 5820,
+        "avg_price": 29200
+      },
+      {
+        "date": "2024-04-01",
+        "new_home_sales": 4050,
+        "existing_home_sales": 5650,
+        "avg_price": 28800
+      },
+      {
+        "date": "2024-05-01",
+        "new_home_sales": 4450,
+        "existing_home_sales": 5920,
+        "avg_price": 29500
+      },
+      {
+        "date": "2024-06-01",
+        "new_home_sales": 4680,
+        "existing_home_sales": 6150,
+        "avg_price": 30200
+      },
+      {
+        "date": "2024-07-01",
+        "new_home_sales": 4820,
+        "existing_home_sales": 6350,
+        "avg_price": 30500
+      },
+      {
+        "date": "2024-08-01",
+        "new_home_sales": 4950,
+        "existing_home_sales": 6480,
+        "avg_price": 30800
+      },
+      {
+        "date": "2024-09-01",
+        "new_home_sales": 4520,
+        "existing_home_sales": 6280,
+        "avg_price": 29800
+      },
+      {
+        "date": "2024-10-01",
+        "new_home_sales": 5120,
+        "existing_home_sales": 6720,
+        "avg_price": 31200
+      },
+      {
+        "date": "2024-11-01",
+        "new_home_sales": 5250,
+        "existing_home_sales": 6950,
+        "avg_price": 31500
+      },
+      {
+        "date": "2024-12-01",
+        "new_home_sales": 5380,
+        "existing_home_sales": 7120,
+        "avg_price": 31800
+      }
+    ]
+  },
+  "ai_agent": {
+    "knowledge_base": [
+      {
+        "question": "How is the commercial loan amount calculated?",
+        "answer": "Commercial loan amount = property appraised value × LTV ratio (max 70% for first home). Housing provident fund loans are limited by three factors: account balance (typically 15-25x), monthly contribution amount, and local maximum cap. Combined loan = provident fund max + commercial loan for remainder. Monthly payment should not exceed 50% of household monthly income."
+      },
+      {
+        "question": "What is Floor Area Ratio and Usable Area Ratio?",
+        "answer": "Floor Area Ratio (FAR) = total floor area / land area. Lower FAR means better comfort (villas <0.5, low-rise 1.0-1.5, high-rise 2.0-4.0). Usable area ratio = unit area / floor area, typically 78-82% for high-rises, 82-88% for low-rises."
+      }
+    ]
+  },
+  "risk_control": {
+    "transactions": [
+      {
+        "id": "RE001",
+        "project": "Puyueshan",
+        "cost_ratio": 112,
+        "progress_pct": 35,
+        "payment_pct": 42,
+        "price_vs_market": 95,
+        "delay_days": 0,
+        "risk_label": "cost_overrun",
+        "detail": "Payment ratio 42% exceeds progress ratio 35%, overpaid by 7%"
+      },
+      {
+        "id": "RE002",
+        "project": "Tianhui Plaza",
+        "cost_ratio": 98,
+        "progress_pct": 60,
+        "payment_pct": 58,
+        "price_vs_market": 88,
+        "delay_days": 45,
+        "risk_label": null,
+        "detail": "Generally normal"
+      },
+      {
+        "id": "RE003",
+        "project": "Chunjiang Tianxi",
+        "cost_ratio": 105,
+        "progress_pct": 50,
+        "payment_pct": 52,
+        "price_vs_market": 78,
+        "delay_days": 120,
+        "risk_label": "delivery_delay",
+        "detail": "Delivery delayed 120 days, behind schedule by ~4 months"
+      }
+    ],
+    "indicators": [
+      {
+        "id": "cost_overrun",
+        "name": "Construction Cost Overpayment Risk",
+        "value": 0.45,
+        "trend": "stable",
+        "threshold": 0.6,
+        "status": "safe",
+        "detail": "Puyueshan project has overpayment, refund requested from contractor"
+      },
+      {
+        "id": "delivery_delay",
+        "name": "Delivery Delay Risk",
+        "value": 0.68,
+        "trend": "up",
+        "threshold": 0.65,
+        "status": "warning",
+        "detail": "Chunjiang Tianxi delayed 4 months, needs investigation of general contractor management"
+      }
+    ]
+  },
+  "chatbi": {
+    "tables": {
+      "Property Sales Statistics": [
+        {
+          "Project Name": "Vanke Puyueshan",
+          "City": "Shenzhen",
+          "Total Units": 1200,
+          "Sold Units": 985,
+          "Sell-Through Rate Pct": 82.1,
+          "Avg Price CNY/sqm": 85600,
+          "Monthly Sales": 35,
+          "Sales Rank": 1
+        },
+        {
+          "Project Name": "Sunac One Grand",
+          "City": "Shanghai",
+          "Total Units": 850,
+          "Sold Units": 620,
+          "Sell-Through Rate Pct": 72.9,
+          "Avg Price CNY/sqm": 125000,
+          "Monthly Sales": 22,
+          "Sales Rank": 3
+        },
+        {
+          "Project Name": "Poly Tianhui",
+          "City": "Guangzhou",
+          "Total Units": 980,
+          "Sold Units": 710,
+          "Sell-Through Rate Pct": 72.4,
+          "Avg Price CNY/sqm": 68000,
+          "Monthly Sales": 28,
+          "Sales Rank": 2
+        },
+        {
+          "Project Name": "Longfor Chunjiang Tianxi",
+          "City": "Hangzhou",
+          "Total Units": 650,
+          "Sold Units": 520,
+          "Sell-Through Rate Pct": 80.0,
+          "Avg Price CNY/sqm": 52000,
+          "Monthly Sales": 18,
+          "Sales Rank": 4
+        }
+      ],
+      "Rental Listing Registry": [
+        {
+          "Listing No": "RENT-001",
+          "Community Name": "Zhonghai International Community",
+          "Layout": "3BR2BA",
+          "Area sqm": 120,
+          "Monthly Rent CNY": 8500,
+          "Floor": "15/32",
+          "Orientation": "North-South",
+          "Decoration": "Furnished",
+          "Status": "Available"
+        },
+        {
+          "Listing No": "RENT-002",
+          "Community Name": "Greenland Haipo Rihui",
+          "Layout": "2BR1BA",
+          "Area sqm": 85,
+          "Monthly Rent CNY": 6200,
+          "Floor": "22/38",
+          "Orientation": "South",
+          "Decoration": "Luxury",
+          "Status": "Rented"
+        }
+      ]
+    }
+  }
+}

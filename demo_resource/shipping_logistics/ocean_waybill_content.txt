@@ -1,0 +1,73 @@
+================================================================
+                    BILL OF LADING
+                    SEA WAYBILL
+================================================================
+B/L No.: MSCU4820347
+Reference No.: S2401-3344
+
+CARRIER: CMA CGM (China) Shipping Co., Ltd.
+
+================================================================
+1. SHIPPER (Principal or Seller - name and address)
+   Zhejiang Hongda Import & Export Co., Ltd.
+   No. 188, Yinxian Avenue, Ningbo, Zhejiang, China
+   Tel: 0574-88886666
+
+2. CONSIGNEE (name and address)
+   Global Trade Solutions GmbH
+   Werner-von-Siemens-Str. 12, 22113 Hamburg, Germany
+
+3. NOTIFY PARTY (name and address)
+   DB Schenker Logistics Hamburg
+   Frachtweg 5, 21129 Hamburg, Germany
+
+================================================================
+4. VESSEL & VOYAGE
+   Vessel Name: CMA CGM COLUMBIA
+   Voyage No.: V.244E
+   Flag: Cyprus
+
+5. PORT OF LOADING
+   NINGBO, CHINA
+
+6. PORT OF DISCHARGE
+   HAMBURG, GERMANY
+
+7. PLACE OF DELIVERY
+   HAMBURG CFS
+
+================================================================
+8. MARKS & NOS.         9. NO. OF PKGS  10. DESCRIPTION OF GOODS  11. GROSS WT  12. MEAS
+   HONGDA                200 CTNS        PRECISION BEARING KITS    5200.00 KGS   52.000 CBM
+   HAMBURG                               6205-2RS
+   CT-2024-0889                          HS CODE: 8482.10.00
+                                          "SHIPPER'S LOAD AND COUNT"
+
+TOTAL: TWO HUNDRED CARTONS ONLY
+
+================================================================
+13. CONTAINER NO. & SEAL NO.
+    Container No.: MSCU4820347
+    Seal No.: MSC123456
+    Container Size/Type: 40GP (40' x 8' x 8'6")
+    Tare Weight: 3,750 KGS
+
+================================================================
+14. FREIGHT & CHARGES
+    Freight Prepaid at: NINGBO
+    Freight Payable at: 
+    Freight Rate: USD 2,850.00 / 40GP
+    Total Freight: USD 2,850.00
+    Payment Terms: FREIGHT PREPAID
+
+15. DATE OF SHIPMENT
+    2024-11-18
+
+================================================================
+    Place of Issue: NINGBO, CHINA
+    Date of Issue: 2024-11-18
+    Number of Original B/L: THREE (3)
+
+    FOR THE CARRIER:
+    CMA CGM (China) Shipping Co., Ltd.
+    Authorized Signature: [Digital Signature]

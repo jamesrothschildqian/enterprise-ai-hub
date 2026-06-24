@@ -1,0 +1,80 @@
+﻿{
+  "doc_parser": {
+    "documents": [
+      {
+        "id": "doc_sm_001",
+        "type": "production_order",
+        "title": "生产工单 PO-2024-1120",
+        "content": "工单号: PO-2024-1120\n产品名称: 精密电机转子 Y2-132M\n产品编码: ROTOR-Y2-132M\n计划数量: 1200件\n生产日期: 2024-11-20\n完工日期: 2024-11-25\n产线: A线\n工序: 绕线→组装→动平衡→测试\n负责人: 王建国\n状态: 生产中和工艺参数：绕线速度1200rpm/张力2.5N/烘烤温度150°C",
+        "fields": {"工单号":"PO-2024-1120","产品名称":"精密电机转子 Y2-132M","产品编码":"ROTOR-Y2-132M","计划数量":"1200件","生产日期":"2024-11-20","完工日期":"2024-11-25","产线":"A线","负责人":"王建国","状态":"生产中"}
+      },
+      {
+        "id": "doc_sm_002",
+        "type": "qc_report",
+        "title": "质检报告 QC-2024-886",
+        "content": "报告编号: QC-2024-886\n产品批次: BATCH-2024-11-15\n检验项目: 外径尺寸(50.00±0.02mm)\n规格要求: 50.00±0.02mm\n实测值: 50.01mm\n判定结果: 合格\n检验项目2: 动平衡(≤0.5g·mm/kg)\n实测值2: 0.32g·mm/kg\n判定结果2: 合格\n检验员: 张明\n检验日期: 2024-11-15\n备注: 抽检比例20%，全部合格",
+        "fields": {"报告编号":"QC-2024-886","产品批次":"BATCH-2024-11-15","检验项目":"外径尺寸","规格要求":"50.00±0.02mm","实测值":"50.01mm","判定结果":"合格","检验员":"张明","检验日期":"2024-11-15"}
+      },
+      {
+        "id": "doc_sm_003",
+        "type": "maintenance_record",
+        "title": "设备维护记录 MC-001",
+        "content": "设备编号: MC-001\n设备名称: CNC加工中心(型号: DMG MORI DMU80)\n维护类型: 二级保养\n维护日期: 2024-11-18\n维护内容: 更换主轴轴承、校准XYZ轴精度、更换冷却液、清洁过滤网\n维护人员: 李志强\n更换零件: 主轴轴承SKF-7206/密封圈/过滤芯\n下次维护日期: 2025-02-18\n维护后精度: XYZ轴定位精度±0.003mm",
+        "fields": {"设备编号":"MC-001","设备名称":"CNC加工中心","维护类型":"二级保养","维护日期":"2024-11-18","维护内容":"更换主轴轴承、校准XYZ轴精度","维护人员":"李志强","下次维护日期":"2025-02-18"}
+      }
+    ]
+  },
+  "demand_forecast": {
+    "history": [
+      {"date":"2024-01-01","output_qty":85600,"equipment_utilization":78.5,"delivery_rate":92.3},
+      {"date":"2024-02-01","output_qty":72300,"equipment_utilization":75.2,"delivery_rate":90.8},
+      {"date":"2024-03-01","output_qty":92100,"equipment_utilization":82.1,"delivery_rate":93.5},
+      {"date":"2024-04-01","output_qty":88700,"equipment_utilization":80.6,"delivery_rate":94.1},
+      {"date":"2024-05-01","output_qty":95800,"equipment_utilization":84.3,"delivery_rate":93.8},
+      {"date":"2024-06-01","output_qty":93500,"equipment_utilization":83.5,"delivery_rate":95.2},
+      {"date":"2024-07-01","output_qty":102300,"equipment_utilization":86.8,"delivery_rate":94.5},
+      {"date":"2024-08-01","output_qty":98900,"equipment_utilization":85.2,"delivery_rate":95.8},
+      {"date":"2024-09-01","output_qty":108500,"equipment_utilization":88.1,"delivery_rate":96.2},
+      {"date":"2024-10-01","output_qty":105200,"equipment_utilization":87.3,"delivery_rate":95.5},
+      {"date":"2024-11-01","output_qty":112800,"equipment_utilization":89.5,"delivery_rate":96.8},
+      {"date":"2024-12-01","output_qty":110100,"equipment_utilization":88.9,"delivery_rate":97.1}
+    ]
+  },
+  "ai_agent": {
+    "knowledge_base": [
+      {"question":"如何提高设备OEE？","answer":"提高OEE需三管齐下：1. 提高可用率(减少计划外停机，推行TPM)；2. 提高性能率(优化生产节拍，减少空转和小停机)；3. 提高质量率(降低缺陷率，实施SPC)。建议先做设备六大损失分析(故障/换型/待料/减速/缺陷/启动损失)。"},
+      {"question":"什么是数字孪生？","answer":"数字孪生(Digital Twin)是通过建立物理设备的虚拟映射模型，实时同步运行数据，实现仿真、预测和优化决策。在制造业中常用于产线仿真(如西门子 Tecnomatix)、设备预测维护和工艺参数优化。"},
+      {"question":"精益生产与六西格玛区别？","answer":"精益生产核心是消除7大浪费(过量生产/等待/运输/过度加工/库存/动作/返工)，追求连续流。六西格玛核心是减少变异，通过DMAIC(定义/测量/分析/改进/控制)将缺陷降至3.4ppm。两者互补，精益六西格玛是最佳实践。"},
+      {"question":"SPC控制图如何选择？","answer":"计量型数据用Xbar-R图(子组容量≤10)或Xbar-S图(子组容量>10)；计数型数据用p图(不合格品率)或c图(缺陷数)。选择依据：数据类型(计量/计数)、子组大小、是否恒定。"}
+    ]
+  },
+  "risk_control": {
+    "transactions": [
+      {"id":"SM001","equipment":"CNC加工中心","vibration":5.2,"temperature":48.3,"run_hours":2850,"defect_rate":2.8,"risk_label":"equipment_abnormal","detail":"主轴振动5.2mm/s超过阈值4.5"},
+      {"id":"SM002","equipment":"注塑机","vibration":2.1,"temperature":185,"run_hours":1200,"defect_rate":1.2,"risk_label":null,"detail":"正常运行"},
+      {"id":"SM003","equipment":"冲压机","vibration":6.8,"temperature":55,"run_hours":3200,"defect_rate":4.5,"risk_label":"equipment_abnormal","detail":"冲压机振动6.8mm/s，不良率4.5%超标"},
+      {"id":"SM004","equipment":"焊接机器人","vibration":1.5,"temperature":38,"run_hours":800,"defect_rate":0.8,"risk_label":null,"detail":"运行正常"}
+    ],
+    "indicators": [
+      {"id":"equipment_abnormal","name":"产线损耗异常风险","value":0.65,"trend":"up","threshold":0.6,"status":"warning","detail":"CNC主轴振动超标，冲压机不良率4.5%"},
+      {"id":"quality_defect","name":"质量缺陷风险","value":0.35,"trend":"down","threshold":0.5,"status":"safe","detail":"整体良率98.8%，在控范围内"}
+    ]
+  },
+  "chatbi": {
+    "tables": {
+      "生产日报汇总": [
+        {"日期":"2024-11-15","产线":"A线","计划产量":1200,"实际产量":1185,"良品数":1172,"不良品数":13,"良率Pct":98.9,"设备OEEPct":85.3},
+        {"日期":"2024-11-15","产线":"B线","计划产量":1000,"实际产量":1012,"良品数":998,"不良品数":14,"良率Pct":98.6,"设备OEEPct":82.5},
+        {"日期":"2024-11-15","产线":"C线","计划产量":800,"实际产量":795,"良品数":788,"不良品数":7,"良率Pct":99.1,"设备OEEPct":88.2},
+        {"日期":"2024-11-16","产线":"A线","计划产量":1200,"实际产量":1192,"良品数":1180,"不良品数":12,"良率Pct":99.0,"设备OEEPct":86.1},
+        {"日期":"2024-11-16","产线":"B线","计划产量":1000,"实际产量":988,"良品数":975,"不良品数":13,"良率Pct":98.7,"设备OEEPct":81.8}
+      ],
+      "设备状态监控": [
+        {"设备编号":"MC-001","设备名称":"CNC加工中心","运行状态":"运行中","转速RPM":3500,"温度C":42.5,"振动mmPerS":0.12,"运行时长H":128,"下次维护日":"2024-12-01"},
+        {"设备编号":"MC-002","设备名称":"注塑机","运行状态":"运行中","转速RPM":120,"温度C":185.3,"振动mmPerS":0.08,"运行时长H":96,"下次维护日":"2024-11-28"},
+        {"设备编号":"MC-003","设备名称":"冲压机","运行状态":"停机维护","转速RPM":0,"温度C":28.0,"振动mmPerS":0.02,"运行时长H":0,"下次维护日":"2024-11-20"},
+        {"设备编号":"RB-001","设备名称":"焊接机器人","运行状态":"运行中","转速RPM":45,"温度C":38.2,"振动mmPerS":0.15,"运行时长H":200,"下次维护日":"2024-12-15"}
+      ]
+    }
+  }
+}

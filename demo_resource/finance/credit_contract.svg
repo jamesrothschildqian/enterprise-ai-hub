@@ -1,0 +1,26 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 400 500" font-family="SimSun, serif">
+  <rect width="400" height="500" fill="#fff" stroke="#333" stroke-width="1"/>
+  <rect x="10" y="10" width="380" height="30" fill="#b71c1c" rx="3"/>
+  <text x="200" y="30" text-anchor="middle" fill="#fff" font-size="13" font-weight="bold">人民币借款合同（抵押）</text>
+  <line x1="10" y1="62" x2="390" y2="62" stroke="#ccc" stroke-width="1"/>
+  <text x="20" y="82" font-size="11" fill="#333">合同编号：LN-2024-3355</text>
+  <text x="20" y="102" font-size="11" fill="#333">借款人：张三（身份证号：330102******1234）</text>
+  <text x="20" y="122" font-size="11" fill="#333">贷款人：中国工商银行杭州分行</text>
+  <text x="20" y="142" font-size="11" fill="#333">贷款金额：人民币伍拾万元整（¥500,000.00）</text>
+  <text x="20" y="162" font-size="11" fill="#333">贷款期限：36个月（2024-06-01 至 2027-05-31）</text>
+  <text x="20" y="182" font-size="11" fill="#333">年利率：4.35%（LPR+0.15%）</text>
+  <text x="20" y="202" font-size="11" fill="#333">担保方式：房产抵押（下城区XX路88号302室）</text>
+  <text x="20" y="222" font-size="11" fill="#333">还款方式：等额本息</text>
+  <text x="20" y="242" font-size="11" fill="#333">资金用途：房屋装修</text>
+  <line x1="10" y1="255" x2="390" y2="255" stroke="#ccc" stroke-width="1"/>
+  <text x="20" y="275" font-size="11" fill="#333">抵押物信息：</text>
+  <text x="30" y="295" font-size="10" fill="#555">房产证号：杭房权证下移字第123456号</text>
+  <text x="30" y="312" font-size="10" fill="#555">建筑面积：89.50 ㎡</text>
+  <text x="30" y="329" font-size="10" fill="#555">评估价值：RMB 2,800,000.00</text>
+  <line x1="10" y1="342" x2="390" y2="342" stroke="#ccc" stroke-width="1"/>
+  <text x="20" y="362" font-size="10" fill="#666">借款人签字：张三（签章）</text>
+  <text x="20" y="382" font-size="10" fill="#666">贷款人盖章：中国工商银行杭州分行（合同专用章）</text>
+  <text x="20" y="402" font-size="10" fill="#666">签署日期：2024年05月25日</text>
+  <rect x="10" y="420" width="380" height="40" fill="#f5f5f5" rx="2"/>
+  <text x="200" y="445" text-anchor="middle" font-size="11" fill="#999">模拟样例 · 仅用于演示</text>
+</svg>
